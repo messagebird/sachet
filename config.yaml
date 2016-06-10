@@ -1,0 +1,15 @@
+providers:
+  messagebird:
+    access_key: 'live_qKwVZ02ULV70GqabBYxLU8d5r'
+  nexmo:
+    api_key: '18e0a6e9'
+    api_secret: 'ea44c2d9'
+
+receivers:
+  - match:
+      name: 'team-sms'
+      provider: 'nexmo'
+  - match:
+      name: 'team-dev'
+      provider: 'messagebird'
+
