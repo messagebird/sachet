@@ -6,10 +6,10 @@ providers:
     api_secret: 'ea44c2d9'
 
 receivers:
-  - match:
-      name: 'team-sms'
-      provider: 'nexmo'
-  - match:
-      name: 'team-dev'
-      provider: 'messagebird'
+  - name: 'team-sms'
+    provider: 'messagebird'
+    to:
+      - '+31612345678'
+    from: 'Sachet'
+    text: 'Something was sent from the Prometheus Alertmanager!'
 
