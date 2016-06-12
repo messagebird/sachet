@@ -18,11 +18,11 @@ type ReceiverConf struct {
 var config struct {
 	Providers struct {
 		MessageBird struct {
-			AccessKey string
+			AccessKey string `yaml:"access_key"`
 		}
 		Nexmo struct {
-			APIKey    string
-			APISecret string
+			APIKey    string `yaml:"api_key"`
+			APISecret string `yaml:"api_secret"`
 		}
 	}
 	Receivers []ReceiverConf
