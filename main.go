@@ -36,7 +36,15 @@ func main() {
 		}
 
 		receiverConf := receiverConfByReceiver(data.Receiver)
+		if receiverConf == nil {
+			// fmt.Println("no receiver")
+			return
+		}
 		provider := providerByName(receiverConf.Provider)
+		if provider == nil {
+			// fmt.Println("no provider")
+			return
+		}
 
 		for _, alert := range data.Alerts {
 
@@ -71,7 +79,7 @@ func tmpl(alert *template.Alert) string {
 
 // receiverConfByReceiver loops the receiver conf list and returns the first instance with that name
 func receiverConfByReceiver(name string) *ReceiverConf {
-	for i, _ := range config.Receivers {
+	for i := range config.Receivers {
 		rc := &config.Receivers[i]
 		if rc.Name == name {
 			return rc
@@ -81,7 +89,7 @@ func receiverConfByReceiver(name string) *ReceiverConf {
 }
 
 type Message struct {
-	To   string
+	To   []string
 	From string
 	Text string
 }

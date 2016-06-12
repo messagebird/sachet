@@ -10,7 +10,7 @@ import (
 type ReceiverConf struct {
 	Name     string
 	Provider string
-	To       string
+	To       []string
 	From     string
 	Text     string
 }
