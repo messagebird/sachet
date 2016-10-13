@@ -12,7 +12,6 @@ type ReceiverConf struct {
 	Provider string
 	To       []string
 	From     string
-	Text     string
 }
 
 var config struct {
