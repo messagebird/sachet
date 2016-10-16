@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/prometheus/client_golang/prometheus"
 
@@ -46,20 +47,18 @@ func main() {
 			return
 		}
 
-		for _, alert := range data.Alerts {
-
-			text := receiverConf.Text
-			if text == "" {
-				tmpl(&alert)
-			}
-
-			message := Message{
-				To:   receiverConf.To,
-				From: receiverConf.From,
-				Text: text,
-			}
-			provider.Send(message)
+		// Concatenate common labels to form the alert string.
+		text := strings.Join(data.CommonLabels.Values(), " | ")
+		if len(text) > 160 {
+			text = text[:160]
 		}
+
+		message := Message{
+			To:   receiverConf.To,
+			From: receiverConf.From,
+			Text: text,
+		}
+		provider.Send(message)
 	})
 
 	http.Handle("/metrics", prometheus.Handler())
@@ -69,12 +68,6 @@ func main() {
 	}
 
 	log.Fatal(http.ListenAndServe(*listenAddress, nil))
-}
-
-func tmpl(alert *template.Alert) string {
-	// TODO "a message made of parts of alert"
-	// https: //godoc.org/github.com/prometheus/alertmanager/template#Alert
-	return alert.Status + ": " + alert.Labels["alertname"]
 }
 
 // receiverConfByReceiver loops the receiver conf list and returns the first instance with that name

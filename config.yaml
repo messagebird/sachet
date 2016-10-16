@@ -11,5 +11,4 @@ receivers:
     to:
       - '+31612345678'
     from: 'Sachet'
-    text: 'Something was sent from the Prometheus Alertmanager!'
 
