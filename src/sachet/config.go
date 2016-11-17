@@ -27,12 +27,15 @@ var config struct {
 	Receivers []ReceiverConf
 }
 
-func init() {
-	data, err := ioutil.ReadFile("config.yaml")
+// LoadConfig parses the given YAML file into a Config.
+func LoadConfig(filename string) {
+	content, err := ioutil.ReadFile(filename)
 	if err != nil {
-		log.Fatal("Error reading config.yaml")
+		log.Fatal("Error reading configuration file")
 	}
-	if err := yaml.Unmarshal(data, &config); err != nil {
-		log.Fatal("Error parsing config.yaml")
+
+	err = yaml.Unmarshal([]byte(content), &config)
+	if err != nil {
+		log.Fatal("Error parsing configuration file")
 	}
 }

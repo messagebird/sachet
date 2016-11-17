@@ -9,17 +9,19 @@ import (
 	"os"
 	"strings"
 
-	"github.com/prometheus/client_golang/prometheus"
-
 	"github.com/prometheus/alertmanager/template"
+	"github.com/prometheus/client_golang/prometheus"
 )
 
 var (
 	listenAddress = flag.String("listen-address", ":9876", "The address to listen on for HTTP requests.")
+	configFile    = flag.String("config", "config.yaml", "The configuration file")
 )
 
 func main() {
 	flag.Parse()
+
+	LoadConfig(*configFile)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
