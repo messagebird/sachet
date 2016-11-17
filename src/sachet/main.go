@@ -19,7 +19,6 @@ var (
 )
 
 func main() {
-
 	flag.Parse()
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
