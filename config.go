@@ -23,6 +23,10 @@ var config struct {
 			APIKey    string `yaml:"api_key"`
 			APISecret string `yaml:"api_secret"`
 		}
+		Twilio struct {
+			AccountSID   string `yaml:"account_sid"`
+			AccountToken string `yaml:"account_token"`
+		}
 	}
 	Receivers []ReceiverConf
 }

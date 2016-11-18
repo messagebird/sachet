@@ -4,6 +4,9 @@ providers:
   nexmo:
     api_key: '18e0a6e9'
     api_secret: 'ea44c2d9'
+  twilio:
+    account_sid: 'aCb3bbaacc554b'
+    account_token: '4736473aaabbcc66'
 
 receivers:
   - name: 'team-sms'
