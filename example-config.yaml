@@ -6,7 +6,7 @@ providers:
     api_secret: 'ea44c2d9'
   twilio:
     account_sid: 'aCb3bbaacc554b'
-    account_token: '4736473aaabbcc66'
+    auth_token: '4736473aaabbcc66'
 
 receivers:
   - name: 'team-sms'

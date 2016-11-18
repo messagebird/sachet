@@ -97,6 +97,8 @@ func providerByName(name string) Provider {
 		return &MessageBird{}
 	case "nexmo":
 		return &Nexmo{}
+	case "twilio":
+		return &Twilio{}
 	}
 
 	return nil

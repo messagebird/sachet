@@ -25,7 +25,7 @@ var config struct {
 		}
 		Twilio struct {
 			AccountSID   string `yaml:"account_sid"`
-			AccountToken string `yaml:"account_token"`
+			AuthToken string `yaml:"auth_token"`
 		}
 	}
 	Receivers []ReceiverConf
