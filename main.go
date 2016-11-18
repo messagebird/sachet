@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"flag"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -32,18 +33,18 @@ func main() {
 		// https://godoc.org/github.com/prometheus/alertmanager/template#Data
 		data := template.Data{}
 		if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
-			log.Println(err.Error())
+			errorHandler(w, http.StatusBadRequest, err)
 			return
 		}
 
 		receiverConf := receiverConfByReceiver(data.Receiver)
 		if receiverConf == nil {
-			log.Println("no receiver")
+			errorHandler(w, http.StatusBadRequest, fmt.Errorf("Receiver missing"))
 			return
 		}
 		provider := providerByName(receiverConf.Provider)
 		if provider == nil {
-			log.Println("no provider")
+			errorHandler(w, http.StatusBadRequest, fmt.Errorf("Cannot find provider implementation for '%s'", receiverConf.Provider))
 			return
 		}
 
@@ -58,7 +59,12 @@ func main() {
 			From: receiverConf.From,
 			Text: text,
 		}
-		provider.Send(message)
+
+		err := provider.Send(message)
+		if err != nil {
+			errorHandler(w, http.StatusBadRequest, err)
+			return
+		}
 	})
 
 	http.Handle("/metrics", prometheus.Handler())
@@ -88,7 +94,7 @@ type Message struct {
 }
 
 type Provider interface {
-	Send(message Message)
+	Send(message Message) error
 }
 
 func providerByName(name string) Provider {
@@ -102,4 +108,24 @@ func providerByName(name string) Provider {
 	}
 
 	return nil
+}
+
+func errorHandler(w http.ResponseWriter, status int, err error) {
+	w.WriteHeader(status)
+
+	data := struct {
+		Error   bool
+		Status  int
+		Message string
+	}{
+		true,
+		status,
+		err.Error(),
+	}
+	// respond json
+	bytes, _ := json.Marshal(data)
+	json := string(bytes[:])
+	fmt.Fprint(w, json)
+
+	log.Println("Error: " + json)
 }

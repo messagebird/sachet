@@ -1,20 +1,15 @@
 package main
 
-import (
-	"github.com/messagebird/go-rest-api"
-	"log"
-)
+import "github.com/messagebird/go-rest-api"
 
 type MessageBird struct{}
 
-func (*MessageBird) Send(message Message) {
+func (*MessageBird) Send(message Message) (err error) {
 	client := messagebird.New(config.Providers.MessageBird.AccessKey)
-	_, err := client.NewMessage(
+	_, err = client.NewMessage(
 		message.From,
 		message.To,
 		message.Text,
 		nil)
-	if err != nil {
-		log.Println(err.Error())
-	}
+	return
 }
