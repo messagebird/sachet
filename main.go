@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"flag"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -33,18 +32,18 @@ func main() {
 		// https://godoc.org/github.com/prometheus/alertmanager/template#Data
 		data := template.Data{}
 		if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
-			fmt.Println(err.Error())
+			log.Println(err.Error())
 			return
 		}
 
 		receiverConf := receiverConfByReceiver(data.Receiver)
 		if receiverConf == nil {
-			// fmt.Println("no receiver")
+			log.Println("no receiver")
 			return
 		}
 		provider := providerByName(receiverConf.Provider)
 		if provider == nil {
-			// fmt.Println("no provider")
+			log.Println("no provider")
 			return
 		}
 
