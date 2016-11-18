@@ -26,7 +26,6 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 
-		fmt.Println("new request")
 		// content, _ := ioutil.ReadAll(r.Body)
 		// fmt.Println(string(content))
 

@@ -7,6 +7,13 @@ There are many SMS providers and Alertmanager supporting all of them would make 
 ## The solution
 An HTTP API that accepts Alertmanager webhook calls and allows an end-user to configure it for the SMS provider of their dreams.
 
+## Play with it
+
+```
+curl -H "Content-type: application/json" -X POST -d '{"receiver": "team-sms", "status": "error", "commonLabels": {"key": "value"}}' http://127.0.0.1:9876/
+
+```
+
 
 ### Alert manager configuration
 
@@ -18,6 +25,8 @@ receivers:
   - url: 'http://localhost:9876/alert'
 ...
 ```
+
+
 
 
 ## Authors
