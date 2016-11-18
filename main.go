@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/prometheus/alertmanager/template"
@@ -24,7 +25,7 @@ func main() {
 
 	LoadConfig(*configFile)
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/alert", func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 
 		// content, _ := ioutil.ReadAll(r.Body)
@@ -33,18 +34,18 @@ func main() {
 		// https://godoc.org/github.com/prometheus/alertmanager/template#Data
 		data := template.Data{}
 		if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
-			errorHandler(w, http.StatusBadRequest, err)
+			errorHandler(w, http.StatusBadRequest, err, "?")
 			return
 		}
 
 		receiverConf := receiverConfByReceiver(data.Receiver)
 		if receiverConf == nil {
-			errorHandler(w, http.StatusBadRequest, fmt.Errorf("Receiver missing"))
+			errorHandler(w, http.StatusBadRequest, fmt.Errorf("Receiver missing"), "?")
 			return
 		}
 		provider := providerByName(receiverConf.Provider)
 		if provider == nil {
-			errorHandler(w, http.StatusBadRequest, fmt.Errorf("Cannot find provider implementation for '%s'", receiverConf.Provider))
+			errorHandler(w, http.StatusBadRequest, fmt.Errorf("Cannot find provider implementation for '%s'", receiverConf.Provider), receiverConf.Provider)
 			return
 		}
 
@@ -62,9 +63,11 @@ func main() {
 
 		err := provider.Send(message)
 		if err != nil {
-			errorHandler(w, http.StatusBadRequest, err)
+			errorHandler(w, http.StatusBadRequest, err, receiverConf.Provider)
 			return
 		}
+
+		requestTotal.WithLabelValues("200", receiverConf.Provider).Inc()
 	})
 
 	http.Handle("/metrics", prometheus.Handler())
@@ -110,7 +113,7 @@ func providerByName(name string) Provider {
 	return nil
 }
 
-func errorHandler(w http.ResponseWriter, status int, err error) {
+func errorHandler(w http.ResponseWriter, status int, err error, provider string) {
 	w.WriteHeader(status)
 
 	data := struct {
@@ -128,4 +131,5 @@ func errorHandler(w http.ResponseWriter, status int, err error) {
 	fmt.Fprint(w, json)
 
 	log.Println("Error: " + json)
+	requestTotal.WithLabelValues(strconv.FormatInt(int64(status), 10), provider).Inc()
 }

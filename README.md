@@ -10,7 +10,7 @@ An HTTP API that accepts Alertmanager webhook calls and allows an end-user to co
 ## Play with it
 
 ```
-curl -H "Content-type: application/json" -X POST -d '{"receiver": "team-sms", "status": "error", "commonLabels": {"key": "value"}}' http://127.0.0.1:9876/
+curl -H "Content-type: application/json" -X POST -d '{"receiver": "team-sms", "status": "error", "commonLabels": {"key": "value"}}' http://127.0.0.1:9876/alert
 
 ```
 
