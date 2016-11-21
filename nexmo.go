@@ -1,6 +1,11 @@
 package main
 
-import "gopkg.in/njern/gonexmo.v1"
+import (
+	"encoding/json"
+	"log"
+
+	"gopkg.in/njern/gonexmo.v1"
+)
 
 type Nexmo struct{}
 
@@ -19,7 +24,13 @@ func (*Nexmo) Send(message Message) (err error) {
 			Text:  message.Text,
 			Class: nexmo.Standard,
 		}
-		_, err = nexmoClient.SMS.Send(msg)
+		response, err := nexmoClient.SMS.Send(msg)
+		if err != nil {
+			return err
+		}
+
+		js0n, _ := json.Marshal(response)
+		log.Println(string(js0n))
 	}
 	return
 }

@@ -49,10 +49,18 @@ func main() {
 			return
 		}
 
-		// Concatenate common labels to form the alert string.
-		text := strings.Join(data.CommonLabels.Values(), " | ")
-		if len(text) > 160 {
-			text = text[:160]
+		var text string
+		if len(data.Alerts) > 1 {
+			text = fmt.Sprintf("Firing: %d, Resolved: %d", len(data.Alerts.Firing()), len(data.Alerts.Resolved()))
+		} else if len(data.Alerts) == 1 {
+			alert := data.Alerts[0]
+			tuples := []string{}
+			for k, v := range alert.Labels {
+				tuples = append(tuples, k+"= "+v)
+			}
+			text = strings.ToUpper(data.Status) + " \n" + strings.Join(tuples, "\n")
+		} else {
+			text = "Alert \n" + strings.Join(data.CommonLabels.Values(), " | ")
 		}
 
 		message := Message{
