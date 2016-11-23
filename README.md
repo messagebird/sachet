@@ -7,23 +7,45 @@ There are many SMS providers and Alertmanager supporting all of them would make 
 ## The solution
 An HTTP API that accepts Alertmanager webhook calls and allows an end-user to configure it for the SMS provider of their dreams.
 
-## Play with it
+## Usage
+
+Running Sachet is as easy as executing `sachet` on the command line.
 
 ```
-curl -H "Content-type: application/json" -X POST -d '{"receiver": "team-sms", "status": "error", "commonLabels": {"key": "value"}}' http://127.0.0.1:9876/alert
-
+$ sachet
 ```
 
-
-### Alert manager configuration
+Use the `-h` flag to get help information.
 
 ```
-...
+$ sachet -h
+Usage of sachet:
+  -config string
+        The configuration file (default "config.yaml")
+  -listen-address string
+        The address to listen on for HTTP requests. (default ":9876")
+```
+
+## Testing
+
+Sachet expects a JSON object from Alertmanager. The format of this JSON is described in [the Alertmanager documentation](https://prometheus.io/docs/alerting/configuration/#webhook-receiver-<webhook_config>), or, alternatively, in [the Alertmanager GoDoc](https://godoc.org/github.com/prometheus/alertmanager/template#Data).
+
+To quickly test Sachet is working you can also run:
+```bash
+$ curl -H "Content-type: application/json" -X POST \
+  -d '{"receiver": "team-sms", "status": "firing", "alerts": [{"status": "firing", "labels": {"alertname": "test-123"} }], "commonLabels": {"key": "value"}}' \
+  http://localhost:9876/alert
+```
+
+## Alertmanager configuration
+
+To enable Sachet you need to configure a webhook in Alertmanager. You can do that by adding a webhook receiver to your Alertmanager configuration. 
+
+```yaml
 receivers:
 - name: 'team-sms'
   webhook_configs:
   - url: 'http://localhost:9876/alert'
-...
 ```
 
 ## License
