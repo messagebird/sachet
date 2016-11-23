@@ -6,7 +6,7 @@ RUN apk add --no-cache --virtual git && \
     rm -rf src pkg && \
     apk del git
 
-COPY example-config.yaml /etc/sachet/config.yaml
+COPY examples/config.yaml /etc/sachet/config.yaml
 
 EXPOSE 9876
 ENTRYPOINT ["sachet"]
