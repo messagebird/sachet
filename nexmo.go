@@ -1,22 +1,27 @@
-package main
+package sachet
 
-import (
-	"encoding/json"
-	"log"
+import "gopkg.in/njern/gonexmo.v1"
 
-	"gopkg.in/njern/gonexmo.v1"
-)
+type NexmoConfig struct {
+	APIKey    string `yaml:"api_key"`
+	APISecret string `yaml:"api_secret"`
+}
 
-type Nexmo struct{}
+type Nexmo struct {
+	client *nexmo.Client
+}
 
-func (*Nexmo) Send(message Message) (err error) {
-	nexmoClient, err := nexmo.NewClientFromAPI(config.Providers.Nexmo.APIKey, config.Providers.Nexmo.APISecret)
+func NewNexmo(config NexmoConfig) (*Nexmo, error) {
+	client, err := nexmo.NewClientFromAPI(config.APIKey, config.APISecret)
 	if err != nil {
-		return
+		return nil, err
 	}
 
-	for _, recipent := range message.To {
+	return &Nexmo{client: client}, nil
+}
 
+func (nx *Nexmo) Send(message Message) error {
+	for _, recipent := range message.To {
 		msg := &nexmo.SMSMessage{
 			From:  message.From,
 			To:    recipent,
@@ -24,13 +29,11 @@ func (*Nexmo) Send(message Message) (err error) {
 			Text:  message.Text,
 			Class: nexmo.Standard,
 		}
-		response, err := nexmoClient.SMS.Send(msg)
-		if err != nil {
+
+		if _, err := nx.client.SMS.Send(msg); err != nil {
 			return err
 		}
-
-		js0n, _ := json.Marshal(response)
-		log.Println(string(js0n))
 	}
-	return
+
+	return nil
 }
