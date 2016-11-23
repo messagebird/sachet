@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/messagebird/sachet"
 	"github.com/prometheus/alertmanager/template"
 	"github.com/prometheus/client_golang/prometheus"
 )
@@ -28,9 +29,6 @@ func main() {
 	http.HandleFunc("/alert", func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 
-		// content, _ := ioutil.ReadAll(r.Body)
-		// fmt.Println(string(content))
-
 		// https://godoc.org/github.com/prometheus/alertmanager/template#Data
 		data := template.Data{}
 		if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
@@ -43,9 +41,9 @@ func main() {
 			errorHandler(w, http.StatusBadRequest, fmt.Errorf("Receiver missing"), "?")
 			return
 		}
-		provider := providerByName(receiverConf.Provider)
-		if provider == nil {
-			errorHandler(w, http.StatusBadRequest, fmt.Errorf("Cannot find provider implementation for '%s'", receiverConf.Provider), receiverConf.Provider)
+		provider, err := providerByName(receiverConf.Provider)
+		if err != nil {
+			errorHandler(w, http.StatusInternalServerError, err, receiverConf.Provider)
 			return
 		}
 
@@ -63,14 +61,13 @@ func main() {
 			text = "Alert \n" + strings.Join(data.CommonLabels.Values(), " | ")
 		}
 
-		message := Message{
+		message := sachet.Message{
 			To:   receiverConf.To,
 			From: receiverConf.From,
 			Text: text,
 		}
 
-		err := provider.Send(message)
-		if err != nil {
+		if err = provider.Send(message); err != nil {
 			errorHandler(w, http.StatusBadRequest, err, receiverConf.Provider)
 			return
 		}
@@ -98,27 +95,17 @@ func receiverConfByReceiver(name string) *ReceiverConf {
 	return nil
 }
 
-type Message struct {
-	To   []string
-	From string
-	Text string
-}
-
-type Provider interface {
-	Send(message Message) error
-}
-
-func providerByName(name string) Provider {
+func providerByName(name string) (sachet.Provider, error) {
 	switch name {
 	case "messagebird":
-		return &MessageBird{}
+		return sachet.NewMessageBird(config.Providers.MessageBird), nil
 	case "nexmo":
-		return &Nexmo{}
+		return sachet.NewNexmo(config.Providers.Nexmo)
 	case "twilio":
-		return &Twilio{}
+		return sachet.NewTwilio(config.Providers.Twilio), nil
 	}
 
-	return nil
+	return nil, fmt.Errorf("%s: Unknown provider", name)
 }
 
 func errorHandler(w http.ResponseWriter, status int, err error, provider string) {
