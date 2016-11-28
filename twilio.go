@@ -1,22 +1,27 @@
-package main
+package sachet
 
 import twilio "github.com/carlosdp/twiliogo"
 
-type Twilio struct{}
+type TwilioConfig struct {
+	AccountSID string `yaml:"account_sid"`
+	AuthToken  string `yaml:"auth_token"`
+}
 
-func (*Twilio) Send(message Message) (err error) {
-	twilioClient := twilio.NewClient(config.Providers.Twilio.AccountSID, config.Providers.Twilio.AuthToken)
+type Twilio struct {
+	client twilio.Client
+}
 
+func NewTwilio(config TwilioConfig) *Twilio {
+	return &Twilio{client: twilio.NewClient(config.AccountSID, config.AuthToken)}
+}
+
+func (tw *Twilio) Send(message Message) error {
 	for _, recipient := range message.To {
-		_, err = twilio.NewMessage(
-			twilioClient,
-			message.From,
-			recipient,
-			twilio.Body(message.Text),
-		)
+		_, err := twilio.NewMessage(tw.client, message.From, recipient, twilio.Body(message.Text))
 		if err != nil {
-			return
+			return err
 		}
 	}
-	return
+
+	return nil
 }

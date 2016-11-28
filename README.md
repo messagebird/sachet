@@ -9,7 +9,13 @@ An HTTP API that accepts Alertmanager webhook calls and allows an end-user to co
 
 ## Usage
 
-Running Sachet is as easy as executing `sachet` on the command line.
+First get it 
+
+```
+$ go get github.com/messagebird/sachet/cmd/sachet
+```
+
+And then running Sachet is as easy as executing `sachet` on the command line.
 
 ```
 $ sachet
