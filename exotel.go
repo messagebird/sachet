@@ -39,13 +39,13 @@ func (c *Exotel) setHeaders() *Exotel {
 //sendSMS sends sms  ,obviously  
 //This API is rate limited to 200 SMSes per minute. Once this limit has been crossed, your requests will be rejected with an HTTP 429 'Too Many Requests' code.
 func (c *Exotel) sendSMS(from string, to []string,body string) ( err error) {
-	c.requester.Post(fmt.Sprintf("%s/v1/Accounts/%s/Smss/send.json", ExotelBaseURL, c.AccountSid)).
+	c.requester.Post(fmt.Sprintf("%s/v1/Accounts/%s/Sms/send.json", ExotelBaseURL, c.AccountSid)).
 		Param("From", from).
 		Param("Body", body).
         Retry(3,time.Second * ExotelRetryInterval)
     //adding to numbers
-    for _,number :=  range to {
-        c.requester.Param("To", number)
+    for i,number :=  range to {
+        c.requester.Param(fmt.Sprintf("To[%d]",i), number)
     }
 	c.setHeaders()
 	resp, body, errs := c.requester.End()
