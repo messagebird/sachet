@@ -29,7 +29,7 @@ func NewExotel(sid ,token string) *Exotel {
 //SetHeaders Sets needed headers
 func (c *Exotel) setHeaders() *Exotel {
 	c.requester.
-		Set("User-Agent", "sheetblast-v1").
+		Set("User-Agent", "sachet-v1").
 		Set("Accept-language", "es").
 		Set("Content-Type", "application/x-www-form-urlencoded").
 		Set("accept", "application/json")
