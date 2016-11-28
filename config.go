@@ -19,6 +19,10 @@ var config struct {
 		MessageBird struct {
 			AccessKey string `yaml:"access_key"`
 		}
+		Exotel struct {
+			AccountSID string `yaml:"sid"`
+			Token string `yaml:"token"`
+		}
 		Nexmo struct {
 			APIKey    string `yaml:"api_key"`
 			APISecret string `yaml:"api_secret"`
