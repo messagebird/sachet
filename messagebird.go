@@ -1,15 +1,20 @@
-package main
+package sachet
 
 import "github.com/messagebird/go-rest-api"
 
-type MessageBird struct{}
+type MessageBirdConfig struct {
+	AccessKey string `yaml:"access_key"`
+}
 
-func (*MessageBird) Send(message Message) (err error) {
-	client := messagebird.New(config.Providers.MessageBird.AccessKey)
-	_, err = client.NewMessage(
-		message.From,
-		message.To,
-		message.Text,
-		nil)
-	return
+type MessageBird struct {
+	client *messagebird.Client
+}
+
+func NewMessageBird(config MessageBirdConfig) *MessageBird {
+	return &MessageBird{client: messagebird.New(config.AccessKey)}
+}
+
+func (mb *MessageBird) Send(message Message) error {
+	_, err := mb.client.NewMessage(message.From, message.To, message.Text, nil)
+	return err
 }
