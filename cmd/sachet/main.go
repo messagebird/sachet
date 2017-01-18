@@ -49,7 +49,22 @@ func main() {
 
 		var text string
 		if len(data.Alerts) > 1 {
-			text = fmt.Sprintf("Firing: %d, Resolved: %d", len(data.Alerts.Firing()), len(data.Alerts.Resolved()))
+			labelAlerts := map[string]template.Alerts{
+				"Firing":   data.Alerts.Firing(),
+				"Resolved": data.Alerts.Resolved(),
+			}
+			for label, alerts := range labelAlerts {
+				if len(alerts) > 0 {
+					text += label + ": \n"
+					for _, alert := range alerts {
+						text += alert.Labels["alertname"] + " @" + alert.Labels["instance"]
+						if len(alert.Labels["exported_instance"]) > 0 {
+							text += " (" + alert.Labels["exported_instance"] + ")"
+						}
+						text += "\n"
+					}
+				}
+			}
 		} else if len(data.Alerts) == 1 {
 			alert := data.Alerts[0]
 			tuples := []string{}
