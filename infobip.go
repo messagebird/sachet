@@ -2,6 +2,7 @@ package sachet
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
@@ -30,15 +31,14 @@ func NewInfobip(config InfobipConfig) *Infobip {
 //Send send sms to n number of people using bulk sms api
 func (c *Infobip) Send(message Message) (err error) {
 	smsURL := "https://api.infobip.com/sms/1/text/single"
+	//smsURL = "http://requestb.in/pwf2ufpw"
 	var request *http.Request
 	var resp *http.Response
 
-	data := fmt.Sprintf(`{"from": "%s",
-			"to" : "%s",
-			"text" : "%s"}`, message.From, message.To[0], message.Text)
-
+	dataMap := map[string]string{"from": message.From, "to": message.To[0], "text": message.Text}
+	data, _ := json.Marshal(dataMap)
 	//preparing the request
-	request, err = http.NewRequest("POST", smsURL, bytes.NewBufferString(data))
+	request, err = http.NewRequest("POST", smsURL, bytes.NewBuffer(data))
 	if err != nil {
 		return
 	}
