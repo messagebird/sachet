@@ -4,6 +4,9 @@ providers:
   nexmo:
     api_key: '18e0a6e9'
     api_secret: 'ea44c2d9'
+  infobip:
+    token: "sasasa"
+    secret: "sasasa"
   exotel:
     account_sid: 'sachet'
     auth_token: 'bbba3f4afc0b4ee76c93e43b7c1b2d4350d1a0e8'
