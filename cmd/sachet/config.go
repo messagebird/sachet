@@ -20,6 +20,7 @@ var config struct {
 		Nexmo       sachet.NexmoConfig
 		Twilio      sachet.TwilioConfig
 		Infobip     sachet.InfobipConfig
+		Exotel      sachet.ExotelConfig
 	}
 
 	Receivers []ReceiverConf
