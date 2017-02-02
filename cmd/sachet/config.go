@@ -19,6 +19,7 @@ var config struct {
 		MessageBird sachet.MessageBirdConfig
 		Nexmo       sachet.NexmoConfig
 		Twilio      sachet.TwilioConfig
+		Exotel      sachet.ExotelConfig
 	}
 
 	Receivers []ReceiverConf

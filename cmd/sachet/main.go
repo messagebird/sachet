@@ -103,6 +103,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return sachet.NewNexmo(config.Providers.Nexmo)
 	case "twilio":
 		return sachet.NewTwilio(config.Providers.Twilio), nil
+    case "exotel":
+	    return sachet.NewExotel(config.Providers.Exotel),nil
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)
