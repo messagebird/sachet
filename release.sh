@@ -6,6 +6,6 @@
 
 rm -rf "bin/sachet-$VERSION.linux-amd64"
 mkdir "bin/sachet-$VERSION.linux-amd64"
-env GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o "bin/sachet-$VERSION.linux-amd64/sachet"
+env GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o "bin/sachet-$VERSION.linux-amd64/sachet" github.com/messagebird/sachet/cmd/sachet
 cd bin
 tar -zcvf "sachet-$VERSION.linux-amd64.tar.gz" "sachet-$VERSION.linux-amd64"
