@@ -18,7 +18,7 @@ providers:
 
 receivers:
   - name: 'team-sms'
-    provider: 'exotel'
+    provider: 'messagebird'
     to:
       - '+919742033616'
     from: '08039591643'
