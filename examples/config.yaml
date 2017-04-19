@@ -13,10 +13,12 @@ providers:
   twilio:
     account_sid: 'aCb3bbaacc554b'
     auth_token: '4736473aaabbcc66'
+  cm:
+    producttoken: '00000000-0000-0000-0000-000000000000'
 
 receivers:
   - name: 'team-sms'
-    provider: 'exotel'
+    provider: 'messagebird'
     to:
       - '+919742033616'
     from: '08039591643'

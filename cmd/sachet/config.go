@@ -21,6 +21,7 @@ var config struct {
 		Twilio      sachet.TwilioConfig
 		Infobip     sachet.InfobipConfig
 		Exotel      sachet.ExotelConfig
+		CM          sachet.CMConfig
 	}
 
 	Receivers []ReceiverConf
