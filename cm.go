@@ -71,8 +71,6 @@ func (c *CM) Send(message Message) error {
 		return err
 	}
 
-	fmt.Println(string(data))
-
 	request, err := http.NewRequest("POST", smsURL, bytes.NewBuffer(data))
 	if err != nil {
 		return err
