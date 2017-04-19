@@ -107,7 +107,7 @@ func providerByName(name string) (sachet.Provider, error) {
 		return sachet.NewInfobip(config.Providers.Infobip), nil
 	case "exotel":
 		return sachet.NewExotel(config.Providers.Exotel), nil
-	case "cm"
+	case "cm":
 		return sachet.NewCM(config.Providers.CM), nil
 	}
 

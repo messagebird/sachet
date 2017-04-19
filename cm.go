@@ -25,27 +25,53 @@ func NewCM(config CMConfig) *CM {
 	return &CM{config}
 }
 
+type CMRecipient struct {
+	Number string `json:"number"`
+}
+
+type CMMessage struct {
+	From string        `json:"from"`
+	To   []CMRecipient `json:"to"`
+	Body struct {
+		Content string `json:"content"`
+	} `json:"body"`
+}
+
+type CMPayload struct {
+	Messages struct {
+		Authentication struct {
+			ProductToken string `json:"producttoken"`
+		} `json:"authentication"`
+		MSG []CMMessage `json:"msg"`
+	} `json:"messages"`
+}
+
 // Send sends SMS to n number of people using Bulk SMS API
 func (c *CM) Send(message Message) error {
 	smsURL := "https://gw.cmtelecom.com/v1.0/message"
 
-	var dataMap map[string]interface{}
+	payload := CMPayload{}
+	payload.Messages.Authentication.ProductToken = c.CMConfig.ProductToken
+	payload.Messages.MSG = append(payload.Messages.MSG, CMMessage{})
 
-	dataMap["Authentication"] = map[string]string{"ProductToken": c.CMConfig.ProductToken}
-	dataMap["From"] = message.From
+	payload.Messages.MSG[0].From = message.From
+	payload.Messages.MSG[0].Body.Content = message.Text
 
-	var to []map[string]string
 	for _, recipient := range message.To {
-		to = append(to, map[string]string{"Number": recipient})
+		payload.Messages.MSG[0].To = append(
+			payload.Messages.MSG[0].To,
+			CMRecipient{
+				Number: recipient,
+			},
+		)
 	}
-	dataMap["To"] = to
 
-	dataMap["Body"] = map[string]string{"Content": message.Text}
-
-	data, err := json.Marshal(dataMap)
+	data, err := json.Marshal(payload)
 	if err != nil {
 		return err
 	}
+
+	fmt.Println(string(data))
 
 	request, err := http.NewRequest("POST", smsURL, bytes.NewBuffer(data))
 	if err != nil {
