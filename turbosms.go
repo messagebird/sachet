@@ -107,26 +107,33 @@ func (c *Turbosms) Send(message Message) (err error) {
 	if err != nil {
 		return err
 	}
-	/////  Encode SendSms /////////
-	sms := &getSendsmsRequest{Sender: message.From, Destination: message.To, Text: message.Text, Wappush: ""}
-	datasms, err := SoapEncode(&sms)
-	if err != nil {
-		return err
-	}
 	cookieJar, _ := cookiejar.New(nil)
 	clientConfig := &http.Client{
 		Timeout: 15 * time.Second,
 		Jar:     cookieJar,
 	}
-	////// Request ///////////
 	reply, err, statusreply := Request(clientConfig, urlSoap, []byte(data))
 	if err != nil {
 		return err
 	}
-	replysms, err, statusreplysms := Request(clientConfig, urlSoap, []byte(datasms))
-	if err != nil {
-		return err
 
+	for _, recipent := range message.To {
+		/////  Encode SendSms /////////
+		sms := &getSendsmsRequest{Sender: message.From, Destination: recipient, Text: message.Text, Wappush: ""}
+		datasms, err := SoapEncode(&sms)
+		if err != nil {
+			return err
+		}
+		////// Request ///////////
+		replysms, err, statusreplysms := Request(clientConfig, urlSoap, []byte(datasms))
+		if err != nil {
+			return err
+
+		}
+		if statusreplysms == 200 && err == nil {
+			return nil
+		}
+		return fmt.Errorf("Failed sending sms. Reason: %s, statusCode: %d", string(replysms), statusreplysms)
 	}
 	var resp getAuthResponse
 	err = SoapDecode([]byte(reply), &resp)
@@ -134,9 +141,9 @@ func (c *Turbosms) Send(message Message) (err error) {
 		return err
 	}
 
-	if statusreply == 200 && statusreplysms == 200 && err == nil {
+	if statusreply == 200 && err == nil {
 		return nil
 	}
 
-	return fmt.Errorf("Failed sending sms. Reason: %s, statusCode: %d", string(replysms), statusreplysms)
+	//	return fmt.Errorf("Failed sending sms. Reason: %s, statusCode: %d", string(reply), statusreply)
 }
