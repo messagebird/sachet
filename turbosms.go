@@ -56,7 +56,7 @@ type SoapEnvelopeReqest struct {
 type getSendsmsRequest struct {
 	XMLName     struct{} `xml:"ns1:SendSMS"`
 	Sender      string   `xml:"ns1:sender"`
-	Destination []string `xml:"ns1:destination"`
+	Destination string `xml:"ns1:destination"`
 	Text        string   `xml:"ns1:text"`
 	Wappush     string   `xml:"ns1:wappush"`
 }
