@@ -3,7 +3,7 @@ package main
 import (
 	"io/ioutil"
 
-	"github.com/dzirg44/sachet"
+	"github.com/messagebird/sachet"
 	"gopkg.in/yaml.v2"
 )
 
