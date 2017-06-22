@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/cookiejar"
+	"strings"
 	"time"
 )
 
@@ -55,7 +56,7 @@ type SoapEnvelopeReqest struct {
 type getSendsmsRequest struct {
 	XMLName     struct{} `xml:"ns1:SendSMS"`
 	Sender      string   `xml:"ns1:sender"`
-	Destination string `xml:"ns1:destination"`
+	Destination []string `xml:"ns1:destination"`
 	Text        string   `xml:"ns1:text"`
 	Wappush     string   `xml:"ns1:wappush"`
 }
@@ -116,34 +117,32 @@ func (c *Turbosms) Send(message Message) (err error) {
 	if err != nil {
 		return err
 	}
+	var allrecipent string
+	//	for _, recipent := range message.To {
+	//	       allrecipent += recipent
+	//	}
 
-	for _, recipent := range message.To {
-		/////  Encode SendSms /////////
-		sms := &getSendsmsRequest{Sender: message.From, Destination: recipent, Text: message.Text, Wappush: ""}
-		datasms, err := SoapEncode(&sms)
-		if err != nil {
-			return err
-		}
-		////// Request ///////////
-		replysms, err, statusreplysms := Request(clientConfig, urlSoap, []byte(datasms))
-		if err != nil {
-			return err
-
-		}
-		if statusreplysms == 200 && err == nil {
-			return nil
-		}
-		return fmt.Errorf("Failed sending sms. Reason: %s, statusCode: %d", string(replysms), statusreplysms)
+	/////  Encode SendSms /////////
+	sms := &getSendsmsRequest{Sender: message.From, Destination: strings.Join(message.To, ","), Text: message.Text, Wappush: ""}
+	datasms, err := SoapEncode(&sms)
+	if err != nil {
+		return err
 	}
+	////// Request ///////////
+	replysms, err, statusreplysms := Request(clientConfig, urlSoap, []byte(datasms))
+	if err != nil {
+		return err
+
+	}
+	if statusreply == 200 && statusreplysms == 200 && err == nil {
+		return nil
+	}
+
 	var resp getAuthResponse
 	err = SoapDecode([]byte(reply), &resp)
 	if err != nil {
 		return err
 	}
 
-	if statusreply == 200 && err == nil {
-		return nil
-	}
-
-	//	return fmt.Errorf("Failed sending sms. Reason: %s, statusCode: %d", string(reply), statusreply)
+	return fmt.Errorf("Failed sending sms. Reason: %s, statusCode: %d", string(replysms), statusreplysms)
 }
