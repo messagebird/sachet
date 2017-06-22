@@ -119,7 +119,7 @@ func (c *Turbosms) Send(message Message) (err error) {
 
 	for _, recipent := range message.To {
 		/////  Encode SendSms /////////
-		sms := &getSendsmsRequest{Sender: message.From, Destination: recipient, Text: message.Text, Wappush: ""}
+		sms := &getSendsmsRequest{Sender: message.From, Destination: recipent, Text: message.Text, Wappush: ""}
 		datasms, err := SoapEncode(&sms)
 		if err != nil {
 			return err
