@@ -1,7 +1,7 @@
 package twilio
 
 import (
-	twiliogo "github.com/carlosdp/twiliogo"
+	"github.com/carlosdp/twiliogo"
 	"github.com/messagebird/sachet"
 )
 
