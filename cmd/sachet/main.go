@@ -11,6 +11,12 @@ import (
 	"strings"
 
 	"github.com/messagebird/sachet"
+	"github.com/messagebird/sachet/provider/cm"
+	"github.com/messagebird/sachet/provider/exotel"
+	"github.com/messagebird/sachet/provider/infobip"
+	"github.com/messagebird/sachet/provider/messagebird"
+	"github.com/messagebird/sachet/provider/nexmo"
+	"github.com/messagebird/sachet/provider/twilio"
 	"github.com/prometheus/alertmanager/template"
 	"github.com/prometheus/client_golang/prometheus"
 )
@@ -113,17 +119,17 @@ func receiverConfByReceiver(name string) *ReceiverConf {
 func providerByName(name string) (sachet.Provider, error) {
 	switch name {
 	case "messagebird":
-		return sachet.NewMessageBird(config.Providers.MessageBird), nil
+		return messagebird.NewMessageBird(config.Providers.MessageBird), nil
 	case "nexmo":
-		return sachet.NewNexmo(config.Providers.Nexmo)
+		return nexmo.NewNexmo(config.Providers.Nexmo)
 	case "twilio":
-		return sachet.NewTwilio(config.Providers.Twilio), nil
+		return twilio.NewTwilio(config.Providers.Twilio), nil
 	case "infobip":
-		return sachet.NewInfobip(config.Providers.Infobip), nil
+		return infobip.NewInfobip(config.Providers.Infobip), nil
 	case "exotel":
-		return sachet.NewExotel(config.Providers.Exotel), nil
+		return exotel.NewExotel(config.Providers.Exotel), nil
 	case "cm":
-		return sachet.NewCM(config.Providers.CM), nil
+		return cm.NewCM(config.Providers.CM), nil
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)

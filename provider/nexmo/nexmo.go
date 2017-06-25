@@ -1,6 +1,9 @@
-package sachet
+package nexmo
 
-import "gopkg.in/njern/gonexmo.v1"
+import (
+	"github.com/messagebird/sachet"
+	"gopkg.in/njern/gonexmo.v1"
+)
 
 type NexmoConfig struct {
 	APIKey    string `yaml:"api_key"`
@@ -20,7 +23,7 @@ func NewNexmo(config NexmoConfig) (*Nexmo, error) {
 	return &Nexmo{client: client}, nil
 }
 
-func (nx *Nexmo) Send(message Message) error {
+func (nx *Nexmo) Send(message sachet.Message) error {
 	for _, recipent := range message.To {
 		msg := &nexmo.SMSMessage{
 			From:  message.From,

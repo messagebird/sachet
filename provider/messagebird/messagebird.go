@@ -1,6 +1,9 @@
-package sachet
+package messagebird
 
-import "github.com/messagebird/go-rest-api"
+import (
+	"github.com/messagebird/go-rest-api"
+	"github.com/messagebird/sachet"
+)
 
 type MessageBirdConfig struct {
 	AccessKey string `yaml:"access_key"`
@@ -21,7 +24,7 @@ func NewMessageBird(config MessageBirdConfig) *MessageBird {
 	}
 }
 
-func (mb *MessageBird) Send(message Message) error {
+func (mb *MessageBird) Send(message sachet.Message) error {
 	_, err := mb.client.NewMessage(message.From, message.To, message.Text, &mb.params)
 	return err
 }

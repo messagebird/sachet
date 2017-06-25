@@ -3,7 +3,12 @@ package main
 import (
 	"io/ioutil"
 
-	"github.com/messagebird/sachet"
+	"github.com/messagebird/sachet/provider/cm"
+	"github.com/messagebird/sachet/provider/exotel"
+	"github.com/messagebird/sachet/provider/infobip"
+	"github.com/messagebird/sachet/provider/messagebird"
+	"github.com/messagebird/sachet/provider/nexmo"
+	"github.com/messagebird/sachet/provider/twilio"
 	"gopkg.in/yaml.v2"
 )
 
@@ -16,12 +21,12 @@ type ReceiverConf struct {
 
 var config struct {
 	Providers struct {
-		MessageBird sachet.MessageBirdConfig
-		Nexmo       sachet.NexmoConfig
-		Twilio      sachet.TwilioConfig
-		Infobip     sachet.InfobipConfig
-		Exotel      sachet.ExotelConfig
-		CM          sachet.CMConfig
+		MessageBird messagebird.MessageBirdConfig
+		Nexmo       nexmo.NexmoConfig
+		Twilio      twilio.TwilioConfig
+		Infobip     infobip.InfobipConfig
+		Exotel      exotel.ExotelConfig
+		CM          cm.CMConfig
 	}
 
 	Receivers []ReceiverConf

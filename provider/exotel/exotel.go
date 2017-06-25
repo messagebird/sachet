@@ -1,4 +1,4 @@
-package sachet
+package exotel
 
 import (
 	"fmt"
@@ -6,6 +6,8 @@ import (
 	"net/url"
 	"strings"
 	"time"
+
+	"github.com/messagebird/sachet"
 )
 
 //ExotelConfig configuration struct for exotel Client
@@ -30,7 +32,7 @@ func NewExotel(config ExotelConfig) *Exotel {
 }
 
 //Send send sms to n number of people using bulk sms api
-func (c *Exotel) Send(message Message) (err error) {
+func (c *Exotel) Send(message sachet.Message) (err error) {
 	smsURL := fmt.Sprintf("https://twilix.exotel.in/v1/Accounts/%s/Sms/send.json", c.AccountSid)
 	var request *http.Request
 	var resp *http.Response
