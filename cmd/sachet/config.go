@@ -22,6 +22,7 @@ var config struct {
 		Infobip     sachet.InfobipConfig
 		Exotel      sachet.ExotelConfig
 		CM          sachet.CMConfig
+		Turbosms    sachet.TurbosmsConfig
 	}
 
 	Receivers []ReceiverConf

@@ -120,6 +120,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return sachet.NewTwilio(config.Providers.Twilio), nil
 	case "infobip":
 		return sachet.NewInfobip(config.Providers.Infobip), nil
+	case "turbosms":
+		return sachet.NewTurbosms(config.Providers.Turbosms), nil
 	case "exotel":
 		return sachet.NewExotel(config.Providers.Exotel), nil
 	case "cm":
