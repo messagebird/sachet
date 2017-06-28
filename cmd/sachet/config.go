@@ -8,6 +8,7 @@ import (
 	"github.com/messagebird/sachet/provider/infobip"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
+	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
 	"gopkg.in/yaml.v2"
 )
@@ -27,6 +28,7 @@ var config struct {
 		Infobip     infobip.InfobipConfig
 		Exotel      exotel.ExotelConfig
 		CM          cm.CMConfig
+		Turbosms    turbosms.TurbosmsConfig
 	}
 
 	Receivers []ReceiverConf

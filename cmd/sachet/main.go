@@ -16,6 +16,7 @@ import (
 	"github.com/messagebird/sachet/provider/infobip"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
+	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
 	"github.com/prometheus/alertmanager/template"
 	"github.com/prometheus/client_golang/prometheus"
@@ -126,6 +127,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return twilio.NewTwilio(config.Providers.Twilio), nil
 	case "infobip":
 		return infobip.NewInfobip(config.Providers.Infobip), nil
+	case "turbosms":
+		return turbosms.NewTurbosms(config.Providers.Turbosms), nil
 	case "exotel":
 		return exotel.NewExotel(config.Providers.Exotel), nil
 	case "cm":
