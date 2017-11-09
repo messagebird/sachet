@@ -126,6 +126,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return sachet.NewExotel(config.Providers.Exotel), nil
 	case "cm":
 		return sachet.NewCM(config.Providers.CM), nil
+	case "mediaburst":
+		return sachet.NewMediaBurst(config.Providers.MediaBurst), nil
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)

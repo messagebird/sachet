@@ -18,6 +18,8 @@ providers:
     password: '44444'
   cm:
     producttoken: '00000000-0000-0000-0000-000000000000'
+  mediaburst:
+    api_key: 'aa66sdfasfsda7887fdsf7sdf87fsdf7sdf7dsfd'
 
 receivers:
   - name: 'team-sms'

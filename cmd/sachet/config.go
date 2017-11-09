@@ -23,6 +23,7 @@ var config struct {
 		Exotel      sachet.ExotelConfig
 		CM          sachet.CMConfig
 		Turbosms    sachet.TurbosmsConfig
+		MediaBurst  sachet.MediaBurstConfig
 	}
 
 	Receivers []ReceiverConf
