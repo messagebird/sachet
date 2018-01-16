@@ -1,4 +1,4 @@
-package sachet
+package turbosms
 
 import (
 	"bytes"
@@ -9,6 +9,8 @@ import (
 	"net/http/cookiejar"
 	"strings"
 	"time"
+
+	"github.com/messagebird/sachet"
 )
 
 // sachet section
@@ -101,8 +103,8 @@ func Request(c *http.Client, url string, payload []byte) ([]byte, error, int) {
 	return body, nil, statuscode
 }
 
-func (c *Turbosms) Send(message Message) (err error) {
-	////// Encode Auth ////////////
+func (c *Turbosms) Send(message sachet.Message) (err error) {
+	// Encode Auth
 	req := &getAuthRequest{User: c.Login, Password: c.Password}
 	data, err := SoapEncode(&req)
 	if err != nil {
@@ -117,13 +119,13 @@ func (c *Turbosms) Send(message Message) (err error) {
 	if err != nil {
 		return err
 	}
-	/////  Encode SendSms /////////
+	// Encode SendSms
 	sms := &getSendsmsRequest{Sender: message.From, Destination: strings.Join(message.To, ","), Text: message.Text, Wappush: ""}
 	datasms, err := SoapEncode(&sms)
 	if err != nil {
 		return err
 	}
-	////// Request ///////////
+	// Request
 	replysms, err, statusreplysms := Request(clientConfig, urlSoap, []byte(datasms))
 	if err != nil {
 		return err

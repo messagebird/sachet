@@ -1,4 +1,4 @@
-package sachet
+package cm
 
 import (
 	"bytes"
@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+
+	"github.com/messagebird/sachet"
 )
 
 // CMConfig is the configuration struct for CM provider
@@ -47,7 +49,7 @@ type CMPayload struct {
 }
 
 // Send sends SMS to n number of people using Bulk SMS API
-func (c *CM) Send(message Message) error {
+func (c *CM) Send(message sachet.Message) error {
 	smsURL := "https://gw.cmtelecom.com/v1.0/message"
 
 	payload := CMPayload{}

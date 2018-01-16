@@ -1,4 +1,4 @@
-package sachet
+package infobip
 
 import (
 	"bytes"
@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"net/http"
 	"time"
+
+	"github.com/messagebird/sachet"
 )
 
 //InfobipConfig configuration struct for Infobip Client
@@ -29,7 +31,7 @@ func NewInfobip(config InfobipConfig) *Infobip {
 }
 
 //Send send sms to n number of people using bulk sms api
-func (c *Infobip) Send(message Message) (err error) {
+func (c *Infobip) Send(message sachet.Message) (err error) {
 	smsURL := "https://api.infobip.com/sms/1/text/single"
 	//smsURL = "http://requestb.in/pwf2ufpw"
 	var request *http.Request
