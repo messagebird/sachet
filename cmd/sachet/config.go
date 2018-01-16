@@ -9,6 +9,7 @@ import (
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
 	"github.com/messagebird/sachet/provider/telegram"
+	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
 
 	"gopkg.in/yaml.v2"
@@ -30,6 +31,7 @@ var config struct {
 		Exotel      exotel.ExotelConfig
 		CM          cm.CMConfig
 		Telegram    telegram.TelegramConfig
+		Turbosms    turbosms.TurbosmsConfig
 	}
 
 	Receivers []ReceiverConf

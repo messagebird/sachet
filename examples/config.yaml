@@ -13,6 +13,9 @@ providers:
   twilio:
     account_sid: 'aCb3bbaacc554b'
     auth_token: '4736473aaabbcc66'
+  turbosms:
+    login: 'visla'
+    password: '44444'
   cm:
     producttoken: '00000000-0000-0000-0000-000000000000'
   telegram:
