@@ -12,7 +12,6 @@ import (
 	"time"
 )
 
-//InfobipConfig configuration struct for Infobip Client
 type OTCConfig struct {
 	IdentityEndpoint string `yaml:"identity_endpoint"`
 	DomainName       string `yaml:"domain_name"`
@@ -25,15 +24,10 @@ type OTCConfig struct {
 	otcBaseURL       string
 }
 
-//InfobipRequestTimeout  is the timeout for http request to Infobip
-//const InfobipRequestTimeout = time.Second * 20
-
-//Infobip is the exte Infobip
 type OTC struct {
 	OTCConfig
 }
 
-//NewInfobip creates a new
 func NewOTC(config OTCConfig) *OTC {
 	OTC := &OTC{config}
 	return OTC
