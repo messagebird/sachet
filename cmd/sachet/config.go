@@ -6,6 +6,7 @@ import (
 	"github.com/messagebird/sachet/provider/cm"
 	"github.com/messagebird/sachet/provider/exotel"
 	"github.com/messagebird/sachet/provider/infobip"
+	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
 	"github.com/messagebird/sachet/provider/telegram"
@@ -32,6 +33,7 @@ var config struct {
 		CM          cm.CMConfig
 		Telegram    telegram.TelegramConfig
 		Turbosms    turbosms.TurbosmsConfig
+		MediaBurst  mediaburst.MediaBurstConfig
 	}
 
 	Receivers []ReceiverConf
