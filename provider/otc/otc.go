@@ -129,7 +129,9 @@ func (c *OTC) loginRequest() error {
 			Catalog []struct {
 				Type      string `json:"type"`
 				Endpoints []struct {
-					URL string `json:"url"`
+					URL       string `json:"url"`
+					Interface string `json:"interface"`
+					Region    string `json:"region"`
 				} `json:"endpoints"`
 			} `json:"catalog"`
 		} `json:"token"`
@@ -141,7 +143,22 @@ func (c *OTC) loginRequest() error {
 		return err
 	}
 
-	c.otcBaseURL = fmt.Sprintf("https://smn.eu-de.otc.t-systems.com/v2/%s", c.ProjectID)
+	for _, v := range endpointResp.Token.Catalog {
+		if v.Type == "smn" {
+			for _, endpoint := range v.Endpoints {
+				c.otcBaseURL = fmt.Sprintf("%s%s", endpoint.URL, c.ProjectID)
+				continue
+			}
+		}
+
+		if c.otcBaseURL != "" {
+			continue
+		}
+	}
+
+	if c.otcBaseURL == "" {
+		return fmt.Errorf("unable to find snm endpoint")
+	}
 
 	return nil
 }
