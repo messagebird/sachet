@@ -24,6 +24,11 @@ type OTCConfig struct {
 	otcBaseURL       string
 }
 
+type smsRequest struct {
+	Endpoint string `json:"endpoint"`
+	Message  string `json:"message"`
+}
+
 type OTC struct {
 	OTCConfig
 }
@@ -141,7 +146,7 @@ func (c *OTC) loginRequest() error {
 	return nil
 }
 
-func (d *OTC) SendRequest(method, resource string, payload interface{}) (io.Reader, error) {
+func (d *OTC) SendRequest(method, resource string, payload *smsRequest) (io.Reader, error) {
 	url := fmt.Sprintf("%s/%s", d.otcBaseURL, resource)
 	body, err := json.Marshal(payload)
 	if err != nil {
@@ -190,10 +195,6 @@ func (c *OTC) Send(message sachet.Message) (err error) {
 		return err
 	}
 
-	type smsRequest struct {
-		Endpoint string `json:"endpoint"`
-		Message  string `json:"message"`
-	}
 	for _, recipent := range message.To {
 
 		r1 := &smsRequest{
