@@ -163,8 +163,16 @@ func (c *OTC) loginRequest() error {
 	return nil
 }
 
-func (d *OTC) SendRequest(method, resource string, payload *smsRequest) (io.Reader, error) {
-	url := fmt.Sprintf("%s/%s", d.otcBaseURL, resource)
+func (c *OTC) SendRequest(method, resource string, payload *smsRequest, attempts int) (io.Reader, error) {
+	if len(c.token) == 0 {
+		err := c.loginRequest()
+
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	url := fmt.Sprintf("%s/%s", c.otcBaseURL, resource)
 	body, err := json.Marshal(payload)
 	if err != nil {
 		return nil, err
@@ -175,12 +183,10 @@ func (d *OTC) SendRequest(method, resource string, payload *smsRequest) (io.Read
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	if len(d.token) > 0 {
-		req.Header.Set("X-Auth-Token", d.token)
-	}
+	req.Header.Set("X-Auth-Token", c.token)
 
 	tr := http.DefaultTransport.(*http.Transport)
-	tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: d.Insecure}
+	tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: c.Insecure}
 
 	client := &http.Client{
 		Timeout:   time.Duration(10 * time.Second),
@@ -192,7 +198,15 @@ func (d *OTC) SendRequest(method, resource string, payload *smsRequest) (io.Read
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode >= 400 {
+	if resp.StatusCode == 401 {
+		// Set empty token to force login
+		c.token = ""
+		if attempts--; attempts > 0 {
+			return c.SendRequest(method, resource, payload, attempts)
+		} else {
+			return nil, err
+		}
+	} else if resp.StatusCode >= 400 {
 		return nil, fmt.Errorf("OTC API request %s failed with HTTP status code %d", url, resp.StatusCode)
 	}
 
@@ -206,19 +220,13 @@ func (d *OTC) SendRequest(method, resource string, payload *smsRequest) (io.Read
 
 //Send send sms to n number of people using bulk sms api
 func (c *OTC) Send(message sachet.Message) (err error) {
-	err = c.loginRequest()
-
-	if err != nil {
-		return err
-	}
-
 	for _, recipent := range message.To {
 
 		r1 := &smsRequest{
 			Endpoint: recipent,
 			Message:  message.Text,
 		}
-		_, err = c.SendRequest("POST", "notifications/sms", r1)
+		_, err := c.SendRequest("POST", "notifications/sms", r1, 2)
 		if err != nil {
 			return err
 		}
