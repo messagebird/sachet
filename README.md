@@ -1,4 +1,7 @@
 # Sachet
+
+[![Build Status](https://travis-ci.org/messagebird/sachet.svg?branch=master)](https://travis-ci.org/messagebird/sachet)
+
 Sachet (or सचेत) is Hindi for conscious. Sachet is an SMS alerting tool for the [Prometheus Alertmanager](https://github.com/prometheus/alertmanager).
 
 ## The problem

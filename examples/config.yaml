@@ -27,6 +27,8 @@ providers:
     username: username
     password: password
     project_id: project_id
+  mediaburst:
+    api_key: 'aa66sdfasfsda7887fdsf7sdf87fsdf7sdf7dsfd'
 
 receivers:
   - name: 'team-sms'

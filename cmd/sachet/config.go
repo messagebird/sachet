@@ -6,6 +6,7 @@ import (
 	"github.com/messagebird/sachet/provider/cm"
 	"github.com/messagebird/sachet/provider/exotel"
 	"github.com/messagebird/sachet/provider/infobip"
+	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
 	"github.com/messagebird/sachet/provider/otc"
@@ -34,6 +35,7 @@ var config struct {
 		Telegram    telegram.TelegramConfig
 		Turbosms    turbosms.TurbosmsConfig
 		OTC         otc.OTCConfig
+		MediaBurst  mediaburst.MediaBurstConfig
 	}
 
 	Receivers []ReceiverConf
