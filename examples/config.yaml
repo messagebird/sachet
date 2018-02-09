@@ -20,6 +20,13 @@ providers:
     producttoken: '00000000-0000-0000-0000-000000000000'
   telegram:
     token: "724679217:aa26V5mK3e2qkGsSlTT-iHreaa5FUyy3Z_0"
+  otc:
+    identity_endpoint: https://iam.eu-de.otc.t-systems.com:443/v3/auth/tokens
+    domain_name: domain_name
+    project_name: project_name
+    username: username
+    password: password
+    project_id: project_id
   mediaburst:
     api_key: 'aa66sdfasfsda7887fdsf7sdf87fsdf7sdf7dsfd'
 

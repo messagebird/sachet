@@ -17,6 +17,7 @@ import (
 	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
+	"github.com/messagebird/sachet/provider/otc"
 	"github.com/messagebird/sachet/provider/telegram"
 	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
@@ -138,6 +139,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return cm.NewCM(config.Providers.CM), nil
 	case "telegram":
 		return telegram.NewTelegram(config.Providers.Telegram)
+	case "otc":
+		return otc.NewOTC(config.Providers.OTC), nil
 	case "mediaburst":
 		return mediaburst.NewMediaBurst(config.Providers.MediaBurst), nil
 	}

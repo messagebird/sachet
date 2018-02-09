@@ -9,6 +9,7 @@ import (
 	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
+	"github.com/messagebird/sachet/provider/otc"
 	"github.com/messagebird/sachet/provider/telegram"
 	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
@@ -33,6 +34,7 @@ var config struct {
 		CM          cm.CMConfig
 		Telegram    telegram.TelegramConfig
 		Turbosms    turbosms.TurbosmsConfig
+		OTC         otc.OTCConfig
 		MediaBurst  mediaburst.MediaBurstConfig
 	}
 
