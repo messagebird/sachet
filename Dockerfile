@@ -1,7 +1,7 @@
 FROM golang:alpine
 
 RUN apk add --no-cache --virtual git openssl ca-certificates && \
-    go get github.com/marcelcorso/sachet/cmd/... && \
+    go get github.com/messagebird/sachet/cmd/... && \
     rm -rf src pkg && \
     apk del git
 
