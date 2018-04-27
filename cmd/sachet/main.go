@@ -103,6 +103,18 @@ func main() {
 
 	http.Handle("/metrics", prometheus.Handler())
 
+	http.HandleFunc("/-/reload", func(w http.ResponseWriter, r *http.Request) {
+		defer r.Body.Close()
+		if r.Method == "POST" {
+			log.Println("Loading configuration file", *configFile)
+			if err := LoadConfig(*configFile); err!=nil {
+               http.Error(w, err.Error(), http.StatusInternalServerError)
+			} 
+        } else {
+            http.Error(w, "Invalid request method.", http.StatusMethodNotAllowed)
+        }
+	})
+
 	if os.Getenv("PORT") != "" {
 		*listenAddress = ":" + os.Getenv("PORT")
 	}
