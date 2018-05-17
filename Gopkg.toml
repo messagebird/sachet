@@ -31,7 +31,7 @@
 
 [[constraint]]
   name = "github.com/messagebird/go-rest-api"
-  version = "3.0.0"
+  branch = "master"
 
 [[constraint]]
   name = "github.com/prometheus/alertmanager"
