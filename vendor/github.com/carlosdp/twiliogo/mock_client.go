@@ -1,38 +1,33 @@
 package twiliogo
 
 import (
-	"net/url"
-
-	"github.com/stretchr/testify/mock"
+  "github.com/stretchr/testify/mock"
+  "net/url"
 )
 
 type MockClient struct {
-	mock.Mock
+  mock.Mock
 }
 
 func (client *MockClient) AccountSid() string {
-	return "AC3FakeClient"
+  return "AC3FakeClient"
 }
 
 func (client *MockClient) AuthToken() string {
-	return "98h4hfaketoken"
+  return "98h4hfaketoken"
 }
 
 func (client *MockClient) RootUrl() string {
-	return "http://test.com/fake"
+  return "http://test.com/fake"
 }
 
 func (client *MockClient) get(params url.Values, uri string) ([]byte, error) {
-	args := client.Mock.Called(params, uri)
-	return args.Get(0).([]byte), args.Error(1)
+  args := client.Mock.Called(params, uri)
+  return args.Get(0).([]byte), args.Error(1)
 }
 
 func (client *MockClient) post(params url.Values, uri string) ([]byte, error) {
-	args := client.Mock.Called(params, uri)
-	return args.Get(0).([]byte), args.Error(1)
+  args := client.Mock.Called(params, uri)
+  return args.Get(0).([]byte), args.Error(1)
 }
 
-func (client *MockClient) delete(uri string) error {
-	args := client.Mock.Called(nil, uri)
-	return args.Error(1)
-}

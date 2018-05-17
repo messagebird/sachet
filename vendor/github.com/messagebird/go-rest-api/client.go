@@ -18,7 +18,7 @@ import (
 )
 
 const (
-	ClientVersion = "2.3.0"
+	ClientVersion = "3.0.0"
 	Endpoint      = "https://rest.messagebird.com"
 )
 
@@ -144,7 +144,8 @@ func (c *Client) HLR(id string) (*HLR, error) {
 func (c *Client) NewHLR(msisdn, reference string) (*HLR, error) {
 	params := &url.Values{
 		"msisdn":    {msisdn},
-		"reference": {reference}}
+		"reference": {reference},
+	}
 
 	hlr := &HLR{}
 	if err := c.request(hlr, "hlr", params); err != nil {
@@ -227,41 +228,40 @@ func (c *Client) NewVoiceMessage(recipients []string, body string, params *Voice
 	return message, nil
 }
 
-// OtpGenerate generates a new One-Time-Password for one recipient.
-func (c *Client) OtpGenerate(recipient string, params *OtpParams) (*OtpMessage, error) {
-	urlParams := paramsForOtp(params)
+// NewVerify generates a new One-Time-Password for one recipient.
+func (c *Client) NewVerify(recipient string, params *VerifyParams) (*Verify, error) {
+	urlParams := paramsForVerify(params)
 	urlParams.Set("recipient", recipient)
 
-	message := &OtpMessage{}
-	if err := c.request(message, "otp/generate", urlParams); err != nil {
+	verify := &Verify{}
+	if err := c.request(verify, "verify", urlParams); err != nil {
 		if err == ErrResponse {
-			return message, err
+			return verify, err
 		}
 
 		return nil, err
 	}
 
-	return message, nil
+	return verify, nil
 }
 
-// OtpVerify verifies the token that was generated with OtpGenerate.
-func (c *Client) OtpVerify(recipient string, token string, params *OtpParams) (*OtpMessage, error) {
-	urlParams := paramsForOtp(params)
-	urlParams.Set("recipient", recipient)
-	urlParams.Set("token", token)
+// VerifyToken performs token value check against MessageBird API.
+func (c *Client) VerifyToken(id, token string) (*Verify, error) {
+	params := &url.Values{}
+	params.Set("token", token)
 
-	path := "otp/verify?" + urlParams.Encode()
+	path := "verify/" + id + "?" + params.Encode()
 
-	message := &OtpMessage{}
-	if err := c.request(message, path, nil); err != nil {
+	verify := &Verify{}
+	if err := c.request(verify, path, nil); err != nil {
 		if err == ErrResponse {
-			return message, err
+			return verify, err
 		}
 
 		return nil, err
 	}
 
-	return message, nil
+	return verify, nil
 }
 
 // Lookup performs a new lookup for the specified number.
