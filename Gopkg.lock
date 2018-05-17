@@ -32,10 +32,10 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "master"
   name = "github.com/messagebird/go-rest-api"
   packages = ["."]
-  revision = "a9514230491e7db6adaa58162cce34a5df987fd4"
+  revision = "a505e01a7789c134e09737b4ed78aff748848259"
+  version = "v3.0.0"
 
 [[projects]]
   name = "github.com/pmezard/go-difflib"
@@ -128,6 +128,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5f8fe62dbc923ac817a9bbbb22dad207fce7420d6a8d36a73c5f4e6c83232d47"
+  inputs-digest = "068cc4e6373867aba549ce6d7c08639bdb59cd027b29c5575088621fb7d310dd"
   solver-name = "gps-cdcl"
   solver-version = 1

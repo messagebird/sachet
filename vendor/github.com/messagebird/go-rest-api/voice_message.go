@@ -1,14 +1,13 @@
 package messagebird
 
 import (
-	"errors"
+	"net/url"
+	"strconv"
 	"time"
 )
 
-// VoiceMessage wraps data needed to transform text messages into voice messages.
-// Voice messages are identified by a unique random ID. With this ID you can always check the status of the voice message through the provided endpoint.
 type VoiceMessage struct {
-	ID                string
+	Id                string
 	HRef              string
 	Originator        string
 	Body              string
@@ -23,17 +22,6 @@ type VoiceMessage struct {
 	Errors            []Error
 }
 
-// VoiceMessageList represents a list of VoiceMessages.
-type VoiceMessageList struct {
-	Offset     int
-	Limit      int
-	Count      int
-	TotalCount int
-	Links      map[string]*string
-	Items      []VoiceMessage
-}
-
-// VoiceMessageParams struct provides additional VoiceMessage details.
 type VoiceMessageParams struct {
 	Originator        string
 	Reference         string
@@ -44,42 +32,39 @@ type VoiceMessageParams struct {
 	ScheduledDatetime time.Time
 }
 
-type voiceMessageRequest struct {
-	Recipients        []string `json:"recipients"`
-	Body              string   `json:"body"`
-	Originator        string   `json:"originator,omitempty"`
-	Reference         string   `json:"reference,omitempty"`
-	Language          string   `json:"language,omitempty"`
-	Voice             string   `json:"voice,omitempty"`
-	Repeat            int      `json:"repeat,omitempty"`
-	IfMachine         string   `json:"ifMachine,omitempty"`
-	ScheduledDatetime string   `json:"scheduledDatetime,omitempty"`
-}
-
-func requestDataForVoiceMessage(recipients []string, body string, params *VoiceMessageParams) (*voiceMessageRequest, error) {
-	if len(recipients) == 0 {
-		return nil, errors.New("at least 1 recipient is required")
-	}
-	if body == "" {
-		return nil, errors.New("body is required")
-	}
-
-	request := &voiceMessageRequest{
-		Recipients: recipients,
-		Body:       body,
-	}
+// paramsForVoiceMessage converts the specified VoiceMessageParams struct to a
+// url.Values pointer and returns it.
+func paramsForVoiceMessage(params *VoiceMessageParams) *url.Values {
+	urlParams := &url.Values{}
 
 	if params == nil {
-		return request, nil
+		return urlParams
 	}
 
-	request.Originator = params.Originator
-	request.Reference = params.Reference
-	request.Language = params.Language
-	request.Voice = params.Voice
-	request.Repeat = params.Repeat
-	request.IfMachine = params.IfMachine
-	request.ScheduledDatetime = params.ScheduledDatetime.Format(time.RFC3339)
+	if params.Originator != "" {
+		urlParams.Set("originator", params.Originator)
+	}
+	if params.Reference != "" {
+		urlParams.Set("reference", params.Reference)
+	}
+	if params.Language != "" {
+		urlParams.Set("language", params.Language)
+	}
+	if params.Voice != "" {
+		urlParams.Set("voice", params.Voice)
+	}
 
-	return request, nil
+	// A repeat value of 1 actually means "play it once", not "repeat it once"
+	// So only set the repeat value when it's larger than 1.
+	if params.Repeat > 1 {
+		urlParams.Set("repeat", strconv.Itoa(params.Repeat))
+	}
+	if params.IfMachine != "" {
+		urlParams.Set("ifMachine", params.IfMachine)
+	}
+	if params.ScheduledDatetime.Unix() > 0 {
+		urlParams.Set("scheduledDatetime", params.ScheduledDatetime.Format(time.RFC3339))
+	}
+
+	return urlParams
 }

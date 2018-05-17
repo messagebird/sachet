@@ -1,7 +1,8 @@
 package messagebird
 
 import (
-	"errors"
+	"net/url"
+	"strconv"
 	"time"
 )
 
@@ -31,41 +32,48 @@ type VerifyParams struct {
 	TokenLength int
 }
 
-type verifyRequest struct {
-	Recipient   string `json:"recipient"`
-	Originator  string `json:"originator,omitempty"`
-	Reference   string `json:"reference,omitempty"`
-	Type        string `json:"type,omitempty"`
-	Template    string `json:"template,omitempty"`
-	DataCoding  string `json:"dataCoding,omitempty"`
-	Voice       string `json:"voice,omitempty"`
-	Language    string `json:"language,omitempty"`
-	Timeout     int    `json:"timeout,omitempty"`
-	TokenLength int    `json:"tokenLength,omitempty"`
-}
-
-func requestDataForVerify(recipient string, params *VerifyParams) (*verifyRequest, error) {
-	if recipient == "" {
-		return nil, errors.New("recipient is required")
-	}
-
-	request := &verifyRequest{
-		Recipient: recipient,
-	}
+func paramsForVerify(params *VerifyParams) *url.Values {
+	urlParams := &url.Values{}
 
 	if params == nil {
-		return request, nil
+		return urlParams
 	}
 
-	request.Originator = params.Originator
-	request.Reference = params.Reference
-	request.Type = params.Type
-	request.Template = params.Template
-	request.DataCoding = params.DataCoding
-	request.Voice = params.Voice
-	request.Language = params.Language
-	request.Timeout = params.Timeout
-	request.TokenLength = params.TokenLength
+	if params.Originator != "" {
+		urlParams.Set("originator", params.Originator)
+	}
 
-	return request, nil
+	if params.Reference != "" {
+		urlParams.Set("reference", params.Reference)
+	}
+
+	if params.Type != "" {
+		urlParams.Set("type", params.Type)
+	}
+
+	if params.Template != "" {
+		urlParams.Set("template", params.Template)
+	}
+
+	if params.DataCoding != "" {
+		urlParams.Set("datacoding", params.DataCoding)
+	}
+
+	if params.Timeout != 0 {
+		urlParams.Set("timeout", strconv.Itoa(params.Timeout))
+	}
+
+	if params.TokenLength != 0 {
+		urlParams.Set("tokenLength", strconv.Itoa(params.TokenLength))
+	}
+
+	// Specific params for voice messages
+	if params.Language != "" {
+		urlParams.Set("language", params.Language)
+	}
+	if params.Voice != "" {
+		urlParams.Set("voice", params.Voice)
+	}
+
+	return urlParams
 }
