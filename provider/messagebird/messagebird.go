@@ -1,6 +1,9 @@
 package messagebird
 
 import (
+	"log"
+	"os"
+
 	"github.com/messagebird/go-rest-api"
 	"github.com/messagebird/sachet"
 )
@@ -8,6 +11,7 @@ import (
 type MessageBirdConfig struct {
 	AccessKey string `yaml:"access_key"`
 	Gateway   int    `yaml:"gateway"`
+	Debug     bool   `yaml:"debug"`
 }
 
 type MessageBird struct {
@@ -16,8 +20,12 @@ type MessageBird struct {
 }
 
 func NewMessageBird(config MessageBirdConfig) *MessageBird {
+	client := messagebird.New(config.AccessKey)
+	if config.Debug {
+		client.DebugLog = log.New(os.Stdout, "DEBUG: ", log.Lshortfile)
+	}
 	return &MessageBird{
-		client: messagebird.New(config.AccessKey),
+		client: client,
 		params: messagebird.MessageParams{
 			Gateway: config.Gateway,
 		},
