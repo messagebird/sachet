@@ -5,14 +5,15 @@
 
 set -e 
 
-rm -rf "bin/sachet-$VERSION.linux-amd64"
-mkdir "bin/sachet-$VERSION.linux-amd64"
-env GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o "bin/sachet-$VERSION.linux-amd64/sachet" github.com/messagebird/sachet/cmd/sachet
-cd bin
-tar -zcvf "sachet-$VERSION.linux-amd64.tar.gz" "sachet-$VERSION.linux-amd64"
+# github user and repo
+USER=messagebird
+REPO=sachet
 
-GITHUB_USER=messagebird
-GITHUB_REPO=sachet
+rm -rf "bin/$REPO-$VERSION.linux-amd64"
+mkdir "bin/$REPO-$VERSION.linux-amd64"
+env GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o "bin/sachet-$VERSION.linux-amd64/$REPO" github.com/$USER/$REPO/cmd/$REPO
+cd bin
+tar -zcvf "$REPO-$VERSION.linux-amd64.tar.gz" "$REPO-$VERSION.linux-amd64"
 
 # go get -u github.com/aktau/github-release
 # dont forget to set your token like
@@ -30,7 +31,7 @@ github-release upload \
     --user $GITHUB_USER \
     --repo $GITHUB_REPO \
     --tag $VERSION \
-    --name "sachet-$VERSION.linux-amd64.tar.gz" \
-    --file "sachet-$VERSION.linux-amd64.tar.gz"
+    --name "$REPO-$VERSION.linux-amd64.tar.gz" \
+    --file "$REPO-$VERSION.linux-amd64.tar.gz"
 
 
