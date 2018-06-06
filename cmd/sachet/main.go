@@ -49,7 +49,7 @@ func main() {
 
 		receiverConf := receiverConfByReceiver(data.Receiver)
 		if receiverConf == nil {
-			errorHandler(w, http.StatusBadRequest, fmt.Errorf("Receiver missing"), "?")
+			errorHandler(w, http.StatusBadRequest, fmt.Errorf("Receiver missing: %s", data.Receiver), "?")
 			return
 		}
 		provider, err := providerByName(receiverConf.Provider)
