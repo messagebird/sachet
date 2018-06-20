@@ -26,6 +26,9 @@ var freemobileHTTPClient = &http.Client{Timeout: time.Second * 20}
 
 // NewFreeMobile creates and returns a new FreeMobile struct
 func NewFreeMobile(config FreeMobileConfig) *FreeMobile {
+	if config.Url == "" {
+		config.Url = "https://smsapi.free-mobile.fr/sendmsg"
+	}
 	return &FreeMobile{config}
 }
 
@@ -59,13 +62,10 @@ func (c *FreeMobile) Send(message sachet.Message) error {
 	if err != nil {
 		return err
 	}
-	defer response.Body.Close()
 
-	var body []byte
-	response.Body.Read(body)
 	if response.StatusCode == http.StatusOK && err == nil {
 		return nil
 	}
 
-	return fmt.Errorf("Failed sending sms. Reason: %s, statusCode: %d", string(body), response.StatusCode)
+	return fmt.Errorf("Failed sending sms. statusCode: %d", response.StatusCode)
 }
