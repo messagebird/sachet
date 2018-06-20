@@ -13,6 +13,7 @@ import (
 	"github.com/messagebird/sachet"
 	"github.com/messagebird/sachet/provider/cm"
 	"github.com/messagebird/sachet/provider/exotel"
+	"github.com/messagebird/sachet/provider/freemobile"
 	"github.com/messagebird/sachet/provider/infobip"
 	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/messagebird"
@@ -107,12 +108,12 @@ func main() {
 		defer r.Body.Close()
 		if r.Method == "POST" {
 			log.Println("Loading configuration file", *configFile)
-			if err := LoadConfig(*configFile); err!=nil {
-               http.Error(w, err.Error(), http.StatusInternalServerError)
-			} 
-        } else {
-            http.Error(w, "Invalid request method.", http.StatusMethodNotAllowed)
-        }
+			if err := LoadConfig(*configFile); err != nil {
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+			}
+		} else {
+			http.Error(w, "Invalid request method.", http.StatusMethodNotAllowed)
+		}
 	})
 
 	if os.Getenv("PORT") != "" {
@@ -155,6 +156,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return otc.NewOTC(config.Providers.OTC), nil
 	case "mediaburst":
 		return mediaburst.NewMediaBurst(config.Providers.MediaBurst), nil
+	case "freemobile":
+		return freemobile.NewFreeMobile(config.Providers.FreeMobile), nil
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)
