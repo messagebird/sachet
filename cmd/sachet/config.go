@@ -37,7 +37,7 @@ var config struct {
 		Turbosms    turbosms.TurbosmsConfig
 		OTC         otc.OTCConfig
 		MediaBurst  mediaburst.MediaBurstConfig
-		FreeMobile  freemobile.FreeMobileConfig
+		FreeMobile  freemobile.Config
 	}
 
 	Receivers []ReceiverConf

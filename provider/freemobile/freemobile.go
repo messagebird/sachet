@@ -10,29 +10,29 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-// FreeMobileConfig is the configuration struct for FreeMobile provider
-type FreeMobileConfig struct {
+// Config is the configuration struct for FreeMobile provider
+type Config struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
-	Url      string `yaml:"url"`
+	URL      string `yaml:"url"`
 }
 
 // FreeMobile contains the necessary values for the FreeMobile provider
 type FreeMobile struct {
-	FreeMobileConfig
+	Config
 }
 
 var freemobileHTTPClient = &http.Client{Timeout: time.Second * 20}
 
 // NewFreeMobile creates and returns a new FreeMobile struct
-func NewFreeMobile(config FreeMobileConfig) *FreeMobile {
-	if config.Url == "" {
-		config.Url = "https://smsapi.free-mobile.fr/sendmsg"
+func NewFreeMobile(config Config) *FreeMobile {
+	if config.URL == "" {
+		config.URL = "https://smsapi.free-mobile.fr/sendmsg"
 	}
 	return &FreeMobile{config}
 }
 
-type FreeMobilePayload struct {
+type payload struct {
 	User    string `json:"user"`
 	Pass    string `json:"pass"`
 	Message string `json:"msg"`
@@ -40,18 +40,18 @@ type FreeMobilePayload struct {
 
 // Send sends SMS to user registered in configuration
 func (c *FreeMobile) Send(message sachet.Message) error {
-	payload := FreeMobilePayload{
+	params := payload{
 		User:    c.Username,
 		Pass:    c.Password,
 		Message: message.Text,
 	}
 
-	data, err := json.Marshal(payload)
+	data, err := json.Marshal(params)
 	if err != nil {
 		return err
 	}
 
-	request, err := http.NewRequest("POST", c.Url, bytes.NewBuffer(data))
+	request, err := http.NewRequest("POST", c.URL, bytes.NewBuffer(data))
 	if err != nil {
 		return err
 	}
