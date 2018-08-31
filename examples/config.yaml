@@ -34,6 +34,9 @@ providers:
     username: 'my-user-name'
     password: 'secret'
     url: "https://smsapi.free-mobile.fr/sendmsg"
+  aspsms:
+    username: 'username'
+    password: 'password'
 
 receivers:
   - name: 'team-sms'

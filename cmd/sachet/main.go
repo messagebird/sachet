@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/messagebird/sachet"
+	"github.com/messagebird/sachet/provider/aspsms"
 	"github.com/messagebird/sachet/provider/cm"
 	"github.com/messagebird/sachet/provider/exotel"
 	"github.com/messagebird/sachet/provider/freemobile"
@@ -158,6 +159,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return mediaburst.NewMediaBurst(config.Providers.MediaBurst), nil
 	case "freemobile":
 		return freemobile.NewFreeMobile(config.Providers.FreeMobile), nil
+	case "aspsms":
+		return aspsms.NewAspSms(config.Providers.AspSms), nil
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)
