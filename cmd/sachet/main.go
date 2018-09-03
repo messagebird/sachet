@@ -37,7 +37,9 @@ func main() {
 	flag.Parse()
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
-	LoadConfig(*configFile)
+	if err := LoadConfig(*configFile); err != nil {
+		log.Fatalf("Error loading configuration: %s", err)
+	}
 
 	http.HandleFunc("/alert", func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
