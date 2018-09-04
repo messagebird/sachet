@@ -71,5 +71,5 @@ func (c *AspSms) Send(message sachet.Message) error {
 	defer response.Body.Close()
 	response.Body.Read(body)
 
-	return fmt.Errorf("SMS sending failed. HTTP status code: %s, Response body: %s", response.StatusCode, body)
+	return fmt.Errorf("SMS sending failed. HTTP status code: %d, Response body: %s", response.StatusCode, body)
 }
