@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"time"
 
@@ -19,13 +20,16 @@ type Config struct {
 // AspSms contains the necessary values for the AspSms provider
 type AspSms struct {
 	Config
-}
 
-var aspsmsHTTPClient = &http.Client{Timeout: time.Second * 20}
+	httpClient *http.Client
+}
 
 // NewAspSms creates and returns a new AspSms struct
 func NewAspSms(config Config) *AspSms {
-	return &AspSms{config}
+	return &AspSms{
+		config,
+		&http.Client{Timeout: time.Second * 20},
+	}
 }
 
 type requestPayload struct {
@@ -35,6 +39,8 @@ type requestPayload struct {
 	Recipients  []string `json:"Recipients"`
 	MessageText string   `json:"MessageText"`
 }
+
+const apiUrl = "https://json.aspsms.com/SendSimpleTextSMS"
 
 // Send sends SMS to user registered in configuration
 func (c *AspSms) Send(message sachet.Message) error {
@@ -51,25 +57,23 @@ func (c *AspSms) Send(message sachet.Message) error {
 		return err
 	}
 
-	request, err := http.NewRequest("POST", "https://json.aspsms.com/SendSimpleTextSMS", bytes.NewBuffer(data))
+	request, err := http.NewRequest("POST", apiUrl, bytes.NewBuffer(data))
 	if err != nil {
 		return err
 	}
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("User-Agent", "Sachet")
 
-	response, err := aspsmsHTTPClient.Do(request)
+	response, err := c.httpClient.Do(request)
 	if err != nil {
 		return err
 	}
+	defer response.Body.Close()
 
-	if response.StatusCode == http.StatusOK && err == nil {
-		return nil
+	if response.StatusCode != http.StatusOK {
+		body, _ := ioutil.ReadAll(response.Body)
+		return fmt.Errorf("SMS sending failed. HTTP status code: %d, Response body: %s", response.StatusCode, body)
 	}
 
-	var body []byte
-	defer response.Body.Close()
-	response.Body.Read(body)
-
-	return fmt.Errorf("SMS sending failed. HTTP status code: %d, Response body: %s", response.StatusCode, body)
+	return nil
 }
