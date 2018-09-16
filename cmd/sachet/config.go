@@ -3,6 +3,7 @@ package main
 import (
 	"io/ioutil"
 
+	"github.com/messagebird/sachet/provider/aspsms"
 	"github.com/messagebird/sachet/provider/cm"
 	"github.com/messagebird/sachet/provider/exotel"
 	"github.com/messagebird/sachet/provider/freemobile"
@@ -38,6 +39,7 @@ var config struct {
 		OTC         otc.OTCConfig
 		MediaBurst  mediaburst.MediaBurstConfig
 		FreeMobile  freemobile.Config
+		AspSms      aspsms.Config
 	}
 
 	Receivers []ReceiverConf
