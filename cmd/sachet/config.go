@@ -12,6 +12,7 @@ import (
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
 	"github.com/messagebird/sachet/provider/otc"
+	"github.com/messagebird/sachet/provider/sipgate"
 	"github.com/messagebird/sachet/provider/telegram"
 	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
@@ -40,6 +41,7 @@ var config struct {
 		MediaBurst  mediaburst.MediaBurstConfig
 		FreeMobile  freemobile.Config
 		AspSms      aspsms.Config
+		Sipgate     sipgate.Config
 	}
 
 	Receivers []ReceiverConf
