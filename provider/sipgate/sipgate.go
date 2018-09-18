@@ -10,13 +10,14 @@ import (
 	"github.com/messagebird/sachet"
 )
 
+const sipgateURL = "https://api.sipgate.com/v2/sessions/sms"
+
 var sipgateHTTPClient = &http.Client{Timeout: time.Second * 20}
 
 // Config is the configuration struct for Sipgate provider
 type Config struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
-	URL      string `yaml:"url"`
 }
 
 // Sipgate contains the necessary values for the Sipgate provider
@@ -26,9 +27,6 @@ type Sipgate struct {
 
 // NewSipgate creates and returns a new Sipgate struct
 func NewSipgate(config Config) *Sipgate {
-	if config.URL == "" {
-		config.URL = "https://api.sipgate.com/v2/sessions/sms"
-	}
 	return &Sipgate{config}
 }
 
@@ -41,20 +39,18 @@ type payload struct {
 // Send sends SMS to user registered in configuration
 func (c *Sipgate) Send(message sachet.Message) error {
 	for _, recipient := range message.To {
-		var body bytes.Buffer
-
 		params := payload{
 			SmsID:     message.From,
 			Recipient: recipient,
 			Message:   message.Text,
 		}
 
-		enc := json.NewEncoder(&body)
-		if err := enc.Encode(params); err != nil {
+		data, err := json.Marshal(params)
+		if err != nil {
 			return err
 		}
 
-		request, err := http.NewRequest("POST", c.URL, &body)
+		request, err := http.NewRequest("POST", sipgateURL, bytes.NewBuffer(data))
 		if err != nil {
 			return err
 		}

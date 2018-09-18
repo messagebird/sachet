@@ -40,7 +40,6 @@ providers:
   sipgate:
     username: 'username'
     password: 'password'
-    url: "https://api.sipgate.com/v2/sessions/sms"
 
 receivers:
   - name: 'team-sms'
