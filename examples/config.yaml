@@ -37,6 +37,9 @@ providers:
   aspsms:
     username: 'username'
     password: 'password'
+  sipgate:
+    username: 'username'
+    password: 'password'
 
 receivers:
   - name: 'team-sms'
