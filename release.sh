@@ -21,15 +21,15 @@ tar -zcvf "$REPO-$VERSION.linux-amd64.tar.gz" "$REPO-$VERSION.linux-amd64"
 git tag -a $VERSION -m "version $VERSION"
 
 github-release release \
-    --user $GITHUB_USER \
-    --repo $GITHUB_REPO \
+    --user $USER \
+    --repo $REPO \
     --tag $VERSION \
     --name $VERSION \
     --description "version $VERSION!" 
 
 github-release upload \
-    --user $GITHUB_USER \
-    --repo $GITHUB_REPO \
+    --user $USER \
+    --repo $REPO \
     --tag $VERSION \
     --name "$REPO-$VERSION.linux-amd64.tar.gz" \
     --file "$REPO-$VERSION.linux-amd64.tar.gz"
