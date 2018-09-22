@@ -16,6 +16,7 @@ import (
 	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
 
+	"github.com/prometheus/alertmanager/template"
 	"gopkg.in/yaml.v2"
 )
 
@@ -24,6 +25,7 @@ type ReceiverConf struct {
 	Provider string
 	To       []string
 	From     string
+	Text     string
 }
 
 var config struct {
@@ -43,7 +45,9 @@ var config struct {
 	}
 
 	Receivers []ReceiverConf
+	Templates []string
 }
+var tmpl *template.Template
 
 // LoadConfig loads the specified YAML configuration file.
 func LoadConfig(filename string) error {
@@ -53,6 +57,11 @@ func LoadConfig(filename string) error {
 	}
 
 	err = yaml.Unmarshal(content, &config)
+	if err != nil {
+		return err
+	}
+
+	tmpl, err = template.FromGlobs(config.Templates...)
 	if err != nil {
 		return err
 	}
