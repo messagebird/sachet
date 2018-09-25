@@ -38,6 +38,9 @@ providers:
     username: 'username'
     password: 'password'
 
+templates:
+  - telegram.tmpl
+
 receivers:
   - name: 'team-sms'
     provider: 'messagebird'
@@ -48,4 +51,5 @@ receivers:
     provider: 'telegram'
     to:
       - '164451814' # the chat id of a user. Get yours at https://telegram.me/userinfobot
+    text: '{{ .GroupLabels.alertname }} @ {{ .Labels.instance }}: {{ .Status | toUpper }}'
 
