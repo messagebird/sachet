@@ -62,9 +62,5 @@ func LoadConfig(filename string) error {
 	}
 
 	tmpl, err = template.FromGlobs(config.Templates...)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
