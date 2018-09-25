@@ -64,32 +64,40 @@ func main() {
 		}
 
 		var text string
-		if len(data.Alerts) > 1 {
-			labelAlerts := map[string]template.Alerts{
-				"Firing":   data.Alerts.Firing(),
-				"Resolved": data.Alerts.Resolved(),
+		if receiverConf.Text != "" {
+			text, err = tmpl.ExecuteTextString(receiverConf.Text, data)
+			if err != nil {
+				errorHandler(w, http.StatusInternalServerError, err, receiverConf.Provider)
+				return
 			}
-			for label, alerts := range labelAlerts {
-				if len(alerts) > 0 {
-					text += label + ": \n"
-					for _, alert := range alerts {
-						text += alert.Labels["alertname"] + " @" + alert.Labels["instance"]
-						if len(alert.Labels["exported_instance"]) > 0 {
-							text += " (" + alert.Labels["exported_instance"] + ")"
+		} else {
+			if len(data.Alerts) > 1 {
+				labelAlerts := map[string]template.Alerts{
+					"Firing":   data.Alerts.Firing(),
+					"Resolved": data.Alerts.Resolved(),
+				}
+				for label, alerts := range labelAlerts {
+					if len(alerts) > 0 {
+						text += label + ": \n"
+						for _, alert := range alerts {
+							text += alert.Labels["alertname"] + " @" + alert.Labels["instance"]
+							if len(alert.Labels["exported_instance"]) > 0 {
+								text += " (" + alert.Labels["exported_instance"] + ")"
+							}
+							text += "\n"
 						}
-						text += "\n"
 					}
 				}
+			} else if len(data.Alerts) == 1 {
+				alert := data.Alerts[0]
+				tuples := []string{}
+				for k, v := range alert.Labels {
+					tuples = append(tuples, k+"= "+v)
+				}
+				text = strings.ToUpper(data.Status) + " \n" + strings.Join(tuples, "\n")
+			} else {
+				text = "Alert \n" + strings.Join(data.CommonLabels.Values(), " | ")
 			}
-		} else if len(data.Alerts) == 1 {
-			alert := data.Alerts[0]
-			tuples := []string{}
-			for k, v := range alert.Labels {
-				tuples = append(tuples, k+"= "+v)
-			}
-			text = strings.ToUpper(data.Status) + " \n" + strings.Join(tuples, "\n")
-		} else {
-			text = "Alert \n" + strings.Join(data.CommonLabels.Values(), " | ")
 		}
 
 		message := sachet.Message{

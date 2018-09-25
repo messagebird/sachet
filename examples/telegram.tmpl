@@ -1,0 +1,14 @@
+{{ define "telegram_title" }}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{ .CommonLabels.alertname }} @ {{ .CommonLabels.identifier }} {{ end }}
+
+{{ define "telegram_message" }}
+{{ if gt (len .Alerts.Firing) 0 }}
+*Alerts Firing:*
+{{ range .Alerts.Firing }}• {{ .Labels.instance }}: {{ .Annotations.description }}
+{{ end }}{{ end }}
+{{ if gt (len .Alerts.Resolved) 0 }}
+*Alerts Resolved:*
+{{ range .Alerts.Resolved }}• {{ .Labels.instance }}: {{ .Annotations.description }}
+{{ end }}{{ end }}{{ end }}
+
+{{ define "telegram_text" }}{{ template "telegram_title" .}}
+{{ template "telegram_message" . }}{{ end }}
