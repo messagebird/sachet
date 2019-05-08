@@ -16,6 +16,7 @@ import (
 	"github.com/messagebird/sachet/provider/telegram"
 	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
+	"github.com/messagebird/sachet/provider/clickatell"
 
 	"github.com/prometheus/alertmanager/template"
 	"gopkg.in/yaml.v2"
@@ -44,6 +45,7 @@ var config struct {
 		FreeMobile  freemobile.Config
 		AspSms      aspsms.Config
 		Sipgate     sipgate.Config
+		Clickatell  clickatell.ClickatellConfig
 	}
 
 	Receivers []ReceiverConf

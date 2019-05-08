@@ -24,6 +24,7 @@ import (
 	"github.com/messagebird/sachet/provider/telegram"
 	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
+	"github.com/messagebird/sachet/provider/clickatell"
 
 	"github.com/prometheus/alertmanager/template"
 	"github.com/prometheus/client_golang/prometheus"
@@ -174,6 +175,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return aspsms.NewAspSms(config.Providers.AspSms), nil
 	case "sipgate":
 		return sipgate.NewSipgate(config.Providers.Sipgate), nil
+	case "clickatell":
+		return clickatell.NewClickatell(config.Providers.Clickatell), nil
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)
