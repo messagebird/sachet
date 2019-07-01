@@ -1,12 +1,16 @@
-FROM golang:alpine
+FROM golang:alpine AS build
 
-RUN apk add --no-cache --virtual git openssl ca-certificates && \
-    go get github.com/messagebird/sachet/cmd/... && \
-    rm -rf src pkg && \
-    apk del git
+RUN apk update && \
+    apk add --no-cache git openssl ca-certificates && \
+    go get github.com/messagebird/sachet/cmd/...
 
-COPY examples/config.yaml /etc/sachet/config.yaml
+FROM alpine
+COPY --from=build /go/bin/sachet /usr/local/bin
+COPY --chown=nobody examples/config.yaml /etc/sachet/config.yaml
+RUN apk update && \
+    apk add --no-cache ca-certificates
 
+USER nobody
 EXPOSE 9876
 ENTRYPOINT ["sachet"]
 CMD ["-config", "/etc/sachet/config.yaml"]
