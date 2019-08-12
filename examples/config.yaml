@@ -40,6 +40,8 @@ providers:
   sipgate:
     username: 'username'
     password: 'password'
+  pushbullet:
+    access_token: 'o.AbCdEfGhIjKlMnOpQrStUvWxYz012345'
 
 templates:
   - telegram.tmpl
@@ -55,4 +57,8 @@ receivers:
     to:
       - '164451814' # the chat id of a user. Get yours at https://telegram.me/userinfobot
     text: '{{ .GroupLabels.alertname }} @ {{ .Labels.instance }}: {{ .Status | toUpper }}'
-
+  - name: 'pushbullet'
+    provider: 'pushbullet'
+    to:
+      - device:My Nickname
+      - channel:mytag

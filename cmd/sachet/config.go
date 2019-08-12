@@ -12,6 +12,7 @@ import (
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
 	"github.com/messagebird/sachet/provider/otc"
+	"github.com/messagebird/sachet/provider/pushbullet"
 	"github.com/messagebird/sachet/provider/sipgate"
 	"github.com/messagebird/sachet/provider/telegram"
 	"github.com/messagebird/sachet/provider/turbosms"
@@ -44,6 +45,7 @@ var config struct {
 		FreeMobile  freemobile.Config
 		AspSms      aspsms.Config
 		Sipgate     sipgate.Config
+		Pushbullet  pushbullet.Config
 	}
 
 	Receivers []ReceiverConf

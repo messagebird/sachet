@@ -3,131 +3,184 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:d6afaeed1502aa28e80a4ed0981d570ad91b2579193404256ce672ed0a609e0d"
   name = "github.com/beorn7/perks"
   packages = ["quantile"]
+  pruneopts = "UT"
   revision = "3a771d992973f24aa725d07868b467d1ddfceafb"
 
 [[projects]]
+  digest = "1:004d308dffe0ab15d83f7dc98ec8c42c843666df1a50537a4ff38ed4cf187f2c"
   name = "github.com/carlosdp/twiliogo"
   packages = ["."]
+  pruneopts = "UT"
   revision = "f61c8230fa91b87ca5c16a21a661861208749dfe"
   version = "v0.1"
 
 [[projects]]
+  digest = "1:a2c1d0e43bd3baaa071d1b9ed72c27d78169b2b269f71c105ac4ba34b1be4a39"
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
+  pruneopts = "UT"
   revision = "346938d642f2ec3594ed81d874461961cd0faa76"
   version = "v1.1.0"
 
 [[projects]]
+  digest = "1:15042ad3498153684d09f393bbaec6b216c8eec6d61f63dff711de7d64ed8861"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
+  pruneopts = "UT"
   revision = "b4deda0973fb4c70b50d226b1af49f3da59f5265"
   version = "v1.1.0"
 
 [[projects]]
+  digest = "1:5985ef4caf91ece5d54817c11ea25f182697534f8ae6521eadcd628c142ac4b6"
   name = "github.com/matttproud/golang_protobuf_extensions"
   packages = ["pbutil"]
+  pruneopts = "UT"
   revision = "3247c84500bff8d9fb6d579d800f20b3e091582c"
   version = "v1.0.0"
 
 [[projects]]
   branch = "master"
+  digest = "1:98dc904e7724bf8f5b26809d39fb706d37b45fa30a838240b334dfbadc7befbb"
   name = "github.com/messagebird/go-rest-api"
   packages = ["."]
+  pruneopts = "UT"
   revision = "a9514230491e7db6adaa58162cce34a5df987fd4"
 
 [[projects]]
+  digest = "1:0028cb19b2e4c3112225cd871870f2d9cf49b9b4276531f03438a88e94be86fe"
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
+  pruneopts = "UT"
   revision = "792786c7400a136282c1664665ae0a8db921c6c2"
   version = "v1.0.0"
 
 [[projects]]
+  digest = "1:4b0a77e3bb3c0ddf54cff8dca385a744edc3625be3b9b55492ed6a14de4c13e6"
   name = "github.com/prometheus/alertmanager"
   packages = [
     "template",
     "template/internal/deftmpl",
-    "types"
+    "types",
   ]
+  pruneopts = "UT"
   revision = "30af4d051b37ce817ea7e35b56c57a0e2ec9dbb0"
   version = "v0.14.0"
 
 [[projects]]
+  digest = "1:b6221ec0f8903b556e127c449e7106b63e6867170c2d10a7c058623d086f2081"
   name = "github.com/prometheus/client_golang"
   packages = ["prometheus"]
+  pruneopts = "UT"
   revision = "c5b7fccd204277076155f10851dad72b76a49317"
   version = "v0.8.0"
 
 [[projects]]
   branch = "master"
+  digest = "1:32d10bdfa8f09ecf13598324dba86ab891f11db3c538b6a34d1c3b5b99d7c36b"
   name = "github.com/prometheus/client_model"
   packages = ["go"]
+  pruneopts = "UT"
   revision = "99fa1f4be8e564e8a6b613da7fa6f46c9edafc6c"
 
 [[projects]]
   branch = "master"
+  digest = "1:e469cd65badf7694aeb44874518606d93c1d59e7735d3754ad442782437d3cc3"
   name = "github.com/prometheus/common"
   packages = [
     "expfmt",
     "internal/bitbucket.org/ww/goautoneg",
-    "model"
+    "model",
   ]
+  pruneopts = "UT"
   revision = "d811d2e9bf898806ecfb6ef6296774b13ffc314c"
 
 [[projects]]
   branch = "master"
+  digest = "1:570784e0ddbf67f14087c6d8cfb7b999b9c55e75518a755e88cb202566ea8a17"
   name = "github.com/prometheus/procfs"
   packages = [
     ".",
     "internal/util",
     "nfs",
-    "xfs"
+    "xfs",
   ]
+  pruneopts = "UT"
   revision = "8b1c2da0d56deffdbb9e48d4414b4e674bd8083e"
 
 [[projects]]
+  digest = "1:1bc4a5bd879ce6b44fdaa2e8e1144921c145604764e92220009b951c1f2439f5"
   name = "github.com/stretchr/objx"
   packages = ["."]
+  pruneopts = "UT"
   revision = "facf9a85c22f48d2f52f2380e4efce1768749a89"
   version = "v0.1"
 
 [[projects]]
+  digest = "1:eca8319bce847b7208ed5ae89ef2efb28586a7095657217241641e1da78a3c13"
   name = "github.com/stretchr/testify"
   packages = [
     "assert",
-    "mock"
+    "mock",
   ]
+  pruneopts = "UT"
   revision = "12b6f73e6084dad08a7c6e575284b177ecafbc71"
   version = "v1.2.1"
 
 [[projects]]
+  digest = "1:420817f94b6c172dabb8a054d0b2d257d7437a87c7c8c7ee432bc008a577fc46"
   name = "github.com/technoweenie/multipartstreamer"
   packages = ["."]
+  pruneopts = "UT"
   revision = "a90a01d73ae432e2611d178c18367fbaa13e0154"
   version = "v1.0.1"
 
 [[projects]]
+  branch = "master"
+  digest = "1:ff865c5772fd1d5dfc30dfd225f9faf545661c35aa774c972411a2ec4af7cd2a"
+  name = "github.com/xconstruct/go-pushbullet"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "67759df45fbbd23cbe3d5cdc6df7891c5b663cb8"
+
+[[projects]]
+  digest = "1:81ccd59248f60553288016a6b5cb7d988fb9c11e21b713a951790647332528bd"
   name = "gopkg.in/njern/gonexmo.v1"
   packages = ["."]
+  pruneopts = "UT"
   revision = "c83191e580d14eb435e39f0317a89c6912b094a4"
   version = "v1.0.1"
 
 [[projects]]
+  digest = "1:6999e4e34bb73184674e844d6d1e6f48f75a30a9c86ef7663dbc7b2509962812"
   name = "gopkg.in/telegram-bot-api.v4"
   packages = ["."]
+  pruneopts = "UT"
   revision = "0e0af0c480ea98e982d5f4d45fb39577c6ab1e3e"
   version = "v4.6.2"
 
 [[projects]]
+  digest = "1:342378ac4dcb378a5448dd723f0784ae519383532f5e70ade24132c4c8693202"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
+  pruneopts = "UT"
   revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
   version = "v2.2.1"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5f8fe62dbc923ac817a9bbbb22dad207fce7420d6a8d36a73c5f4e6c83232d47"
+  input-imports = [
+    "github.com/carlosdp/twiliogo",
+    "github.com/messagebird/go-rest-api",
+    "github.com/prometheus/alertmanager/template",
+    "github.com/prometheus/client_golang/prometheus",
+    "github.com/xconstruct/go-pushbullet",
+    "gopkg.in/njern/gonexmo.v1",
+    "gopkg.in/telegram-bot-api.v4",
+    "gopkg.in/yaml.v2",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
