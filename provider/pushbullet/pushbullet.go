@@ -37,7 +37,7 @@ func (c *Pushbullet) Send(message sachet.Message) error {
 		pb := pushbullet.New(c.AccessToken)
 
 		// parse recipient
-		targetTypeName := strings.Split(recipient, ":")
+		targetTypeName := strings.SplitN(recipient, ":", 2)
 		if len(targetTypeName) != 2 {
 			return fmt.Errorf("cannot parse recipient %s: expecting targetType:targetName", recipient)
 		}
