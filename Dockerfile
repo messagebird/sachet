@@ -1,11 +1,15 @@
-FROM golang:alpine AS build
+FROM golang:1.12 AS builder
 
-RUN apk update && \
-    apk add --no-cache git openssl ca-certificates && \
-    go get github.com/messagebird/sachet/cmd/...
+WORKDIR /build
+
+COPY . .
+
+RUN GO111MODULE=on CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -mod vendor -o sachet github.com/messagebird/sachet/cmd/sachet \
+&& chmod 777 sachet
 
 FROM alpine
-COPY --from=build /go/bin/sachet /usr/local/bin
+
+COPY --from=builder /build/sachet /usr/local/bin
 COPY --chown=nobody examples/config.yaml /etc/sachet/config.yaml
 RUN apk update && \
     apk add --no-cache ca-certificates
