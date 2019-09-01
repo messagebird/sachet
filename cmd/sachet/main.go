@@ -133,7 +133,7 @@ func main() {
 		*listenAddress = ":" + os.Getenv("PORT")
 	}
 
-	log.Printf("Listiting on %s", *listenAddress)
+	log.Printf("Listening on %s", *listenAddress)
 
 	log.Fatal(http.ListenAndServe(*listenAddress, nil))
 }
