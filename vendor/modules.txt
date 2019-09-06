@@ -6,6 +6,8 @@ github.com/carlosdp/twiliogo
 github.com/davecgh/go-spew/spew
 # github.com/golang/protobuf v1.1.0
 github.com/golang/protobuf/proto
+# github.com/heptiolabs/healthcheck v0.0.0-20180807145615-6ff867650f40
+github.com/heptiolabs/healthcheck
 # github.com/matttproud/golang_protobuf_extensions v1.0.0
 github.com/matttproud/golang_protobuf_extensions/pbutil
 # github.com/messagebird/go-rest-api v0.0.0-20180517131710-a9514230491e

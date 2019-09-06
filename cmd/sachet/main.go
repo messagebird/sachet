@@ -28,6 +28,8 @@ import (
 
 	"github.com/prometheus/alertmanager/template"
 	"github.com/prometheus/client_golang/prometheus"
+
+	"github.com/heptiolabs/healthcheck"
 )
 
 var (
@@ -128,6 +130,11 @@ func main() {
 			http.Error(w, "Invalid request method.", http.StatusMethodNotAllowed)
 		}
 	})
+
+	hc := healthcheck.NewMetricsHandler(prometheus.DefaultRegisterer, "sachet")
+
+	http.HandleFunc("/-/live", hc.LiveEndpoint)
+	http.HandleFunc("/-/ready", hc.ReadyEndpoint)
 
 	if os.Getenv("PORT") != "" {
 		*listenAddress = ":" + os.Getenv("PORT")

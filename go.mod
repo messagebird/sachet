@@ -8,6 +8,7 @@ require (
 	github.com/davecgh/go-spew v1.1.0 // indirect
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible // indirect
 	github.com/golang/protobuf v1.1.0 // indirect
+	github.com/heptiolabs/healthcheck v0.0.0-20180807145615-6ff867650f40
 	github.com/matttproud/golang_protobuf_extensions v1.0.0 // indirect
 	github.com/messagebird/go-rest-api v0.0.0-20180517131710-a9514230491e
 	github.com/pmezard/go-difflib v1.0.0 // indirect
