@@ -133,8 +133,8 @@ func main() {
 
 	hc := healthcheck.NewMetricsHandler(prometheus.DefaultRegisterer, "sachet")
 
-	http.Handle("/-/live", hc)
-	http.Handle("/-/ready", hc)
+	http.HandleFunc("/-/live", hc.LiveEndpoint)
+	http.HandleFunc("/-/ready", hc.ReadyEndpoint)
 
 	if os.Getenv("PORT") != "" {
 		*listenAddress = ":" + os.Getenv("PORT")
