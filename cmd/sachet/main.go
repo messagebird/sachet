@@ -109,6 +109,7 @@ func main() {
 			Text: text,
 		}
 
+		log.Printf("Sending message: %+v\n", message)
 		if err = provider.Send(message); err != nil {
 			errorHandler(w, http.StatusBadRequest, err, receiverConf.Provider)
 			return
