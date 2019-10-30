@@ -106,6 +106,7 @@ func main() {
 		message := sachet.Message{
 			To:   receiverConf.To,
 			From: receiverConf.From,
+			Type: receiverConf.Type,
 			Text: text,
 		}
 

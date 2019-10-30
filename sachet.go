@@ -8,4 +8,5 @@ type Message struct {
 	To   []string
 	From string
 	Text string
+	Type string
 }
