@@ -28,6 +28,7 @@ type ReceiverConf struct {
 	To       []string
 	From     string
 	Text     string
+	Type     string
 }
 
 var config struct {
