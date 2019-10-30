@@ -15,6 +15,8 @@ env GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o "bin/sachet-$VERSION.li
 cd bin
 tar -zcvf "$REPO-$VERSION.linux-amd64.tar.gz" "$REPO-$VERSION.linux-amd64"
 
+docker build -t ${USER}/${REPO}:${VERSION} .
+
 # go get -u github.com/aktau/github-release
 # dont forget to set your token like
 # export GITHUB_TOKEN=blabla
@@ -34,4 +36,6 @@ github-release upload \
     --name "$REPO-$VERSION.linux-amd64.tar.gz" \
     --file "$REPO-$VERSION.linux-amd64.tar.gz"
 
-
+docker push ${USER}/${REPO}:${VERSION}
+docker tag ${USER}/${REPO}:${VERSION} ${USER}/${REPO}:latest
+docker push ${USER}/${REPO}:latest
