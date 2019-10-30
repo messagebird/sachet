@@ -45,7 +45,7 @@ func NewMessageBird(config MessageBirdConfig) *MessageBird {
 func (mb *MessageBird) Send(message sachet.Message) error {
 	var err error=nil
 	switch message.Type {
-	case "text":
+	case "","text":
 		_, err = mb.client.NewMessage(message.From, message.To, message.Text, &mb.messageParams)
 	case "voice":
 		_, err = mb.client.NewVoiceMessage(message.To, message.Text, &mb.voiceMessageParams)

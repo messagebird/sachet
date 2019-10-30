@@ -66,11 +66,6 @@ func main() {
 			return
 		}
 
-		// default is set to "text" messages
-		if receiverConf.Type == "" {
-			receiverConf.Type = "text"
-		}
-
 		var text string
 		if receiverConf.Text != "" {
 			text, err = tmpl.ExecuteTextString(receiverConf.Text, data)
