@@ -42,6 +42,9 @@ providers:
     password: 'password'
   pushbullet:
     access_token: 'o.AbCdEfGhIjKlMnOpQrStUvWxYz012345'
+  nowsms:
+    username: 'username'
+    password: 'password'
 
 templates:
   - telegram.tmpl
@@ -62,3 +65,8 @@ receivers:
     to:
       - device:My Nickname
       - channel:mytag
+  - name: 'nowsms'
+    provider: 'nowsms'
+    to:
+      - '332432432'
+      - '4242334534'

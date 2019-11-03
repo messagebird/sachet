@@ -11,6 +11,7 @@ import (
 	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
+	"github.com/messagebird/sachet/provider/nowsms"
 	"github.com/messagebird/sachet/provider/otc"
 	"github.com/messagebird/sachet/provider/pushbullet"
 	"github.com/messagebird/sachet/provider/sipgate"
@@ -47,6 +48,7 @@ var config struct {
 		AspSms      aspsms.Config
 		Sipgate     sipgate.Config
 		Pushbullet  pushbullet.Config
+		NowSms      nowsms.Config
 	}
 
 	Receivers []ReceiverConf

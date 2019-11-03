@@ -5,7 +5,7 @@ import (
 	"os"
 	"fmt"
 
-	"github.com/messagebird/go-rest-api"
+	messagebird "github.com/messagebird/go-rest-api"
 	"github.com/messagebird/sachet"
 )
 

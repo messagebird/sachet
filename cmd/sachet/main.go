@@ -19,6 +19,7 @@ import (
 	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
+	"github.com/messagebird/sachet/provider/nowsms"
 	"github.com/messagebird/sachet/provider/otc"
 	"github.com/messagebird/sachet/provider/pushbullet"
 	"github.com/messagebird/sachet/provider/sipgate"
@@ -187,6 +188,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return sipgate.NewSipgate(config.Providers.Sipgate), nil
 	case "pushbullet":
 		return pushbullet.NewPushbullet(config.Providers.Pushbullet), nil
+	case "nowsms":
+		return nowsms.NewNowSms(config.Providers.NowSms), nil
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)
