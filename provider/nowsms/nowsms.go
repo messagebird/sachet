@@ -44,7 +44,7 @@ func (ns *NowSms) Send(message sachet.Message) error {
 	params := request.URL.Query()
 	params.Add("User", ns.User)
 	params.Add("Password", ns.Password)
-	params.Add("PhoneNumber", strings.Join(ns.PhoneNumbers, ","))
+	params.Add("PhoneNumber", strings.Join(message.To, ","))
 	params.Add("Text", message.Text)
 	request.URL.RawQuery = params.Encode()
 
