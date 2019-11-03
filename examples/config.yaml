@@ -42,6 +42,12 @@ providers:
     password: 'password'
   pushbullet:
     access_token: 'o.AbCdEfGhIjKlMnOpQrStUvWxYz012345'
+  nowsms:
+    username: 'username'
+    password: 'password'
+    phone_numbers:
+      - '332432432'
+      - '4242334534'
 
 templates:
   - telegram.tmpl
