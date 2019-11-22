@@ -16,6 +16,7 @@ import (
 	"github.com/messagebird/sachet/provider/exotel"
 	"github.com/messagebird/sachet/provider/freemobile"
 	"github.com/messagebird/sachet/provider/infobip"
+	"github.com/messagebird/sachet/provider/kannel"
 	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
@@ -168,6 +169,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return twilio.NewTwilio(config.Providers.Twilio), nil
 	case "infobip":
 		return infobip.NewInfobip(config.Providers.Infobip), nil
+	case "kannel":
+		return kannel.NewKannel(config.Providers.Kannel), nil
 	case "turbosms":
 		return turbosms.NewTurbosms(config.Providers.Turbosms), nil
 	case "exotel":

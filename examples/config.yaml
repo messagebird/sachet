@@ -8,6 +8,11 @@ providers:
   infobip:
     token: "sasasa"
     secret: "sasasa"
+  kannel:
+    # url: "http://localhost:13013/cgi-bin/sendsms"
+    url: "http://httpbin.org/get"
+    user: "tester"
+    password: "foobar"
   exotel:
     account_sid: 'sachet'
     auth_token: 'bbba3f4afc0b4ee76c93e43b7c1b2d4350d1a0e8'
