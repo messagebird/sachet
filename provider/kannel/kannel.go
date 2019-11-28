@@ -2,8 +2,8 @@ package kannel
 
 import (
 	"fmt"
-	"net/url"
 	"net/http"
+	"net/url"
 	"time"
 
 	"github.com/messagebird/sachet"
@@ -11,9 +11,9 @@ import (
 
 //KannelConfig configuration struct for Kannel Client
 type KannelConfig struct {
-	URL 	string `yaml:"url"`
-	User  string `yaml:"username"`
-	Pass 	string `yaml:"password"`
+	URL  string `yaml:"url"`
+	User string `yaml:"username"`
+	Pass string `yaml:"password"`
 }
 
 //KannelRequestTimeout  is the timeout for http request to Kannel
