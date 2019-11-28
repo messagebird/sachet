@@ -8,6 +8,7 @@ import (
 	"github.com/messagebird/sachet/provider/exotel"
 	"github.com/messagebird/sachet/provider/freemobile"
 	"github.com/messagebird/sachet/provider/infobip"
+	"github.com/messagebird/sachet/provider/kannel"
 	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
@@ -38,6 +39,7 @@ var config struct {
 		Nexmo       nexmo.NexmoConfig
 		Twilio      twilio.TwilioConfig
 		Infobip     infobip.InfobipConfig
+		Kannel      kannel.KannelConfig
 		Exotel      exotel.ExotelConfig
 		CM          cm.CMConfig
 		Telegram    telegram.TelegramConfig
