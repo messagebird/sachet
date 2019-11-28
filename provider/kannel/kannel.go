@@ -32,34 +32,30 @@ func NewKannel(config KannelConfig) *Kannel {
 
 //Send send sms to n number of people using bulk sms api
 func (c *Kannel) Send(message sachet.Message) (err error) {
-	var request *http.Request
-	var resp *http.Response
+	for _, recipient := range message.To {
+		queryParams := url.Values{"from": {message.From}, "to": {recipient}, "text": {message.Text}, "user": {c.User}, "pass": {c.Pass}}
 
-	queryParams := url.Values{"from": {message.From}, "to": message.To, "text": {message.Text}, "user": {c.User}, "pass": {c.Pass}}
-	//preparing the request
-	request, err = http.NewRequest("GET", c.URL, nil)
-	if err != nil {
-		return
-	}
+		request, err := http.NewRequest("GET", c.URL, nil)
+		if err != nil {
+			return err
+		}
 
-	// request.SetBasicAuth(c.User, c.Pass)
-	request.URL.RawQuery = queryParams.Encode()
-	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	request.Header.Set("User-Agent", "SachetV1.0")
-	//calling the endpoint
-	fmt.Println(request.URL.String())
-	httpClient := &http.Client{}
-	httpClient.Timeout = KannelRequestTimeout
+		request.URL.RawQuery = queryParams.Encode()
+		request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+		request.Header.Set("User-Agent", "SachetV1.0")
+		//	calling the endpoint - print out Kannel requested URL for debug purpose
+		// fmt.Println(request.URL.String())
+		httpClient := &http.Client{}
+		httpClient.Timeout = KannelRequestTimeout
 
-	resp, err = httpClient.Do(request)
-	if err != nil {
-		return
+		response, err := httpClient.Do(request)
+		if err != nil {
+			return err
+		}
+
+		if response.StatusCode >= 400 {
+			return fmt.Errorf("Failed sending sms. statusCode: %d", response.StatusCode)
+		}
 	}
-	defer resp.Body.Close()
-	var body []byte
-	resp.Body.Read(body)
-	if resp.StatusCode == http.StatusOK && err == nil {
-		return
-	}
-	return fmt.Errorf("Failed sending sms:Reason: %s , StatusCode : %d", string(body), resp.StatusCode)
+	return
 }
