@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/messagebird/sachet"
+	"github.com/messagebird/sachet/provider/aliyun"
 	"github.com/messagebird/sachet/provider/aspsms"
 	"github.com/messagebird/sachet/provider/cm"
 	"github.com/messagebird/sachet/provider/exotel"
@@ -193,6 +194,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return pushbullet.NewPushbullet(config.Providers.Pushbullet), nil
 	case "nowsms":
 		return nowsms.NewNowSms(config.Providers.NowSms), nil
+	case "aliyun":
+		return aliyun.NewAliyun(config.Providers.Aliyun)
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)
