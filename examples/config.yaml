@@ -1,4 +1,10 @@
 providers:
+  aliyun:
+    access_key: access_key
+    access_key_secret: access_key_secret
+    sign_name: sign_name
+    template_code: template_code
+    template_param_key: text
   messagebird:
     access_key: 'live_qKwVZ02ULV70GqabBYxLU8d5r'
     debug: true
