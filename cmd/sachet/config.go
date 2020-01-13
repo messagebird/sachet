@@ -3,6 +3,7 @@ package main
 import (
 	"io/ioutil"
 
+	"github.com/messagebird/sachet/provider/aliyun"
 	"github.com/messagebird/sachet/provider/aspsms"
 	"github.com/messagebird/sachet/provider/cm"
 	"github.com/messagebird/sachet/provider/exotel"
@@ -51,6 +52,7 @@ var config struct {
 		Sipgate     sipgate.Config
 		Pushbullet  pushbullet.Config
 		NowSms      nowsms.Config
+		Aliyun      aliyun.Config
 	}
 
 	Receivers []ReceiverConf
