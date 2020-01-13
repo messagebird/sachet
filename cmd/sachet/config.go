@@ -52,7 +52,7 @@ var config struct {
 		Sipgate     sipgate.Config
 		Pushbullet  pushbullet.Config
 		NowSms      nowsms.Config
-		Aliyun      aliyun.AliyunConfig
+		Aliyun      aliyun.Config
 	}
 
 	Receivers []ReceiverConf

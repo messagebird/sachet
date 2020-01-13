@@ -9,7 +9,8 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-type AliyunConfig struct {
+type Config struct {
+	RegionId        string `yaml:"region_id"`
 	AccessKey       string `yaml:"access_key"`
 	AccessKeySecret string `yaml:"access_key_secret"`
 
@@ -20,11 +21,11 @@ type AliyunConfig struct {
 
 type Aliyun struct {
 	client *dysmsapi.Client
-	config *AliyunConfig
+	config *Config
 }
 
-func NewAliyun(config AliyunConfig) (*Aliyun, error) {
-	client, err := dysmsapi.NewClientWithAccessKey("cn-hangzhou", config.AccessKey, config.AccessKeySecret)
+func NewAliyun(config Config) (*Aliyun, error) {
+	client, err := dysmsapi.NewClientWithAccessKey(config.RegionId, config.AccessKey, config.AccessKeySecret)
 	if err != nil {
 		return nil, err
 	}

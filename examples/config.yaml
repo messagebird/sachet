@@ -1,5 +1,6 @@
 providers:
   aliyun:
+    region_id: cn-hangzhou
     access_key: access_key
     access_key_secret: access_key_secret
     sign_name: sign_name
