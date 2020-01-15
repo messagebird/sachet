@@ -51,7 +51,7 @@ func (aliyun *Aliyun) Send(message sachet.Message) error {
 			request.TemplateParam = string(templateParamByte)
 			var response *dysmsapi.SendSmsResponse
 			response, err = aliyun.client.SendSms(request)
-			if err == nil && (!response.IsSuccess() || response.Code != "") {
+			if err == nil && (!response.IsSuccess() || response.Code != "OK") {
 				err = fmt.Errorf(response.String())
 			}
 		}
