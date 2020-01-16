@@ -19,6 +19,7 @@ import (
 	"github.com/messagebird/sachet/provider/sipgate"
 	"github.com/messagebird/sachet/provider/telegram"
 	"github.com/messagebird/sachet/provider/turbosms"
+	"github.com/messagebird/sachet/provider/smsc"
 	"github.com/messagebird/sachet/provider/twilio"
 
 	"github.com/prometheus/alertmanager/template"
@@ -45,6 +46,7 @@ var config struct {
 		CM          cm.CMConfig
 		Telegram    telegram.TelegramConfig
 		Turbosms    turbosms.TurbosmsConfig
+		Smsc        smsc.SmscConfig
 		OTC         otc.OTCConfig
 		MediaBurst  mediaburst.MediaBurstConfig
 		FreeMobile  freemobile.Config
