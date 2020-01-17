@@ -2,10 +2,10 @@ package smsc
 
 import (
 	"fmt"
+	"github.com/messagebird/sachet"
 	"net/http"
 	"net/url"
 	"time"
-	"github.com/messagebird/sachet"
 )
 
 type SmscConfig struct {
@@ -19,7 +19,7 @@ const SmscRequestTimeout = time.Second * 60
 type Smsc struct {
 	Login    string
 	Password string
-        Sender   string
+	Sender   string
 }
 
 func NewSmsc(config SmscConfig) *Smsc {

@@ -17,9 +17,9 @@ import (
 	"github.com/messagebird/sachet/provider/otc"
 	"github.com/messagebird/sachet/provider/pushbullet"
 	"github.com/messagebird/sachet/provider/sipgate"
+	"github.com/messagebird/sachet/provider/smsc"
 	"github.com/messagebird/sachet/provider/telegram"
 	"github.com/messagebird/sachet/provider/turbosms"
-	"github.com/messagebird/sachet/provider/smsc"
 	"github.com/messagebird/sachet/provider/twilio"
 
 	"github.com/prometheus/alertmanager/template"
