@@ -25,6 +25,7 @@ import (
 	"github.com/messagebird/sachet/provider/otc"
 	"github.com/messagebird/sachet/provider/pushbullet"
 	"github.com/messagebird/sachet/provider/sipgate"
+	"github.com/messagebird/sachet/provider/smsc"
 	"github.com/messagebird/sachet/provider/telegram"
 	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
@@ -174,6 +175,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return kannel.NewKannel(config.Providers.Kannel), nil
 	case "turbosms":
 		return turbosms.NewTurbosms(config.Providers.Turbosms), nil
+	case "smsc":
+		return smsc.NewSmsc(config.Providers.Smsc), nil
 	case "exotel":
 		return exotel.NewExotel(config.Providers.Exotel), nil
 	case "cm":

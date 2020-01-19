@@ -29,6 +29,10 @@ providers:
   turbosms:
     login: 'visla'
     password: '44444'
+  smsc:
+    login: sachet
+    password: sachet
+    sender: SACHET
   cm:
     producttoken: '00000000-0000-0000-0000-000000000000'
   telegram:
