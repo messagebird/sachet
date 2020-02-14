@@ -52,7 +52,7 @@ func (aliyun *Aliyun) Send(message sachet.Message) error {
 			var response *dysmsapi.SendSmsResponse
 			response, err = aliyun.client.SendSms(request)
 			if err == nil && (!response.IsSuccess() || response.Code != "OK") {
-				err = fmt.Errorf(response.String())
+				return fmt.Errorf(response.String())
 			}
 		}
 	default:
