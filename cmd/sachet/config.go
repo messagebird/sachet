@@ -55,6 +55,7 @@ var config struct {
 		Pushbullet  pushbullet.Config
 		NowSms      nowsms.Config
 		Aliyun      aliyun.Config
+		OVH         ovh.Config
 	}
 
 	Receivers []ReceiverConf

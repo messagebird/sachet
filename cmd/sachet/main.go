@@ -34,6 +34,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 
 	"github.com/heptiolabs/healthcheck"
+	. "ovh"
 )
 
 var (
@@ -199,6 +200,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return nowsms.NewNowSms(config.Providers.NowSms), nil
 	case "aliyun":
 		return aliyun.NewAliyun(config.Providers.Aliyun)
+	case "ovh":
+		return ovh.NewOvh(config.Providers.Ovh)
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)
