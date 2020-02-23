@@ -23,6 +23,7 @@ import (
 	"github.com/messagebird/sachet/provider/nexmo"
 	"github.com/messagebird/sachet/provider/nowsms"
 	"github.com/messagebird/sachet/provider/otc"
+	"github.com/messagebird/sachet/provider/ovh"
 	"github.com/messagebird/sachet/provider/pushbullet"
 	"github.com/messagebird/sachet/provider/sipgate"
 	"github.com/messagebird/sachet/provider/smsc"
@@ -34,7 +35,6 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 
 	"github.com/heptiolabs/healthcheck"
-	. "ovh"
 )
 
 var (
@@ -201,7 +201,7 @@ func providerByName(name string) (sachet.Provider, error) {
 	case "aliyun":
 		return aliyun.NewAliyun(config.Providers.Aliyun)
 	case "ovh":
-		return ovh.NewOvh(config.Providers.Ovh)
+		return ovh.NewOvh(config.Providers.OVH)
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)
