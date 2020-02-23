@@ -7,8 +7,6 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-
-
 type Config struct {
 	Endpoint             string `yaml:"endpoint"`
 	ApplicationKey       string `yaml:"application_key"`
@@ -43,24 +41,15 @@ func (ovh *Ovh) Send(message sachet.Message) error {
 	var err error = nil
 	switch message.Type {
 	case "", "text":
-		//receivers := make([]string, 0)
-		//for _, recipent := range message.To {
-		//	receivers = append(r, recipent)
-		//}
-
 		type ovhSMS map[string]interface{}
 		sms := make(ovhSMS)
 		sms["message"] = message.Text
 		sms["noStopClause"] = false
 		sms["senderForResponse"] = true
 		sms["receivers"] = message.To
-		//fmt.Println(sms)
-		//response := make(map[string]interface{})
-		//err := client.Post("/sms/sms-pn13165-1/jobs", sms, &response)
-		//if err != nil {
-		//	fmt.Println(err)
-		//}
-		if err := ovh.client.Post("/sms/sms-pn13165-1/jobs", sms, nil); err != nil {
+		serviceName := &ovh.config.ServiceName
+
+		if err := ovh.client.Post("/sms/" + *serviceName + "/jobs", sms, nil); err != nil {
 			return err
 		}
 
