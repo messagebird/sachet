@@ -61,6 +61,13 @@ providers:
   nowsms:
     username: 'username'
     password: 'password'
+  ovh:
+    endpoint: ovh-eu
+    application_key: application_key
+    application_secret: application_secret
+    consumer_key: consumer_key
+    service_name: sms-xxx-1
+    #sender: my_sender # optionnal must a validate sender
 
 templates:
   - telegram.tmpl
