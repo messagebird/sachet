@@ -67,7 +67,7 @@ providers:
     application_secret: application_secret
     consumer_key: consumer_key
     service_name: sms-xxx-1
-    #sender: my_sender # optionnal must a validate sender
+    sender_for_response: true # True if the SMS can be reply by the receiver (if false from in receiver must valid and recorded in OVH API)
 
 templates:
   - telegram.tmpl

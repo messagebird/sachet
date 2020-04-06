@@ -14,7 +14,7 @@ type Config struct {
 	ConsumerKey          string `yaml:"consumer_key"`
 
 	ServiceName          string `yaml:"service_name"`
-	Sender               string `yaml:"sender"`
+	SenderForResponse    string `yaml:"sender_for_response"`
 }
 
 type Ovh struct {
@@ -46,12 +46,9 @@ func (ovh *Ovh) Send(message sachet.Message) error {
 		sms := make(ovhSMS)
 		sms["message"] = message.Text
 		sms["noStopClause"] = false
-		if &ovh.config.Sender != nil {
-			sms["sender"] = &ovh.config.Sender
-			sms["senderForResponse"] = false
-		} else {
-			sms["senderForResponse"] = true
-		}
+		sms["sender"] = message.From
+		senderForResponse := &ovh.config.SenderForResponse
+		sms["senderForResponse"] = senderForResponse
 		sms["receivers"] = message.To
 		serviceName := &ovh.config.ServiceName
 
