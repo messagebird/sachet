@@ -23,6 +23,7 @@ import (
 	"github.com/messagebird/sachet/provider/nexmo"
 	"github.com/messagebird/sachet/provider/nowsms"
 	"github.com/messagebird/sachet/provider/otc"
+	"github.com/messagebird/sachet/provider/ovh"
 	"github.com/messagebird/sachet/provider/pushbullet"
 	"github.com/messagebird/sachet/provider/sipgate"
 	"github.com/messagebird/sachet/provider/smsc"
@@ -199,6 +200,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return nowsms.NewNowSms(config.Providers.NowSms), nil
 	case "aliyun":
 		return aliyun.NewAliyun(config.Providers.Aliyun)
+	case "ovh":
+		return ovh.NewOvh(config.Providers.OVH)
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)

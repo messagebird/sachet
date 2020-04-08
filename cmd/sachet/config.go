@@ -15,6 +15,7 @@ import (
 	"github.com/messagebird/sachet/provider/nexmo"
 	"github.com/messagebird/sachet/provider/nowsms"
 	"github.com/messagebird/sachet/provider/otc"
+	"github.com/messagebird/sachet/provider/ovh"
 	"github.com/messagebird/sachet/provider/pushbullet"
 	"github.com/messagebird/sachet/provider/sipgate"
 	"github.com/messagebird/sachet/provider/smsc"
@@ -55,6 +56,7 @@ var config struct {
 		Pushbullet  pushbullet.Config
 		NowSms      nowsms.Config
 		Aliyun      aliyun.Config
+		OVH         ovh.Config
 	}
 
 	Receivers []ReceiverConf

@@ -11,6 +11,7 @@ require (
 	github.com/heptiolabs/healthcheck v0.0.0-20180807145615-6ff867650f40
 	github.com/matttproud/golang_protobuf_extensions v1.0.0 // indirect
 	github.com/messagebird/go-rest-api v0.0.0-20180517131710-a9514230491e
+	github.com/ovh/go-ovh v0.0.0-20181109152953-ba5adb4cf014
 	github.com/prometheus/alertmanager v0.14.0
 	github.com/prometheus/client_golang v0.8.0
 	github.com/prometheus/client_model v0.0.0-20171117100541-99fa1f4be8e5 // indirect
