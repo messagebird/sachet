@@ -18,7 +18,7 @@ providers:
   kannel:
     # url: "http://localhost:13013/cgi-bin/sendsms"
     url: "http://httpbin.org/get"
-    user: "tester"
+    username: "tester"
     password: "foobar"
   exotel:
     account_sid: 'sachet'
