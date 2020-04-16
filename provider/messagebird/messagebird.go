@@ -1,11 +1,13 @@
 package messagebird
 
 import (
+	"fmt"
 	"log"
 	"os"
-	"fmt"
 
 	messagebird "github.com/messagebird/go-rest-api"
+	sms "github.com/messagebird/go-rest-api/sms"
+	voicemessage "github.com/messagebird/go-rest-api/voicemessage"
 	"github.com/messagebird/sachet"
 )
 
@@ -19,9 +21,9 @@ type MessageBirdConfig struct {
 }
 
 type MessageBird struct {
-	client *messagebird.Client
-	messageParams messagebird.MessageParams
-	voiceMessageParams messagebird.VoiceMessageParams
+	client             *messagebird.Client
+	messageParams      sms.Params
+	voiceMessageParams voicemessage.Params
 }
 
 func NewMessageBird(config MessageBirdConfig) *MessageBird {
@@ -31,24 +33,24 @@ func NewMessageBird(config MessageBirdConfig) *MessageBird {
 	}
 	return &MessageBird{
 		client: client,
-		messageParams: messagebird.MessageParams{
+		messageParams: sms.Params{
 			Gateway: config.Gateway,
 		},
-		voiceMessageParams: messagebird.VoiceMessageParams{
+		voiceMessageParams: voicemessage.Params{
 			Language: config.Language,
-			Voice: config.Voice,
-			Repeat: config.Repeat,
+			Voice:    config.Voice,
+			Repeat:   config.Repeat,
 		},
 	}
 }
 
 func (mb *MessageBird) Send(message sachet.Message) error {
-	var err error=nil
+	var err error = nil
 	switch message.Type {
-	case "","text":
-		_, err = mb.client.NewMessage(message.From, message.To, message.Text, &mb.messageParams)
+	case "", "text":
+		_, err = sms.Create(mb.client, message.From, message.To, message.Text, &mb.messageParams)
 	case "voice":
-		_, err = mb.client.NewVoiceMessage(message.To, message.Text, &mb.voiceMessageParams)
+		_, err = voicemessage.Create(mb.client, message.To, message.Text, &mb.voiceMessageParams)
 	default:
 		return fmt.Errorf("unknown message type %s", message.Type)
 	}

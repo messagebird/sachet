@@ -33,6 +33,7 @@ import (
 
 	"github.com/prometheus/alertmanager/template"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/heptiolabs/healthcheck"
 )
@@ -123,7 +124,7 @@ func main() {
 		requestTotal.WithLabelValues("200", receiverConf.Provider).Inc()
 	})
 
-	http.Handle("/metrics", prometheus.Handler())
+	http.Handle("/metrics", promhttp.Handler())
 
 	http.HandleFunc("/-/reload", func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
