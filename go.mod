@@ -3,10 +3,8 @@ module github.com/messagebird/sachet
 go 1.12
 
 require (
-	github.com/aktau/github-release v0.7.2 // indirect
 	github.com/aliyun/alibaba-cloud-sdk-go v1.61.122
 	github.com/carlosdp/twiliogo v0.0.0-20161027183705-b26045ebb9d1
-	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible // indirect
 	github.com/golang/protobuf v1.4.0 // indirect
 	github.com/heptiolabs/healthcheck v0.0.0-20180807145615-6ff867650f40
@@ -17,8 +15,6 @@ require (
 	github.com/prometheus/client_golang v1.5.1
 	github.com/prometheus/procfs v0.0.11 // indirect
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
-	github.com/tomnomnom/linkheader v0.0.0-20180905144013-02ca5825eb80 // indirect
-	github.com/voxelbrain/goptions v0.0.0-20180630082107-58cddc247ea2 // indirect
 	github.com/xconstruct/go-pushbullet v0.0.0-20171206132031-67759df45fbb
 	golang.org/x/sys v0.0.0-20200413165638-669c56c373c4 // indirect
 	gopkg.in/DATA-DOG/go-sqlmock.v1 v1.3.0 // indirect
