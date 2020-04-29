@@ -75,6 +75,7 @@ providers:
     app_id: 111233
     sign_name: sign_name
     template_code: 123233
+    truncate: true
 
 templates:
   - telegram.tmpl

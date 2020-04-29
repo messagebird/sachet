@@ -18,6 +18,7 @@ type Config struct {
 	Endpoint     string `yaml:"endpoint"`
 	SignName     string `yaml:"sign_name"`
 	TemplateCode string `yaml:"template_code"`
+	Truncate     bool   `yaml:"truncate"`
 }
 
 type TencentCloud struct {
@@ -42,6 +43,17 @@ func NewTencentCloud(config Config) (*TencentCloud, error) {
 
 }
 
+func truncateString(str string, num int) string {
+	bnoden := str
+	if len(str) > num {
+		if num > 3 {
+			num -= 3
+		}
+		bnoden = str[0:num] + "...\ntoo many text truncated, show detail on alert platform"
+	}
+	return bnoden
+}
+
 func (tencentcloud *TencentCloud) Send(message sachet.Message) error {
 	var err error = nil
 	switch message.Type {
@@ -49,7 +61,12 @@ func (tencentcloud *TencentCloud) Send(message sachet.Message) error {
 		request := sms.NewSendSmsRequest()
 		request.SmsSdkAppid = common.StringPtr(tencentcloud.config.AppId)
 		request.Sign = common.StringPtr(tencentcloud.config.SignName)
-		request.TemplateParamSet = common.StringPtrs([]string{message.Text})
+		sendText := message.Text
+		if tencentcloud.config.Truncate {
+			sendText = truncateString(sendText, 400)
+		}
+
+		request.TemplateParamSet = common.StringPtrs([]string{sendText})
 		request.TemplateID = common.StringPtr(tencentcloud.config.TemplateCode)
 		request.PhoneNumberSet = common.StringPtrs(message.To)
 		response, err := tencentcloud.client.SendSms(request)
