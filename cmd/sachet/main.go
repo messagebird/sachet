@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/messagebird/sachet/provider/tencentcloud"
 	"log"
 	"net/http"
 	"os"
@@ -203,6 +204,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return aliyun.NewAliyun(config.Providers.Aliyun)
 	case "ovh":
 		return ovh.NewOvh(config.Providers.OVH)
+	case "tencentcloud":
+		return tencentcloud.NewTencentCloud(config.Providers.TencentCloud)
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)

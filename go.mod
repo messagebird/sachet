@@ -15,6 +15,7 @@ require (
 	github.com/prometheus/client_golang v1.5.1
 	github.com/prometheus/procfs v0.0.11 // indirect
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
+	github.com/tencentcloud/tencentcloud-sdk-go v3.0.164+incompatible
 	github.com/xconstruct/go-pushbullet v0.0.0-20171206132031-67759df45fbb
 	golang.org/x/sys v0.0.0-20200413165638-669c56c373c4 // indirect
 	gopkg.in/DATA-DOG/go-sqlmock.v1 v1.3.0 // indirect

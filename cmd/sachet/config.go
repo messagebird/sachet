@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/messagebird/sachet/provider/tencentcloud"
 	"io/ioutil"
 
 	"github.com/messagebird/sachet/provider/aliyun"
@@ -38,25 +39,26 @@ type ReceiverConf struct {
 
 var config struct {
 	Providers struct {
-		MessageBird messagebird.MessageBirdConfig
-		Nexmo       nexmo.NexmoConfig
-		Twilio      twilio.TwilioConfig
-		Infobip     infobip.InfobipConfig
-		Kannel      kannel.KannelConfig
-		Exotel      exotel.ExotelConfig
-		CM          cm.CMConfig
-		Telegram    telegram.TelegramConfig
-		Turbosms    turbosms.TurbosmsConfig
-		Smsc        smsc.SmscConfig
-		OTC         otc.OTCConfig
-		MediaBurst  mediaburst.MediaBurstConfig
-		FreeMobile  freemobile.Config
-		AspSms      aspsms.Config
-		Sipgate     sipgate.Config
-		Pushbullet  pushbullet.Config
-		NowSms      nowsms.Config
-		Aliyun      aliyun.Config
-		OVH         ovh.Config
+		MessageBird  messagebird.MessageBirdConfig
+		Nexmo        nexmo.NexmoConfig
+		Twilio       twilio.TwilioConfig
+		Infobip      infobip.InfobipConfig
+		Kannel       kannel.KannelConfig
+		Exotel       exotel.ExotelConfig
+		CM           cm.CMConfig
+		Telegram     telegram.TelegramConfig
+		Turbosms     turbosms.TurbosmsConfig
+		Smsc         smsc.SmscConfig
+		OTC          otc.OTCConfig
+		MediaBurst   mediaburst.MediaBurstConfig
+		FreeMobile   freemobile.Config
+		AspSms       aspsms.Config
+		Sipgate      sipgate.Config
+		Pushbullet   pushbullet.Config
+		NowSms       nowsms.Config
+		Aliyun       aliyun.Config
+		OVH          ovh.Config
+		TencentCloud tencentcloud.Config
 	}
 
 	Receivers []ReceiverConf

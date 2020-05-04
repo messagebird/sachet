@@ -68,6 +68,14 @@ providers:
     consumer_key: consumer_key
     service_name: sms-xxx-1
     sender_for_response: true # True if the SMS can be reply by the receiver (if false from in receiver must valid and recorded in OVH API)
+  tencentcloud:
+    region_id: ap-shanghai
+    secret_id: AKIDWqaCa1aNL3V0MtSG7mCZPjvrgJhqdgeN
+    secret_key: d5JLBreHfnfJjHbffWCsSoF8wYs5pNgl
+    app_id: 111233
+    sign_name: sign_name
+    template_code: 123233
+    truncate: true
 
 templates:
   - telegram.tmpl
