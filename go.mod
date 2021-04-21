@@ -10,6 +10,7 @@ require (
 	github.com/heptiolabs/healthcheck v0.0.0-20180807145615-6ff867650f40
 	github.com/jmespath/go-jmespath v0.3.0 // indirect
 	github.com/messagebird/go-rest-api v5.3.0+incompatible
+	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/ovh/go-ovh v0.0.0-20181109152953-ba5adb4cf014
 	github.com/prometheus/alertmanager v0.20.0
 	github.com/prometheus/client_golang v1.5.1

@@ -26,6 +26,7 @@ import (
 	"github.com/messagebird/sachet/provider/otc"
 	"github.com/messagebird/sachet/provider/ovh"
 	"github.com/messagebird/sachet/provider/pushbullet"
+	"github.com/messagebird/sachet/provider/sap"
 	"github.com/messagebird/sachet/provider/sipgate"
 	"github.com/messagebird/sachet/provider/smsc"
 	"github.com/messagebird/sachet/provider/telegram"
@@ -206,6 +207,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return ovh.NewOvh(config.Providers.OVH)
 	case "tencentcloud":
 		return tencentcloud.NewTencentCloud(config.Providers.TencentCloud)
+	case "sap":
+		return sap.NewSap(config.Providers.Sap), nil
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)
