@@ -2,10 +2,10 @@ package sap
 
 import (
 	"fmt"
-	"net/http"
-	"time"
-	"strings"
 	"github.com/messagebird/sachet"
+	"net/http"
+	"strings"
+	"time"
 )
 
 // Config is the configuration struct for Sap provider
@@ -33,14 +33,14 @@ func NewSap(config Config) *Sap {
 func (c *Sap) Send(message sachet.Message) error {
 
 	// No \n in Text tolerated
-	msg := strings.ReplaceAll(message.Text,"\n"," - ")
-	content := fmt.Sprintf("Version=2.0\nSubject=Alert\n[MSISDN]\nList=%s\n[MESSAGE]\nText=%s\n[SETUP]\nSplitText=yes\n[END]", strings.Join(message.To, ","), msg )
+	msg := strings.ReplaceAll(message.Text, "\n", " - ")
+	content := fmt.Sprintf("Version=2.0\nSubject=Alert\n[MSISDN]\nList=%s\n[MESSAGE]\nText=%s\n[SETUP]\nSplitText=yes\n[END]", strings.Join(message.To, ","), msg)
 
 	request, err := http.NewRequest("POST", c.URL, strings.NewReader(content))
 	if err != nil {
 		return err
 	}
-	request.Header.Set("Authorization", "Basic " + c.AuthHash)
+	request.Header.Set("Authorization", "Basic "+c.AuthHash)
 
 	response, err := sapHTTPClient.Do(request)
 	if err != nil {
