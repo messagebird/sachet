@@ -4,7 +4,7 @@ import "time"
 
 // Recipient struct holds information for a single msisdn with status details.
 type Recipient struct {
-	Recipient      int
+	Recipient      int64
 	Status         string
 	StatusDatetime *time.Time
 }
