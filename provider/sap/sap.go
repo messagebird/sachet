@@ -17,16 +17,18 @@ type Config struct {
 // Sap contains the necessary values for the Sap provider
 type Sap struct {
 	Config
+	HTTPClient *http.Client // The HTTP client to send requests on
 }
-
-var sapHTTPClient = &http.Client{Timeout: time.Second * 20}
 
 // NewSap creates and returns a new Sap struct
 func NewSap(config Config) *Sap {
 	if config.URL == "" {
 		config.URL = "https://sms-pp.sapmobileservices.com/cmn/xxxxxxxxxx/xxxxxxxxxxx.sms"
 	}
-	return &Sap{config}
+	return &Sap{
+		config,
+		&http.Client{Timeout: time.Second * 20},
+	}
 }
 
 // Send sends SMS to user registered in configuration
@@ -42,7 +44,7 @@ func (c *Sap) Send(message sachet.Message) error {
 	}
 	request.Header.Set("Authorization", "Basic "+c.AuthHash)
 
-	response, err := sapHTTPClient.Do(request)
+	response, err := c.HTTPClient.Do(request)
 	if err != nil {
 		return err
 	}
