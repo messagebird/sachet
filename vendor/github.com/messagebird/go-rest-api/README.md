@@ -36,16 +36,16 @@ Now you can query the API for information or send data. For example, if we want 
 
 ```go
 // Request the balance information, returned as a Balance object.
-balance, err := client.Balance()
+balance, err := balance.Read(client)
 if err != nil {
-  // messagebird.ErrResponse means custom JSON errors.
-  if err == messagebird.ErrResponse {
-    for _, mbError := range balance.Errors {
-      fmt.Printf("Error: %#v\n", mbError)
-    }
-  }
+	switch errResp := err.(type) {
+	case messagebird.ErrorResponse:
+		for _, mbError := range errResp.Errors {
+			fmt.Printf("Error: %#v\n", mbError)
+		}
+	}
 
-  return
+	return
 }
 
 fmt.Println("  payment :", balance.Payment)
@@ -67,6 +67,10 @@ Documentation
 -------------
 Complete documentation, instructions, and examples are available at:
 [https://developers.messagebird.com](https://developers.messagebird.com).
+
+Upgrading
+---------
+If you're upgrading from older versions, please read the [Messagebird `go-rest-api` upgrading guide](UPGRADING.md).
 
 License
 -------

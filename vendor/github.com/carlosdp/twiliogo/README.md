@@ -1,11 +1,16 @@
+[![Build Status](https://travis-ci.org/carlosdp/twiliogo.png?branch=master)](https://travis-ci.org/carlosdp/twiliogo)
 # twilio-go
 The unofficial Go helper library for [Twilio](http://twilio.com).
 
 # Installation
 
 ``` bash
-go get github.com/carlosdp/twilio-go
+go get github.com/carlosdp/twiliogo
 ```
+
+# Documentation
+
+[GoDoc](http://godoc.org/github.com/carlosdp/twiliogo)
 
 # Usage
 
@@ -16,18 +21,18 @@ package main
 
 import (
   "fmt"
-  "github.com/carlosdp/twilio-go"
+  twilio "github.com/carlosdp/twiliogo"
 )
 
 func main() {
-  client := twilio.NewClient("<ACCOUNT_SID", "<AUTH_TOKEN>")
+  client := twilio.NewClient("<ACCOUNT_SID>", "<AUTH_TOKEN>")
 
-  message, err := twilio.SendMessage(client, "3334445555", "2223334444", "Hello World!")
+  message, err := twilio.NewMessage(client, "3334445555", "2223334444", twilio.Body("Hello World!"))
 
   if err != nil {
     fmt.Println(err)
   } else {
-    fmt.Println("Message sent!")
+    fmt.Println(message.Status)
   }
 }
 ```
@@ -39,13 +44,13 @@ package main
 
 import (
   "fmt"
-  "github.com/carlosdp/twilio-go"
+  twilio "github.com/carlosdp/twiliogo"
 )
 
 func main() {
   client := twilio.NewClient("<ACCOUNT_SID>", "<AUTH_TOKEN>")
 
-  call, err := twilio.MakeCall(client, "8883332222", "3334443333")
+  call, err := twilio.NewCall(client, "8883332222", "3334443333", nil)
 
   if err != nil {
     fmt.Println(err)

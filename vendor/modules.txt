@@ -1,4 +1,5 @@
-# github.com/aliyun/alibaba-cloud-sdk-go v1.60.327
+# github.com/aliyun/alibaba-cloud-sdk-go v1.61.122
+## explicit
 github.com/aliyun/alibaba-cloud-sdk-go/sdk
 github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth
 github.com/aliyun/alibaba-cloud-sdk-go/sdk/auth/credentials
@@ -10,61 +11,139 @@ github.com/aliyun/alibaba-cloud-sdk-go/sdk/requests
 github.com/aliyun/alibaba-cloud-sdk-go/sdk/responses
 github.com/aliyun/alibaba-cloud-sdk-go/sdk/utils
 github.com/aliyun/alibaba-cloud-sdk-go/services/dysmsapi
-# github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973
+# github.com/beorn7/perks v1.0.1
 github.com/beorn7/perks/quantile
-# github.com/carlosdp/twiliogo v0.0.0-20140102225436-f61c8230fa91
+# github.com/carlosdp/twiliogo v0.0.0-20161027183705-b26045ebb9d1
+## explicit
 github.com/carlosdp/twiliogo
+# github.com/cespare/xxhash/v2 v2.1.1
+github.com/cespare/xxhash/v2
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
-# github.com/golang/protobuf v1.1.0
+# github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
+## explicit
+# github.com/golang/protobuf v1.4.0
+## explicit
 github.com/golang/protobuf/proto
+github.com/golang/protobuf/ptypes
+github.com/golang/protobuf/ptypes/any
+github.com/golang/protobuf/ptypes/duration
+github.com/golang/protobuf/ptypes/timestamp
 # github.com/heptiolabs/healthcheck v0.0.0-20180807145615-6ff867650f40
+## explicit
 github.com/heptiolabs/healthcheck
-# github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af
+# github.com/jmespath/go-jmespath v0.3.0
+## explicit
 github.com/jmespath/go-jmespath
-# github.com/json-iterator/go v1.1.5
+# github.com/json-iterator/go v1.1.9
 github.com/json-iterator/go
-# github.com/matttproud/golang_protobuf_extensions v1.0.0
+# github.com/matttproud/golang_protobuf_extensions v1.0.1
 github.com/matttproud/golang_protobuf_extensions/pbutil
-# github.com/messagebird/go-rest-api v0.0.0-20180517131710-a9514230491e
+# github.com/messagebird/go-rest-api v5.3.0+incompatible
+## explicit
 github.com/messagebird/go-rest-api
+github.com/messagebird/go-rest-api/sms
+github.com/messagebird/go-rest-api/voicemessage
 # github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
 github.com/modern-go/concurrent
-# github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742
+# github.com/modern-go/reflect2 v1.0.1
 github.com/modern-go/reflect2
+# github.com/ovh/go-ovh v0.0.0-20181109152953-ba5adb4cf014
+## explicit
+github.com/ovh/go-ovh/ovh
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
-# github.com/prometheus/alertmanager v0.14.0
+# github.com/prometheus/alertmanager v0.20.0
+## explicit
+github.com/prometheus/alertmanager/asset
 github.com/prometheus/alertmanager/template
-github.com/prometheus/alertmanager/template/internal/deftmpl
 github.com/prometheus/alertmanager/types
-# github.com/prometheus/client_golang v0.8.0
+# github.com/prometheus/client_golang v1.5.1
+## explicit
 github.com/prometheus/client_golang/prometheus
-# github.com/prometheus/client_model v0.0.0-20171117100541-99fa1f4be8e5
+github.com/prometheus/client_golang/prometheus/internal
+github.com/prometheus/client_golang/prometheus/promhttp
+# github.com/prometheus/client_model v0.2.0
 github.com/prometheus/client_model/go
-# github.com/prometheus/common v0.0.0-20180426121432-d811d2e9bf89
+# github.com/prometheus/common v0.9.1
 github.com/prometheus/common/expfmt
 github.com/prometheus/common/internal/bitbucket.org/ww/goautoneg
 github.com/prometheus/common/model
-# github.com/prometheus/procfs v0.0.0-20180408092902-8b1c2da0d56d
+# github.com/prometheus/procfs v0.0.11
+## explicit
 github.com/prometheus/procfs
+github.com/prometheus/procfs/internal/fs
 github.com/prometheus/procfs/internal/util
-github.com/prometheus/procfs/nfs
-github.com/prometheus/procfs/xfs
-# github.com/stretchr/objx v0.1.0
+# github.com/shurcooL/httpfs v0.0.0-20190707220628-8d4bc4ba7749
+github.com/shurcooL/httpfs/filter
+github.com/shurcooL/httpfs/union
+github.com/shurcooL/httpfs/vfsutil
+# github.com/shurcooL/vfsgen v0.0.0-20181202132449-6a9ea43bcacd
+github.com/shurcooL/vfsgen
+# github.com/stretchr/objx v0.2.0
 github.com/stretchr/objx
-# github.com/stretchr/testify v1.3.0
+# github.com/stretchr/testify v1.5.1
 github.com/stretchr/testify/assert
 github.com/stretchr/testify/mock
 # github.com/technoweenie/multipartstreamer v1.0.1
+## explicit
 github.com/technoweenie/multipartstreamer
+# github.com/tencentcloud/tencentcloud-sdk-go v3.0.164+incompatible
+## explicit
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/http
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms/v20190711
 # github.com/xconstruct/go-pushbullet v0.0.0-20171206132031-67759df45fbb
+## explicit
 github.com/xconstruct/go-pushbullet
-# gopkg.in/ini.v1 v1.42.0
+# golang.org/x/sys v0.0.0-20200413165638-669c56c373c4
+## explicit
+golang.org/x/sys/unix
+golang.org/x/sys/windows
+# google.golang.org/protobuf v1.21.0
+google.golang.org/protobuf/encoding/prototext
+google.golang.org/protobuf/encoding/protowire
+google.golang.org/protobuf/internal/descfmt
+google.golang.org/protobuf/internal/descopts
+google.golang.org/protobuf/internal/detrand
+google.golang.org/protobuf/internal/encoding/defval
+google.golang.org/protobuf/internal/encoding/messageset
+google.golang.org/protobuf/internal/encoding/tag
+google.golang.org/protobuf/internal/encoding/text
+google.golang.org/protobuf/internal/errors
+google.golang.org/protobuf/internal/fieldnum
+google.golang.org/protobuf/internal/fieldsort
+google.golang.org/protobuf/internal/filedesc
+google.golang.org/protobuf/internal/filetype
+google.golang.org/protobuf/internal/flags
+google.golang.org/protobuf/internal/genname
+google.golang.org/protobuf/internal/impl
+google.golang.org/protobuf/internal/mapsort
+google.golang.org/protobuf/internal/pragma
+google.golang.org/protobuf/internal/set
+google.golang.org/protobuf/internal/strs
+google.golang.org/protobuf/internal/version
+google.golang.org/protobuf/proto
+google.golang.org/protobuf/reflect/protoreflect
+google.golang.org/protobuf/reflect/protoregistry
+google.golang.org/protobuf/runtime/protoiface
+google.golang.org/protobuf/runtime/protoimpl
+google.golang.org/protobuf/types/known/anypb
+google.golang.org/protobuf/types/known/durationpb
+google.golang.org/protobuf/types/known/timestamppb
+# gopkg.in/DATA-DOG/go-sqlmock.v1 v1.3.0
+## explicit
+# gopkg.in/ini.v1 v1.55.0
+## explicit
 gopkg.in/ini.v1
 # gopkg.in/njern/gonexmo.v1 v1.0.1
+## explicit
 gopkg.in/njern/gonexmo.v1
-# gopkg.in/telegram-bot-api.v4 v4.6.2
+# gopkg.in/telegram-bot-api.v4 v4.6.4
+## explicit
 gopkg.in/telegram-bot-api.v4
-# gopkg.in/yaml.v2 v2.2.1
+# gopkg.in/yaml.v2 v2.2.8
+## explicit
 gopkg.in/yaml.v2
