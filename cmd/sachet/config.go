@@ -18,6 +18,7 @@ import (
 	"github.com/messagebird/sachet/provider/otc"
 	"github.com/messagebird/sachet/provider/ovh"
 	"github.com/messagebird/sachet/provider/pushbullet"
+	"github.com/messagebird/sachet/provider/sap"
 	"github.com/messagebird/sachet/provider/sipgate"
 	"github.com/messagebird/sachet/provider/smsc"
 	"github.com/messagebird/sachet/provider/telegram"
@@ -59,6 +60,7 @@ var config struct {
 		Aliyun       aliyun.Config
 		OVH          ovh.Config
 		TencentCloud tencentcloud.Config
+		Sap          sap.Config
 	}
 
 	Receivers []ReceiverConf

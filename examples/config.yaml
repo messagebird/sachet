@@ -76,6 +76,9 @@ providers:
     sign_name: sign_name
     template_code: 123233
     truncate: true
+  sap:
+    url: "https://sms-pp.sapmobileservices.com/cmn/xxxxx/xxxxx.sms"
+    auth_hash: ""
 
 templates:
   - telegram.tmpl
@@ -101,3 +104,8 @@ receivers:
     to:
       - '332432432'
       - '4242334534'
+
+  - name: 'sap'
+    provider: "sap"
+    to:
+      - '+336xxxxxxxx'
