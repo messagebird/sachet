@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/messagebird/sachet/provider/tencentcloud"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/messagebird/sachet/provider/tencentcloud"
 
 	"github.com/messagebird/sachet"
 	"github.com/messagebird/sachet/provider/aliyun"
@@ -19,6 +20,7 @@ import (
 	"github.com/messagebird/sachet/provider/freemobile"
 	"github.com/messagebird/sachet/provider/infobip"
 	"github.com/messagebird/sachet/provider/kannel"
+	"github.com/messagebird/sachet/provider/kavenegar"
 	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
@@ -177,6 +179,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return infobip.NewInfobip(config.Providers.Infobip), nil
 	case "kannel":
 		return kannel.NewKannel(config.Providers.Kannel), nil
+	case "kavenegar":
+		return kavenegar.NewKaveNegar(config.Providers.KaveNegar), nil
 	case "turbosms":
 		return turbosms.NewTurbosms(config.Providers.Turbosms), nil
 	case "smsc":

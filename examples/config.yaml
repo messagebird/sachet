@@ -79,6 +79,8 @@ providers:
   sap:
     url: "https://sms-pp.sapmobileservices.com/cmn/xxxxx/xxxxx.sms"
     auth_hash: ""
+  kavehnegar:
+    api_token: 'KAVENEGAR_API_TOKEN'
 
 templates:
   - telegram.tmpl
@@ -109,3 +111,9 @@ receivers:
     provider: "sap"
     to:
       - '+336xxxxxxxx'
+  - name: 'kavenegar'
+    provider: 'kavenegar'
+    from: '10008663'
+    to:
+      - '09123456789'
+      - '09129876543'
