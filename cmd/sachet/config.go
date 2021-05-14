@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/messagebird/sachet/provider/tencentcloud"
 	"io/ioutil"
+
+	"github.com/messagebird/sachet/provider/tencentcloud"
 
 	"github.com/messagebird/sachet/provider/aliyun"
 	"github.com/messagebird/sachet/provider/aspsms"
@@ -11,6 +12,7 @@ import (
 	"github.com/messagebird/sachet/provider/freemobile"
 	"github.com/messagebird/sachet/provider/infobip"
 	"github.com/messagebird/sachet/provider/kannel"
+	"github.com/messagebird/sachet/provider/kavenegar"
 	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
@@ -45,6 +47,7 @@ var config struct {
 		Twilio       twilio.TwilioConfig
 		Infobip      infobip.InfobipConfig
 		Kannel       kannel.KannelConfig
+		KaveNegar    kavenegar.Config
 		Exotel       exotel.ExotelConfig
 		CM           cm.CMConfig
 		Telegram     telegram.TelegramConfig
