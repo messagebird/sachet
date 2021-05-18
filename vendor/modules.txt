@@ -29,6 +29,8 @@ github.com/golang/protobuf/ptypes
 github.com/golang/protobuf/ptypes/any
 github.com/golang/protobuf/ptypes/duration
 github.com/golang/protobuf/ptypes/timestamp
+# github.com/hako/durafmt v0.0.0-20190612201238-650ed9f29a84
+github.com/hako/durafmt
 # github.com/heptiolabs/healthcheck v0.0.0-20180807145615-6ff867650f40
 ## explicit
 github.com/heptiolabs/healthcheck
@@ -37,6 +39,16 @@ github.com/heptiolabs/healthcheck
 github.com/jmespath/go-jmespath
 # github.com/json-iterator/go v1.1.9
 github.com/json-iterator/go
+# github.com/konsorten/go-windows-terminal-sequences v1.0.1
+github.com/konsorten/go-windows-terminal-sequences
+# github.com/mail-ru-im/bot-golang v0.0.0-20210416201405-ed140b099aee
+## explicit
+github.com/mail-ru-im/bot-golang
+# github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e
+github.com/mailru/easyjson
+github.com/mailru/easyjson/buffer
+github.com/mailru/easyjson/jlexer
+github.com/mailru/easyjson/jwriter
 # github.com/matttproud/golang_protobuf_extensions v1.0.1
 github.com/matttproud/golang_protobuf_extensions/pbutil
 # github.com/messagebird/go-rest-api v5.3.0+incompatible
@@ -81,6 +93,8 @@ github.com/shurcooL/httpfs/union
 github.com/shurcooL/httpfs/vfsutil
 # github.com/shurcooL/vfsgen v0.0.0-20181202132449-6a9ea43bcacd
 github.com/shurcooL/vfsgen
+# github.com/sirupsen/logrus v1.4.2
+github.com/sirupsen/logrus
 # github.com/stretchr/objx v0.2.0
 github.com/stretchr/objx
 # github.com/stretchr/testify v1.5.1
