@@ -3,8 +3,6 @@ package main
 import (
 	"io/ioutil"
 
-	"github.com/messagebird/sachet/provider/tencentcloud"
-
 	"github.com/messagebird/sachet/provider/aliyun"
 	"github.com/messagebird/sachet/provider/aspsms"
 	"github.com/messagebird/sachet/provider/cm"
@@ -13,6 +11,7 @@ import (
 	"github.com/messagebird/sachet/provider/infobip"
 	"github.com/messagebird/sachet/provider/kannel"
 	"github.com/messagebird/sachet/provider/kavenegar"
+	"github.com/messagebird/sachet/provider/mailruim"
 	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
@@ -24,6 +23,7 @@ import (
 	"github.com/messagebird/sachet/provider/sipgate"
 	"github.com/messagebird/sachet/provider/smsc"
 	"github.com/messagebird/sachet/provider/telegram"
+	"github.com/messagebird/sachet/provider/tencentcloud"
 	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
 
@@ -50,6 +50,7 @@ var config struct {
 		KaveNegar    kavenegar.Config
 		Exotel       exotel.ExotelConfig
 		CM           cm.CMConfig
+		MailruIM     mailruim.MailruIMConfig
 		Telegram     telegram.TelegramConfig
 		Turbosms     turbosms.TurbosmsConfig
 		Smsc         smsc.SmscConfig
