@@ -9,6 +9,7 @@ require (
 	github.com/golang/protobuf v1.4.0 // indirect
 	github.com/heptiolabs/healthcheck v0.0.0-20180807145615-6ff867650f40
 	github.com/jmespath/go-jmespath v0.3.0 // indirect
+	github.com/mail-ru-im/bot-golang v0.0.0-20210416201405-ed140b099aee
 	github.com/messagebird/go-rest-api v5.3.0+incompatible
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/ovh/go-ovh v0.0.0-20181109152953-ba5adb4cf014

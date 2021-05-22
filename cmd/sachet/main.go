@@ -21,6 +21,7 @@ import (
 	"github.com/messagebird/sachet/provider/infobip"
 	"github.com/messagebird/sachet/provider/kannel"
 	"github.com/messagebird/sachet/provider/kavenegar"
+	"github.com/messagebird/sachet/provider/mailruim"
 	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
@@ -191,6 +192,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return cm.NewCM(config.Providers.CM), nil
 	case "telegram":
 		return telegram.NewTelegram(config.Providers.Telegram)
+	case "mailruim":
+		return mailruim.NewMailruIM(config.Providers.MailruIM)
 	case "otc":
 		return otc.NewOTC(config.Providers.OTC), nil
 	case "mediaburst":
