@@ -82,7 +82,7 @@ providers:
   sap:
     url: "https://sms-pp.sapmobileservices.com/cmn/xxxxx/xxxxx.sms"
     auth_hash: ""
-  kavehnegar:
+  kavenegar:
     api_token: 'KAVENEGAR_API_TOKEN'
 
 templates:
