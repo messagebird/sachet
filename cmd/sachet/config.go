@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/messagebird/sachet/provider/esendex"
 	"io/ioutil"
 
 	"github.com/messagebird/sachet/provider/aliyun"
@@ -65,6 +66,7 @@ var config struct {
 		OVH          ovh.Config
 		TencentCloud tencentcloud.Config
 		Sap          sap.Config
+		Esendex      esendex.Config
 	}
 
 	Receivers []ReceiverConf

@@ -84,6 +84,10 @@ providers:
     auth_hash: ""
   kavenegar:
     api_token: 'KAVENEGAR_API_TOKEN'
+  esendex:
+    user: 'name'
+    api_token: 'TOKEN'
+    account_reference: 'reference'
 
 templates:
   - telegram.tmpl
