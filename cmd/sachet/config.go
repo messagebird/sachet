@@ -29,6 +29,7 @@ import (
 	"github.com/messagebird/sachet/provider/sipgate"
 	"github.com/messagebird/sachet/provider/sms77"
 	"github.com/messagebird/sachet/provider/smsc"
+	"github.com/messagebird/sachet/provider/smstools"
 	"github.com/messagebird/sachet/provider/telegram"
 	"github.com/messagebird/sachet/provider/tencentcloud"
 	"github.com/messagebird/sachet/provider/textmagic"
@@ -75,6 +76,7 @@ var config struct {
 		Ghasedak     ghasedak.Config
 		Sfr          sfr.Config
 		TextMagic    textmagic.Config
+		SmsTools     smstools.Config
 	}
 
 	Receivers []ReceiverConf
