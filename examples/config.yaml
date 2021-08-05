@@ -88,6 +88,9 @@ providers:
     user: 'name'
     api_token: 'TOKEN'
     account_reference: 'reference'
+  sms77:
+    api_key: 'api_key'
+    debug: false
 
 templates:
   - telegram.tmpl
