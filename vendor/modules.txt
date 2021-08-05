@@ -59,7 +59,6 @@ github.com/messagebird/go-rest-api/voicemessage
 # github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
 github.com/modern-go/concurrent
 # github.com/modern-go/reflect2 v1.0.1
-## explicit
 github.com/modern-go/reflect2
 # github.com/ovh/go-ovh v0.0.0-20181109152953-ba5adb4cf014
 ## explicit
@@ -95,9 +94,12 @@ github.com/shurcooL/httpfs/vfsutil
 github.com/shurcooL/vfsgen
 # github.com/sirupsen/logrus v1.4.2
 github.com/sirupsen/logrus
+# github.com/sms77io/go-client v0.0.0-20210727072156-0740dfc8b70d
+## explicit
+github.com/sms77io/go-client/sms77api
 # github.com/stretchr/objx v0.2.0
 github.com/stretchr/objx
-# github.com/stretchr/testify v1.5.1
+# github.com/stretchr/testify v1.6.1
 github.com/stretchr/testify/assert
 github.com/stretchr/testify/mock
 # github.com/technoweenie/multipartstreamer v1.0.1
@@ -162,3 +164,5 @@ gopkg.in/telegram-bot-api.v4
 # gopkg.in/yaml.v2 v2.2.8
 ## explicit
 gopkg.in/yaml.v2
+# gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
+gopkg.in/yaml.v3

@@ -11,11 +11,11 @@ require (
 	github.com/jmespath/go-jmespath v0.3.0 // indirect
 	github.com/mail-ru-im/bot-golang v0.0.0-20210416201405-ed140b099aee
 	github.com/messagebird/go-rest-api v5.3.0+incompatible
-	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/ovh/go-ovh v0.0.0-20181109152953-ba5adb4cf014
 	github.com/prometheus/alertmanager v0.20.0
 	github.com/prometheus/client_golang v1.5.1
 	github.com/prometheus/procfs v0.0.11 // indirect
+	github.com/sms77io/go-client v0.0.0-20210727072156-0740dfc8b70d
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
 	github.com/tencentcloud/tencentcloud-sdk-go v3.0.164+incompatible
 	github.com/xconstruct/go-pushbullet v0.0.0-20171206132031-67759df45fbb
