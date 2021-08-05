@@ -84,8 +84,12 @@ providers:
     auth_hash: ""
   kavenegar:
     api_token: 'KAVENEGAR_API_TOKEN'
+  esendex:
+    user: 'name'
+    api_token: 'TOKEN'
+    account_reference: 'reference'
   sms77:
-    api_key: 'HeJyJSAvBWDn5RwNfhQGKZI6poCLk7pUXjpxctipYHWGsjoHtWNDI3d4De8gkoVe'
+    api_key: 'api_key'
     debug: false
 
 templates:

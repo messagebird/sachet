@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/messagebird/sachet/provider/esendex"
 	"log"
 	"net/http"
 	"os"
@@ -217,6 +218,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return tencentcloud.NewTencentCloud(config.Providers.TencentCloud)
 	case "sap":
 		return sap.NewSap(config.Providers.Sap), nil
+	case "esendex":
+		return esendex.NewEsendex(config.Providers.Esendex), nil
 	case "sms77":
 		return sms77.NewSms77(config.Providers.Sms77), nil
 	}
