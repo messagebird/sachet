@@ -21,6 +21,7 @@ import (
 	"github.com/messagebird/sachet/provider/pushbullet"
 	"github.com/messagebird/sachet/provider/sap"
 	"github.com/messagebird/sachet/provider/sipgate"
+	"github.com/messagebird/sachet/provider/sms77"
 	"github.com/messagebird/sachet/provider/smsc"
 	"github.com/messagebird/sachet/provider/telegram"
 	"github.com/messagebird/sachet/provider/tencentcloud"
@@ -65,6 +66,7 @@ var config struct {
 		OVH          ovh.Config
 		TencentCloud tencentcloud.Config
 		Sap          sap.Config
+		Sms77        sms77.Sms77Config
 	}
 
 	Receivers []ReceiverConf
