@@ -11,7 +11,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
 	tchttp "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/http"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 )
@@ -21,17 +20,25 @@ type Client struct {
 	httpClient      *http.Client
 	httpProfile     *profile.HttpProfile
 	profile         *profile.ClientProfile
-	credential      *Credential
+	credential      CredentialIface
 	signMethod      string
 	unsignedPayload bool
 	debug           bool
 }
 
 func (c *Client) Send(request tchttp.Request, response tchttp.Response) (err error) {
+	if request.GetScheme() == "" {
+		request.SetScheme(c.httpProfile.Scheme)
+	}
+
+	if request.GetRootDomain() == "" {
+		request.SetRootDomain(c.httpProfile.RootDomain)
+	}
+
 	if request.GetDomain() == "" {
 		domain := c.httpProfile.Endpoint
 		if domain == "" {
-			domain = tchttp.GetServiceDomain(request.GetService())
+			domain = request.GetServiceDomain(request.GetService())
 		}
 		request.SetDomain(domain)
 	}
@@ -41,6 +48,11 @@ func (c *Client) Send(request tchttp.Request, response tchttp.Response) (err err
 	}
 
 	tchttp.CompleteCommonParams(request, c.GetRegion())
+
+	// reflect to inject client client if field exists and retry feature is enabled
+	if c.profile.NetworkFailureMaxRetries > 0 || c.profile.RateLimitExceededMaxRetries > 0 {
+		safeInjectClientToken(request)
+	}
 
 	if c.signMethod == "HmacSHA1" || c.signMethod == "HmacSHA256" {
 		return c.sendWithSignatureV1(request, response)
@@ -67,18 +79,9 @@ func (c *Client) sendWithSignatureV1(request tchttp.Request, response tchttp.Res
 	if request.GetHttpMethod() == "POST" {
 		httpRequest.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	}
-	if c.debug {
-		outbytes, err := httputil.DumpRequest(httpRequest, true)
-		if err != nil {
-			log.Printf("[ERROR] dump request failed because %s", err)
-			return err
-		}
-		log.Printf("[DEBUG] http request = %s", outbytes)
-	}
-	httpResponse, err := c.httpClient.Do(httpRequest)
+	httpResponse, err := c.sendWithRateLimitRetry(httpRequest, isRetryable(request))
 	if err != nil {
-		msg := fmt.Sprintf("Fail to get response because %s", err)
-		return errors.NewTencentCloudSDKError("ClientError.NetworkError", msg, "")
+		return err
 	}
 	err = tchttp.ParseFromHttpResponse(httpResponse, response)
 	return err
@@ -96,15 +99,27 @@ func (c *Client) sendWithSignatureV3(request tchttp.Request, response tchttp.Res
 	if c.region != "" {
 		headers["X-TC-Region"] = c.region
 	}
-	if c.credential.Token != "" {
-		headers["X-TC-Token"] = c.credential.Token
+	if c.credential.GetToken() != "" {
+		headers["X-TC-Token"] = c.credential.GetToken()
 	}
 	if request.GetHttpMethod() == "GET" {
 		headers["Content-Type"] = "application/x-www-form-urlencoded"
 	} else {
 		headers["Content-Type"] = "application/json"
 	}
-
+	isOctetStream := false
+	cr := &tchttp.CommonRequest{}
+	ok := false
+	if cr, ok = request.(*tchttp.CommonRequest); ok {
+		if cr.IsOctetStream() {
+			isOctetStream = true
+			// custom headers must contain Content-Type : application/octet-stream
+			// todo:the custom header may overwrite headers
+			for k, v := range cr.GetHeader() {
+				headers[k] = v
+			}
+		}
+	}
 	// start signature v3 process
 
 	// build canonical request string
@@ -132,11 +147,16 @@ func (c *Client) sendWithSignatureV3(request tchttp.Request, response tchttp.Res
 	signedHeaders := "content-type;host"
 	requestPayload := ""
 	if httpRequestMethod == "POST" {
-		b, err := json.Marshal(request)
-		if err != nil {
-			return err
+		if isOctetStream {
+			// todo Conversion comparison between string and []byte affects performance much
+			requestPayload = string(cr.GetOctetStreamBody())
+		} else {
+			b, err := json.Marshal(request)
+			if err != nil {
+				return err
+			}
+			requestPayload = string(b)
 		}
-		requestPayload = string(b)
 	}
 	hashedRequestPayload := ""
 	if c.unsignedPayload {
@@ -171,7 +191,7 @@ func (c *Client) sendWithSignatureV3(request tchttp.Request, response tchttp.Res
 	//log.Println("string2sign", string2sign)
 
 	// sign string
-	secretDate := hmacsha256(date, "TC3"+c.credential.SecretKey)
+	secretDate := hmacsha256(date, "TC3"+c.credential.GetSecretKey())
 	secretService := hmacsha256(request.GetService(), secretDate)
 	secretKey := hmacsha256("tc3_request", secretService)
 	signature := hex.EncodeToString([]byte(hmacsha256(string2sign, secretKey)))
@@ -180,14 +200,14 @@ func (c *Client) sendWithSignatureV3(request tchttp.Request, response tchttp.Res
 	// build authorization
 	authorization := fmt.Sprintf("%s Credential=%s/%s, SignedHeaders=%s, Signature=%s",
 		algorithm,
-		c.credential.SecretId,
+		c.credential.GetSecretId(),
 		credentialScope,
 		signedHeaders,
 		signature)
 	//log.Println("authorization", authorization)
 
 	headers["Authorization"] = authorization
-	url := "https://" + request.GetDomain() + request.GetPath()
+	url := request.GetScheme() + "://" + request.GetDomain() + request.GetPath()
 	if canonicalQueryString != "" {
 		url = url + "?" + canonicalQueryString
 	}
@@ -198,21 +218,27 @@ func (c *Client) sendWithSignatureV3(request tchttp.Request, response tchttp.Res
 	for k, v := range headers {
 		httpRequest.Header[k] = []string{v}
 	}
-	if c.debug {
-		outbytes, err := httputil.DumpRequest(httpRequest, true)
-		if err != nil {
-			log.Printf("[ERROR] dump request failed because %s", err)
-			return err
-		}
-		log.Printf("[DEBUG] http request = %s", outbytes)
-	}
-	httpResponse, err := c.httpClient.Do(httpRequest)
+	httpResponse, err := c.sendWithRateLimitRetry(httpRequest, isRetryable(request))
 	if err != nil {
-		msg := fmt.Sprintf("Fail to get response because %s", err)
-		return errors.NewTencentCloudSDKError("ClientError.NetworkError", msg, "")
+		return err
 	}
 	err = tchttp.ParseFromHttpResponse(httpResponse, response)
 	return err
+}
+
+// send http request
+func (c *Client) sendHttp(request *http.Request) (response *http.Response, err error) {
+	if c.debug {
+		outbytes, err := httputil.DumpRequest(request, true)
+		if err != nil {
+			log.Printf("[ERROR] dump request failed because %s", err)
+			return nil, err
+		}
+		log.Printf("[DEBUG] http request = %s", outbytes)
+	}
+
+	response, err = c.httpClient.Do(request)
+	return response, err
 }
 
 func (c *Client) GetRegion() string {
@@ -233,7 +259,7 @@ func (c *Client) WithSecretId(secretId, secretKey string) *Client {
 	return c
 }
 
-func (c *Client) WithCredential(cred *Credential) *Client {
+func (c *Client) WithCredential(cred CredentialIface) *Client {
 	c.credential = cred
 	return c
 }
@@ -263,8 +289,30 @@ func (c *Client) WithDebug(flag bool) *Client {
 	return c
 }
 
+// WithProvider use specify provider to get a credential and use it to build a client
+func (c *Client) WithProvider(provider Provider) (*Client, error) {
+	cred, err := provider.GetCredential()
+	if err != nil {
+		return nil, err
+	}
+	return c.WithCredential(cred), nil
+}
+
 func NewClientWithSecretId(secretId, secretKey, region string) (client *Client, err error) {
 	client = &Client{}
 	client.Init(region).WithSecretId(secretId, secretKey)
 	return
+}
+
+// NewClientWithProviders build client with your custom providers;
+// If you don't specify the providers, it will use the DefaultProviderChain to find credential
+func NewClientWithProviders(region string, providers ...Provider) (client *Client, err error) {
+	client = (&Client{}).Init(region)
+	var pc Provider
+	if len(providers) == 0 {
+		pc = DefaultProviderChain()
+	} else {
+		pc = NewProviderChain(providers)
+	}
+	return client.WithProvider(pc)
 }
