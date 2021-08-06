@@ -83,9 +83,7 @@ type Contact struct {
 	LastName  string `json:"lastName"`
 }
 
-type EventPayload struct {
-	client *Client
-
+type BaseEventPayload struct {
 	// Id of the message.
 	// Presented in newMessage, editedMessage, deletedMessage, pinnedMessage, unpinnedMessage events.
 	MsgID string `json:"msgId"`
@@ -102,16 +100,25 @@ type EventPayload struct {
 	// Presented in newMessage, editedMessage and pinnedMessage events.
 	Text string `json:"text"`
 
+	// Timestamp of the event.
+	Timestamp int `json:"timestamp"`
+}
+
+type EventPayload struct {
+	client *Client
+	BaseEventPayload
+
 	// Parts of the message.
 	// Presented only in newMessage event.
 	Parts []Part `json:"parts"`
 
-	// Timestamp of the event.
-	Timestamp int `json:"timestamp"`
-
 	// Id of the query.
 	// Presented only in callbackQuery event.
 	QueryID string `json:"queryId"`
+
+	// Callback message of the query (parent message for button).
+	// Presented only in callbackQuery event.
+	CallbackMsg BaseEventPayload `json:"message"`
 
 	// CallbackData of the query (id of button).
 	// Presented only in callbackQuery event.
@@ -127,14 +134,21 @@ type EventPayload struct {
 }
 
 func (ep *EventPayload) Message() *Message {
-	ep.Chat.client = ep.client
+	return message(ep.client, ep.BaseEventPayload)
+}
 
+func (ep *EventPayload) CallbackMessage() *Message {
+	return message(ep.client, ep.CallbackMsg)
+}
+
+func message(client *Client, msg BaseEventPayload) *Message {
+	msg.Chat.client = client
 	return &Message{
-		client:    ep.client,
-		ID:        ep.MsgID,
-		Text:      ep.Text,
-		Chat:      ep.Chat,
-		Timestamp: ep.Timestamp,
+		client:    client,
+		ID:        msg.MsgID,
+		Text:      msg.Text,
+		Chat:      msg.Chat,
+		Timestamp: msg.Timestamp,
 	}
 }
 

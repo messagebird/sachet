@@ -364,6 +364,10 @@ func (c *Client) SendTextMessage(message *Message) error {
 		params.Set("inlineKeyboardMarkup", string(data))
 	}
 
+	if message.ParseMode != "" {
+		params.Set("parseMode", string(message.ParseMode))
+	}
+
 	response, err := c.Do("/messages/sendText", params, nil)
 	if err != nil {
 		return fmt.Errorf("error while sending text: %s", err)
@@ -390,6 +394,10 @@ func (c *Client) EditMessage(message *Message) error {
 		}
 
 		params.Set("inlineKeyboardMarkup", string(data))
+	}
+
+	if message.ParseMode != "" {
+		params.Set("parseMode", string(message.ParseMode))
 	}
 
 	response, err := c.Do("/messages/editText", params, nil)
@@ -440,6 +448,10 @@ func (c *Client) SendFileMessage(message *Message) error {
 		}
 
 		params.Set("inlineKeyboardMarkup", string(data))
+	}
+
+	if message.ParseMode != "" {
+		params.Set("parseMode", string(message.ParseMode))
 	}
 
 	response, err := c.Do("/messages/sendFile", params, nil)

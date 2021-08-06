@@ -64,6 +64,8 @@ func easyjson4086215fDecodeGithubComMailRuImBotGolang(in *jlexer.Lexer, out *Mes
 				}
 				easyjson4086215fDecodeGithubComMailRuImBotGolang1(in, out.InlineKeyboard)
 			}
+		case "parseMode":
+			out.ParseMode = ParseMode(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -131,6 +133,11 @@ func easyjson4086215fEncodeGithubComMailRuImBotGolang(out *jwriter.Writer, in Me
 		} else {
 			easyjson4086215fEncodeGithubComMailRuImBotGolang1(out, *in.InlineKeyboard)
 		}
+	}
+	{
+		const prefix string = ",\"parseMode\":"
+		out.RawString(prefix)
+		out.String(string(in.ParseMode))
 	}
 	out.RawByte('}')
 }

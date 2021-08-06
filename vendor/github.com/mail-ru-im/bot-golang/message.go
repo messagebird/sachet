@@ -54,6 +54,9 @@ type Message struct {
 
 	// The markup for the inline keyboard
 	InlineKeyboard *Keyboard `json:"inlineKeyboardMarkup"`
+
+	// The parse mode (HTML/MarkdownV2)
+	ParseMode ParseMode `json:"parseMode"`
 }
 
 func (m *Message) AttachNewFile(file *os.File) {
@@ -74,6 +77,19 @@ func (m *Message) AttachNewVoice(file *os.File) {
 func (m *Message) AttachExistingVoice(fileID string) {
 	m.FileID = fileID
 	m.ContentType = Voice
+}
+
+// ParseMode represent a type of text formatting
+type ParseMode string
+
+const (
+	ParseModeHTML       ParseMode = "HTML"
+	ParseModeMarkdownV2 ParseMode = "MarkdownV2"
+)
+
+// AppendParseMode append a type of text formatting for current message
+func (m *Message) AppendParseMode(mode ParseMode) {
+	m.ParseMode = mode
 }
 
 // AttachInlineKeyboard adds a keyboard to the message.

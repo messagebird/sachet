@@ -230,6 +230,20 @@ func (h *MockHandler) GetEvents(w http.ResponseWriter) {
 				  "firstName": "Name",
 				  "userId": "1234567890"
                 },
+				"message": {
+          			"chat": {
+            			"chatId": "1234567890",
+            			"type": "private"
+          			},
+          			"from": {
+            			"firstName": "bot_name",
+            			"nick": "bot_nick",
+            			"userId": "bot_id"
+          			},
+					"msgId": "6720509406122810000",
+          			"text": "Some important information!",
+					"timestamp": 1564740530
+        		},
                 "queryId": "SVR:123456"
             },
             "type": "callbackQuery"
