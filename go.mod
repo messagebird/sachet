@@ -21,7 +21,8 @@ require (
 	github.com/sms77io/go-client v0.0.0-20210727072156-0740dfc8b70d
 	github.com/stretchr/objx v0.3.0 // indirect
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
-	github.com/tencentcloud/tencentcloud-sdk-go v3.0.164+incompatible
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.223
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms v1.0.223
 	github.com/xconstruct/go-pushbullet v0.0.0-20171206132031-67759df45fbb
 	golang.org/x/sys v0.0.0-20210630005230-0f9fa26af87c // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
