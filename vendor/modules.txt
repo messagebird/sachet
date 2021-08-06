@@ -112,12 +112,15 @@ github.com/stretchr/testify/mock
 # github.com/technoweenie/multipartstreamer v1.0.1
 ## explicit
 github.com/technoweenie/multipartstreamer
-# github.com/tencentcloud/tencentcloud-sdk-go v3.0.164+incompatible
+# github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.223
 ## explicit
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/http
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/regions
+# github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms v1.0.223
+## explicit
 github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms/v20190711
 # github.com/xconstruct/go-pushbullet v0.0.0-20171206132031-67759df45fbb
 ## explicit
