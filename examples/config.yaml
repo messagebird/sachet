@@ -91,6 +91,8 @@ providers:
   sms77:
     api_key: 'api_key'
     debug: false
+  ghasedak:
+    api_token: 'GHASEDAK_API_KEY'
 
 templates:
   - telegram.tmpl
@@ -127,3 +129,8 @@ receivers:
     to:
       - '09123456789'
       - '09129876543'
+  - name: 'ghasedak'
+    provider: 'ghasedak'
+    to:
+      - '09012345679'
+      - '09123456789'
