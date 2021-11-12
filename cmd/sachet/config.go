@@ -53,7 +53,7 @@ var config struct {
 		Exotel       exotel.ExotelConfig
 		CM           cm.CMConfig
 		MailruIM     mailruim.MailruIMConfig
-		Telegram     telegram.TelegramConfig
+		Telegram     telegram.Config
 		Turbosms     turbosms.TurbosmsConfig
 		Smsc         smsc.SmscConfig
 		OTC          otc.OTCConfig
