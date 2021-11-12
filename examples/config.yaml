@@ -1,4 +1,11 @@
 providers:
+  aliyun:
+    region_id: cn-hangzhou
+    access_key: access_key
+    access_key_secret: access_key_secret
+    sign_name: sign_name
+    template_code: template_code
+    template_param_key: text
   messagebird:
     access_key: 'live_qKwVZ02ULV70GqabBYxLU8d5r'
     debug: true
@@ -8,6 +15,11 @@ providers:
   infobip:
     token: "sasasa"
     secret: "sasasa"
+  kannel:
+    # url: "http://localhost:13013/cgi-bin/sendsms"
+    url: "http://httpbin.org/get"
+    username: "tester"
+    password: "foobar"
   exotel:
     account_sid: 'sachet'
     auth_token: 'bbba3f4afc0b4ee76c93e43b7c1b2d4350d1a0e8'
@@ -17,10 +29,17 @@ providers:
   turbosms:
     login: 'visla'
     password: '44444'
+  smsc:
+    login: sachet
+    password: sachet
+    sender: SACHET
   cm:
     producttoken: '00000000-0000-0000-0000-000000000000'
   telegram:
     token: "724679217:aa26V5mK3e2qkGsSlTT-iHreaa5FUyy3Z_0"
+  mailruim:
+    token: 000.0000000000.0000000000:0000000000
+    url: https://api.icq.net/bot/v1
   otc:
     identity_endpoint: https://iam.eu-de.otc.t-systems.com:443/v3/auth/tokens
     domain_name: domain_name
@@ -40,6 +59,38 @@ providers:
   sipgate:
     username: 'username'
     password: 'password'
+  pushbullet:
+    access_token: 'o.AbCdEfGhIjKlMnOpQrStUvWxYz012345'
+  nowsms:
+    username: 'username'
+    password: 'password'
+  ovh:
+    endpoint: ovh-eu
+    application_key: application_key
+    application_secret: application_secret
+    consumer_key: consumer_key
+    service_name: sms-xxx-1
+    sender_for_response: true # True if the SMS can be reply by the receiver (if false from in receiver must valid and recorded in OVH API)
+  tencentcloud:
+    region_id: ap-shanghai
+    secret_id: AKIDWqaCa1aNL3V0MtSG7mCZPjvrgJhqdgeN
+    secret_key: d5JLBreHfnfJjHbffWCsSoF8wYs5pNgl
+    app_id: 111233
+    sign_name: sign_name
+    template_code: 123233
+    truncate: true
+  sap:
+    url: "https://sms-pp.sapmobileservices.com/cmn/xxxxx/xxxxx.sms"
+    auth_hash: ""
+  kavenegar:
+    api_token: 'KAVENEGAR_API_TOKEN'
+  esendex:
+    user: 'name'
+    api_token: 'TOKEN'
+    account_reference: 'reference'
+  sms77:
+    api_key: 'api_key'
+    debug: false
 
 templates:
   - telegram.tmpl
@@ -55,4 +106,24 @@ receivers:
     to:
       - '164451814' # the chat id of a user. Get yours at https://telegram.me/userinfobot
     text: '{{ .GroupLabels.alertname }} @ {{ .Labels.instance }}: {{ .Status | toUpper }}'
+  - name: 'pushbullet'
+    provider: 'pushbullet'
+    to:
+      - device:My Nickname
+      - channel:mytag
+  - name: 'nowsms'
+    provider: 'nowsms'
+    to:
+      - '332432432'
+      - '4242334534'
 
+  - name: 'sap'
+    provider: "sap"
+    to:
+      - '+336xxxxxxxx'
+  - name: 'kavenegar'
+    provider: 'kavenegar'
+    from: '10008663'
+    to:
+      - '09123456789'
+      - '09129876543'

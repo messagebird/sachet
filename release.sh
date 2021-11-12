@@ -34,4 +34,10 @@ github-release upload \
     --name "$REPO-$VERSION.linux-amd64.tar.gz" \
     --file "$REPO-$VERSION.linux-amd64.tar.gz"
 
+cd ..
 
+docker build -t ${USER}/${REPO}:${VERSION} .
+
+docker push ${USER}/${REPO}:${VERSION}
+docker tag ${USER}/${REPO}:${VERSION} ${USER}/${REPO}:latest
+docker push ${USER}/${REPO}:latest
