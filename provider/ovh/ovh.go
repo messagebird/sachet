@@ -3,8 +3,8 @@ package ovh
 import (
 	"fmt"
 
-	"github.com/ovh/go-ovh/ovh"
 	"github.com/messagebird/sachet"
+	"github.com/ovh/go-ovh/ovh"
 )
 
 type Config struct {
@@ -15,7 +15,7 @@ type Config struct {
 
 	ServiceName          string `yaml:"service_name"`
 	SenderForResponse    string `yaml:"sender_for_response"`
-	NoStopClause         bool   `default:"false" yaml:"no_stop_clause"`
+	NoStopClause         bool   `yaml:"no_stop_clause"`
 }
 
 type Ovh struct {
