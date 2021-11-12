@@ -15,6 +15,7 @@ type Config struct {
 
 	ServiceName          string `yaml:"service_name"`
 	SenderForResponse    string `yaml:"sender_for_response"`
+	NoStopClause         bool   `default:"false" yaml:"no_stop_clause"`
 }
 
 type Ovh struct {
@@ -45,7 +46,7 @@ func (ovh *Ovh) Send(message sachet.Message) error {
 		type ovhSMS map[string]interface{}
 		sms := make(ovhSMS)
 		sms["message"] = message.Text
-		sms["noStopClause"] = false
+		sms["noStopClause"] = &ovh.config.NoStopClause
 		sms["sender"] = message.From
 		senderForResponse := &ovh.config.SenderForResponse
 		sms["senderForResponse"] = senderForResponse
