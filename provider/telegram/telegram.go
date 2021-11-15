@@ -7,13 +7,14 @@ import (
 )
 
 type Config struct {
-	Token     string `yaml:"token"`
-	ParseMode string `yaml:"parse_mode"`
+	Token                 string `yaml:"token"`
+	ParseMode             string `yaml:"parse_mode"`
+	DisableWebPagePreview bool   `yaml:"disable_web_page_preview"`
 }
 
 type Telegram struct {
-	bot       *tgbotapi.BotAPI
-	config    *Config
+	bot    *tgbotapi.BotAPI
+	config *Config
 }
 
 func NewTelegram(config Config) (*Telegram, error) {
@@ -37,6 +38,7 @@ func (tg *Telegram) Send(message sachet.Message) error {
 
 		msg := tgbotapi.NewMessage(chatID, message.Text)
 		msg.ParseMode = tg.config.ParseMode
+		msg.DisableWebPagePreview = tg.config.DisableWebPagePreview
 
 		_, err = tg.bot.Send(msg)
 		if err != nil {
