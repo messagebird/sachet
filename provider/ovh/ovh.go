@@ -8,14 +8,15 @@ import (
 )
 
 type Config struct {
-	Endpoint             string `yaml:"endpoint"`
-	ApplicationKey       string `yaml:"application_key"`
-	ApplicationSecret    string `yaml:"application_secret"`
-	ConsumerKey          string `yaml:"consumer_key"`
+	Endpoint          string `yaml:"endpoint"`
+	ApplicationKey    string `yaml:"application_key"`
+	ApplicationSecret string `yaml:"application_secret"`
+	ConsumerKey       string `yaml:"consumer_key"`
 
-	ServiceName          string `yaml:"service_name"`
-	SenderForResponse    string `yaml:"sender_for_response"`
-	NoStopClause         bool   `yaml:"no_stop_clause"`
+	ServiceName       string `yaml:"service_name"`
+	SenderForResponse string `yaml:"sender_for_response"`
+	NoStopClause      bool   `yaml:"no_stop_clause"`
+	Priority          string `yaml:"priority"`
 }
 
 type Ovh struct {
@@ -48,12 +49,14 @@ func (ovh *Ovh) Send(message sachet.Message) error {
 		sms["message"] = message.Text
 		sms["noStopClause"] = &ovh.config.NoStopClause
 		sms["sender"] = message.From
-		senderForResponse := &ovh.config.SenderForResponse
-		sms["senderForResponse"] = senderForResponse
+		sms["senderForResponse"] = &ovh.config.SenderForResponse
 		sms["receivers"] = message.To
+		if ovh.config.Priority != "" {
+			sms["priority"] = &ovh.config.Priority
+		}
 		serviceName := &ovh.config.ServiceName
 
-		if err := ovh.client.Post("/sms/" + *serviceName + "/jobs", sms, nil); err != nil {
+		if err := ovh.client.Post("/sms/"+*serviceName+"/jobs", sms, nil); err != nil {
 			return err
 		}
 
