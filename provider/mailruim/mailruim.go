@@ -5,16 +5,16 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-type MailruIMConfig struct {
+type Config struct {
 	Token string `yaml:"token"`
-	Url string `yaml:"url"`
+	Url   string `yaml:"url"`
 }
 
 type MailruIM struct {
 	bot *botgolang.Bot
 }
 
-func NewMailruIM(config MailruIMConfig) (*MailruIM, error) {
+func NewMailruIM(config Config) (*MailruIM, error) {
 	bot, err := botgolang.NewBot(config.Token, botgolang.BotApiURL(config.Url))
 	if err != nil {
 		return nil, err
@@ -32,6 +32,3 @@ func (mr *MailruIM) Send(message sachet.Message) error {
 	}
 	return nil
 }
-
-
-

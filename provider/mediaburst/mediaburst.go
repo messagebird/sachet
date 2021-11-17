@@ -10,8 +10,8 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-//MediaBurstConfig configuration struct for mediaburst Client
-type MediaBurstConfig struct {
+//Config configuration struct for mediaburst Client
+type Config struct {
 	APIKey string `yaml:"api_key"`
 }
 
@@ -20,11 +20,11 @@ const MediaBurstRequestTimeout = time.Second * 20
 
 //MediaBurst is the exte MediaBurst
 type MediaBurst struct {
-	MediaBurstConfig
+	Config
 }
 
 //NewMediaBurst creates a new
-func NewMediaBurst(config MediaBurstConfig) *MediaBurst {
+func NewMediaBurst(config Config) *MediaBurst {
 	MediaBurst := &MediaBurst{config}
 	return MediaBurst
 }

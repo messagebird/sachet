@@ -10,8 +10,8 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-//InfobipConfig configuration struct for Infobip Client
-type InfobipConfig struct {
+//Config configuration struct for Infobip Client
+type Config struct {
 	Token  string `yaml:"token"`
 	Secret string `yaml:"secret"`
 }
@@ -21,11 +21,11 @@ const InfobipRequestTimeout = time.Second * 20
 
 //Infobip is the exte Infobip
 type Infobip struct {
-	InfobipConfig
+	Config
 }
 
 //NewInfobip creates a new
-func NewInfobip(config InfobipConfig) *Infobip {
+func NewInfobip(config Config) *Infobip {
 	Infobip := &Infobip{config}
 	return Infobip
 }

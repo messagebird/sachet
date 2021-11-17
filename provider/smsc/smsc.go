@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-type SmscConfig struct {
+type Config struct {
 	Login    string `yaml:"login"`
 	Password string `yaml:"password"`
 }
@@ -20,7 +20,7 @@ type Smsc struct {
 	Password string
 }
 
-func NewSmsc(config SmscConfig) *Smsc {
+func NewSmsc(config Config) *Smsc {
 	Smsc := &Smsc{Login: config.Login, Password: config.Password}
 	return Smsc
 }

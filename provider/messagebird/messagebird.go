@@ -11,7 +11,7 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-type MessageBirdConfig struct {
+type Config struct {
 	AccessKey string `yaml:"access_key"`
 	Gateway   int    `yaml:"gateway"`
 	Debug     bool   `yaml:"debug"`
@@ -26,7 +26,7 @@ type MessageBird struct {
 	voiceMessageParams voicemessage.Params
 }
 
-func NewMessageBird(config MessageBirdConfig) *MessageBird {
+func NewMessageBird(config Config) *MessageBird {
 	client := messagebird.New(config.AccessKey)
 	if config.Debug {
 		client.DebugLog = log.New(os.Stdout, "DEBUG: ", log.Lshortfile)
