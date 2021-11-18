@@ -44,20 +44,20 @@ type ReceiverConf struct {
 
 var config struct {
 	Providers struct {
-		MessageBird  messagebird.MessageBirdConfig
-		Nexmo        nexmo.NexmoConfig
-		Twilio       twilio.TwilioConfig
-		Infobip      infobip.InfobipConfig
-		Kannel       kannel.KannelConfig
+		MessageBird  messagebird.Config
+		Nexmo        nexmo.Config
+		Twilio       twilio.Config
+		Infobip      infobip.Config
+		Kannel       kannel.Config
 		KaveNegar    kavenegar.Config
-		Exotel       exotel.ExotelConfig
-		CM           cm.CMConfig
-		MailruIM     mailruim.MailruIMConfig
+		Exotel       exotel.Config
+		CM           cm.Config
+		MailruIM     mailruim.Config
 		Telegram     telegram.Config
-		Turbosms     turbosms.TurbosmsConfig
-		Smsc         smsc.SmscConfig
-		OTC          otc.OTCConfig
-		MediaBurst   mediaburst.MediaBurstConfig
+		Turbosms     turbosms.Config
+		Smsc         smsc.Config
+		OTC          otc.Config
+		MediaBurst   mediaburst.Config
 		FreeMobile   freemobile.Config
 		AspSms       aspsms.Config
 		Sipgate      sipgate.Config
@@ -68,7 +68,7 @@ var config struct {
 		TencentCloud tencentcloud.Config
 		Sap          sap.Config
 		Esendex      esendex.Config
-		Sms77        sms77.Sms77Config
+		Sms77        sms77.Config
 	}
 
 	Receivers []ReceiverConf

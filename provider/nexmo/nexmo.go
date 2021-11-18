@@ -5,7 +5,7 @@ import (
 	"gopkg.in/njern/gonexmo.v1"
 )
 
-type NexmoConfig struct {
+type Config struct {
 	APIKey    string `yaml:"api_key"`
 	APISecret string `yaml:"api_secret"`
 }
@@ -14,7 +14,7 @@ type Nexmo struct {
 	client *nexmo.Client
 }
 
-func NewNexmo(config NexmoConfig) (*Nexmo, error) {
+func NewNexmo(config Config) (*Nexmo, error) {
 	client, err := nexmo.NewClientFromAPI(config.APIKey, config.APISecret)
 	if err != nil {
 		return nil, err

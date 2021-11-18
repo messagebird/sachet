@@ -14,7 +14,7 @@ import (
 )
 
 // sachet section
-type TurbosmsConfig struct {
+type Config struct {
 	Alogin    string `yaml:"login"`
 	Apassword string `yaml:"password"`
 }
@@ -23,7 +23,7 @@ type Turbosms struct {
 	Password string
 }
 
-func NewTurbosms(config TurbosmsConfig) *Turbosms {
+func NewTurbosms(config Config) *Turbosms {
 	Turbosms := &Turbosms{Login: config.Alogin, Password: config.Apassword}
 	return Turbosms
 }

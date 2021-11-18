@@ -10,8 +10,8 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-//ExotelConfig configuration struct for exotel Client
-type ExotelConfig struct {
+//Config configuration struct for exotel Client
+type Config struct {
 	AccountSID string `yaml:"account_sid"`
 	AuthToken  string `yaml:"auth_token"`
 }
@@ -26,7 +26,7 @@ type Exotel struct {
 }
 
 //NewExotel creates a new
-func NewExotel(config ExotelConfig) *Exotel {
+func NewExotel(config Config) *Exotel {
 	Exotel := &Exotel{AccountSid: config.AccountSID, Token: config.AuthToken}
 	return Exotel
 }
