@@ -25,17 +25,17 @@ type Infobip struct {
 }
 
 type InfobipDestination struct {
-    To string `json:"to"`
+	To string `json:"to"`
 }
 
 type InfobipMessage struct {
-    From string `json:"from"`
-    Destinations []InfobipDestination `json:"destinations"`
-    Text string `json:"text"`
+	From         string               `json:"from"`
+	Destinations []InfobipDestination `json:"destinations"`
+	Text         string               `json:"text"`
 }
 
 type InfobipPayload struct {
-    Messages []InfobipMessage `json:"messages"`
+	Messages []InfobipMessage `json:"messages"`
 }
 
 //NewInfobip creates a new
@@ -51,19 +51,19 @@ func (c *Infobip) Send(message sachet.Message) (err error) {
 	var request *http.Request
 	var resp *http.Response
 
-    payload := InfobipPayload{}
-    payload.Messages = append(payload.Messages, InfobipMessage{})
-    payload.Messages[0].From = message.From
-    payload.Messages[0].Text = message.Text
+	payload := InfobipPayload{}
+	payload.Messages = append(payload.Messages, InfobipMessage{})
+	payload.Messages[0].From = message.From
+	payload.Messages[0].Text = message.Text
 
-    for _, destination := range message.To {
-        payload.Messages[0].Destinations = append(
-            payload.Messages[0].Destinations,
-            InfobipDestination{
-                To: destination,
-            },
-        )
-    }
+	for _, destination := range message.To {
+		payload.Messages[0].Destinations = append(
+			payload.Messages[0].Destinations,
+			InfobipDestination{
+				To: destination,
+			},
+		)
+	}
 
 	data, err := json.Marshal(payload)
 	if err != nil {
