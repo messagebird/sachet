@@ -24,6 +24,20 @@ type Infobip struct {
 	Config
 }
 
+type InfobipDestination struct {
+	To string `json:"to"`
+}
+
+type InfobipMessage struct {
+	From         string               `json:"from"`
+	Destinations []InfobipDestination `json:"destinations"`
+	Text         string               `json:"text"`
+}
+
+type InfobipPayload struct {
+	Messages []InfobipMessage `json:"messages"`
+}
+
 //NewInfobip creates a new
 func NewInfobip(config Config) *Infobip {
 	Infobip := &Infobip{config}
@@ -32,13 +46,30 @@ func NewInfobip(config Config) *Infobip {
 
 //Send send sms to n number of people using bulk sms api
 func (c *Infobip) Send(message sachet.Message) (err error) {
-	smsURL := "https://api.infobip.com/sms/1/text/single"
+	smsURL := "https://api.infobip.com/sms/2/text/advanced"
 	//smsURL = "http://requestb.in/pwf2ufpw"
 	var request *http.Request
 	var resp *http.Response
 
-	dataMap := map[string]string{"from": message.From, "to": message.To[0], "text": message.Text}
-	data, _ := json.Marshal(dataMap)
+	payload := InfobipPayload{}
+	payload.Messages = append(payload.Messages, InfobipMessage{})
+	payload.Messages[0].From = message.From
+	payload.Messages[0].Text = message.Text
+
+	for _, destination := range message.To {
+		payload.Messages[0].Destinations = append(
+			payload.Messages[0].Destinations,
+			InfobipDestination{
+				To: destination,
+			},
+		)
+	}
+
+	data, err := json.Marshal(payload)
+	if err != nil {
+		return err
+	}
+
 	//preparing the request
 	request, err = http.NewRequest("POST", smsURL, bytes.NewBuffer(data))
 	if err != nil {
