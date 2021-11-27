@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
+
 	"github.com/messagebird/sachet"
 )
 
@@ -31,9 +33,11 @@ func NewGhasedak(config Config) *Ghasedak {
 
 // Building the API and call the Ghasedak endpoint to send SMS to the configured receptor from config.yaml
 func (ns *Ghasedak) Send(message sachet.Message) error {
-	url := "https://api.ghasedak.me/v2/sms/send/pair"
-	payload := strings.NewReader("message=" + message.Text + "&receptor=" + strings.Join(message.To, ","))
-	request, err := http.NewRequest("POST", url, payload)
+	endpoint := "https://api.ghasedak.me/v2/sms/send/pair"
+	data := url.Values{}
+	data.Set("message", message.Text)
+	data.Set("receptor", strings.Join(message.To, ","))
+	request, err := http.NewRequest("POST", endpoint, strings.NewReader(data.Encode()))
 	if err != nil {
 		return err
 	}
