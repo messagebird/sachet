@@ -71,6 +71,7 @@ providers:
     consumer_key: consumer_key
     service_name: sms-xxx-1
     sender_for_response: true # True if the SMS can be reply by the receiver (if false from in receiver must valid and recorded in OVH API)
+    no_stop_clause: true # True if you don't need STOP clause at the end on the message
   tencentcloud:
     region_id: ap-shanghai
     secret_id: AKIDWqaCa1aNL3V0MtSG7mCZPjvrgJhqdgeN

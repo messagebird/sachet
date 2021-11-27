@@ -9,8 +9,8 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-//KannelConfig configuration struct for Kannel Client
-type KannelConfig struct {
+//Config configuration struct for Kannel Client
+type Config struct {
 	URL  string `yaml:"url"`
 	User string `yaml:"username"`
 	Pass string `yaml:"password"`
@@ -21,11 +21,11 @@ const KannelRequestTimeout = time.Second * 20
 
 //Kannel is the exte Kannel
 type Kannel struct {
-	KannelConfig
+	Config
 }
 
 //NewKannel creates a new
-func NewKannel(config KannelConfig) *Kannel {
+func NewKannel(config Config) *Kannel {
 	Kannel := &Kannel{config}
 	return Kannel
 }

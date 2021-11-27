@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-type OTCConfig struct {
+type Config struct {
 	IdentityEndpoint string `yaml:"identity_endpoint"`
 	DomainName       string `yaml:"domain_name"`
 	ProjectName      string `yaml:"project_name"`
@@ -30,10 +30,10 @@ type smsRequest struct {
 }
 
 type OTC struct {
-	OTCConfig
+	Config
 }
 
-func NewOTC(config OTCConfig) *OTC {
+func NewOTC(config Config) *OTC {
 	OTC := &OTC{config}
 	return OTC
 }

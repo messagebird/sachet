@@ -8,8 +8,8 @@ import (
 	"github.com/sms77io/go-client/sms77api"
 )
 
-// Sms77Config is the configuration struct for Sms77 provider
-type Sms77Config struct {
+// Config is the configuration struct for Sms77 provider
+type Config struct {
 	ApiKey string `yaml:"api_key"`
 	Debug  bool   `yaml:"debug"`
 }
@@ -17,11 +17,11 @@ type Sms77Config struct {
 // Sms77 contains the necessary values for the Sms77 provider
 type Sms77 struct {
 	client *sms77api.Sms77API
-	config Sms77Config
+	config Config
 }
 
 // NewSms77 creates and returns a new Sms77 struct
-func NewSms77(config Sms77Config) *Sms77 {
+func NewSms77(config Config) *Sms77 {
 	client := sms77api.New(sms77api.Options{
 		ApiKey:   config.ApiKey,
 		Debug:    config.Debug,
