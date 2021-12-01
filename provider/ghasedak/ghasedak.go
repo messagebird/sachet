@@ -13,8 +13,7 @@ import (
 
 // Retrieving required data from 'ghasedak' sections of config.yaml
 type Config struct {
-	APIToken     string   `yaml:"api_token"`
-	PhoneNumbers []string `yaml:"phone_numbers"`
+	APIToken string `yaml:"api_token"`
 }
 
 // Creating the KaveNegar to contain provider data
