@@ -1,14 +1,16 @@
 package main
 
 import (
-	"github.com/messagebird/sachet/provider/esendex"
 	"io/ioutil"
+
+	"github.com/messagebird/sachet/provider/esendex"
 
 	"github.com/messagebird/sachet/provider/aliyun"
 	"github.com/messagebird/sachet/provider/aspsms"
 	"github.com/messagebird/sachet/provider/cm"
 	"github.com/messagebird/sachet/provider/exotel"
 	"github.com/messagebird/sachet/provider/freemobile"
+	"github.com/messagebird/sachet/provider/ghasedak"
 	"github.com/messagebird/sachet/provider/infobip"
 	"github.com/messagebird/sachet/provider/kannel"
 	"github.com/messagebird/sachet/provider/kavenegar"
@@ -69,6 +71,7 @@ var config struct {
 		Sap          sap.Config
 		Esendex      esendex.Config
 		Sms77        sms77.Config
+		Ghasedak     ghasedak.Config
 	}
 
 	Receivers []ReceiverConf

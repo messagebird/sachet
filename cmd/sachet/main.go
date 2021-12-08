@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/messagebird/sachet/provider/esendex"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/messagebird/sachet/provider/esendex"
 
 	"github.com/messagebird/sachet/provider/tencentcloud"
 
@@ -19,6 +20,7 @@ import (
 	"github.com/messagebird/sachet/provider/cm"
 	"github.com/messagebird/sachet/provider/exotel"
 	"github.com/messagebird/sachet/provider/freemobile"
+	"github.com/messagebird/sachet/provider/ghasedak"
 	"github.com/messagebird/sachet/provider/infobip"
 	"github.com/messagebird/sachet/provider/kannel"
 	"github.com/messagebird/sachet/provider/kavenegar"
@@ -222,6 +224,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return esendex.NewEsendex(config.Providers.Esendex), nil
 	case "sms77":
 		return sms77.NewSms77(config.Providers.Sms77), nil
+	case "ghasedak":
+		return ghasedak.NewGhasedak(config.Providers.Ghasedak), nil
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)
