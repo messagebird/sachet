@@ -245,7 +245,7 @@ func errorHandler(w http.ResponseWriter, status int, err error, provider string)
 	}
 	// respond json
 	bytes, _ := json.Marshal(data)
-	json := string(bytes[:])
+	json := string(bytes)
 	fmt.Fprint(w, json)
 
 	log.Println("Error: " + json)
