@@ -1,6 +1,6 @@
 # TextMagic
 ## Provider
-To configure the TextMagic provider, you need to specify an access key.
+To configure the TextMagic provider, you need to specify a username and an API key.
 
 ```yaml
 providers:
@@ -9,7 +9,7 @@ providers:
     api_key: 'JNV7NgCKNzQVXNOEpZxwU4c9blGEfF'
 ```
 
-You can find your username and API Key by going to https://my.textmagic.com/online/api/rest-api/keys.
+You can find your username and API key by going to https://my.textmagic.com/online/api/rest-api/keys.
 
 The TextMagic provider supports SMS text messages only.
 
