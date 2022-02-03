@@ -37,10 +37,10 @@ func (tm *TextMagic) Send(message sachet.Message) error {
 	var err error = nil
 	switch message.Type {
 	case "", "text":
-		joinedPhones := strings.Join(message.To[:], ",")
+		joinedTo := strings.Join(message.To[:], ",")
 		_, _, err = tm.client.TextMagicApi.SendMessage(tm.auth, textmagic.SendMessageInputObject{
 			Text:   message.Text,
-			Phones: joinedPhones,
+			Phones: joinedTo,
 			From:   message.From,
 		})
 	default:
