@@ -3,7 +3,6 @@ package textmagic
 import (
 	"context"
 	"fmt"
-	"log"
 	"strings"
 
 	"github.com/messagebird/sachet"
