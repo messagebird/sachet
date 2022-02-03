@@ -28,6 +28,7 @@ import (
 	"github.com/messagebird/sachet/provider/smsc"
 	"github.com/messagebird/sachet/provider/telegram"
 	"github.com/messagebird/sachet/provider/tencentcloud"
+	"github.com/messagebird/sachet/provider/textmagic"
 	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
 
@@ -72,6 +73,7 @@ var config struct {
 		Esendex      esendex.Config
 		Sms77        sms77.Config
 		Ghasedak     ghasedak.Config
+		TextMagic    textmagic.Config
 	}
 
 	Receivers []ReceiverConf
