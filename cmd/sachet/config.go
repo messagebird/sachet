@@ -23,6 +23,7 @@ import (
 	"github.com/messagebird/sachet/provider/ovh"
 	"github.com/messagebird/sachet/provider/pushbullet"
 	"github.com/messagebird/sachet/provider/sap"
+	"github.com/messagebird/sachet/provider/sfr"
 	"github.com/messagebird/sachet/provider/sipgate"
 	"github.com/messagebird/sachet/provider/sms77"
 	"github.com/messagebird/sachet/provider/smsc"
@@ -72,6 +73,7 @@ var config struct {
 		Esendex      esendex.Config
 		Sms77        sms77.Config
 		Ghasedak     ghasedak.Config
+		Sfr          sfr.Config
 	}
 
 	Receivers []ReceiverConf

@@ -33,6 +33,7 @@ import (
 	"github.com/messagebird/sachet/provider/ovh"
 	"github.com/messagebird/sachet/provider/pushbullet"
 	"github.com/messagebird/sachet/provider/sap"
+	"github.com/messagebird/sachet/provider/sfr"
 	"github.com/messagebird/sachet/provider/sipgate"
 	"github.com/messagebird/sachet/provider/sms77"
 	"github.com/messagebird/sachet/provider/smsc"
@@ -226,6 +227,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return sms77.NewSms77(config.Providers.Sms77), nil
 	case "ghasedak":
 		return ghasedak.NewGhasedak(config.Providers.Ghasedak), nil
+	case "sfr":
+		return sfr.NewSfr(config.Providers.Sfr), nil
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)
