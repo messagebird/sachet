@@ -101,6 +101,9 @@ providers:
     space_id: ""
     lang: "fr_FR"
     tpoa: "TPOA"
+  textmagic:
+    username: 'username'
+    api_key: 'TEXTMAGIC_API_KEY'
 
 templates:
   - telegram.tmpl
