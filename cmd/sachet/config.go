@@ -3,11 +3,10 @@ package main
 import (
 	"io/ioutil"
 
-	"github.com/messagebird/sachet/provider/esendex"
-
 	"github.com/messagebird/sachet/provider/aliyun"
 	"github.com/messagebird/sachet/provider/aspsms"
 	"github.com/messagebird/sachet/provider/cm"
+	"github.com/messagebird/sachet/provider/esendex"
 	"github.com/messagebird/sachet/provider/exotel"
 	"github.com/messagebird/sachet/provider/freemobile"
 	"github.com/messagebird/sachet/provider/ghasedak"
