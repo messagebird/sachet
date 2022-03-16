@@ -54,7 +54,10 @@ func (c *Smsc) SendOne(message sachet.Message, PhoneNumber string) (err error) {
 	}
 	defer resp.Body.Close()
 	var body []byte
-	resp.Body.Read(body)
+	_, err = resp.Body.Read(body)
+	if err != nil {
+		return
+	}
 	if resp.StatusCode == http.StatusOK && err == nil {
 		return
 	}

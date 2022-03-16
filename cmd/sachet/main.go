@@ -88,6 +88,7 @@ func receiverConfByReceiver(name string) *ReceiverConf {
 }
 
 func providerByName(name string) (sachet.Provider, error) {
+	// TODO: use map of providers instead
 	switch name {
 	case "messagebird":
 		return messagebird.NewMessageBird(config.Providers.MessageBird), nil
@@ -165,7 +166,10 @@ func errorHandler(w http.ResponseWriter, status int, err error, provider string)
 	if err != nil {
 		log.Fatalf("marshalling error: " + err.Error())
 	}
-	w.Write(body)
+
+	if _, err := w.Write(body); err != nil {
+		log.Fatalf("marshalling error: " + err.Error())
+	}
 
 	log.Println("error: " + string(body))
 	requestTotal.WithLabelValues(strconv.FormatInt(int64(status), 10), provider).Inc()

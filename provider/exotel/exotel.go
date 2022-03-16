@@ -59,7 +59,10 @@ func (c *Exotel) Send(message sachet.Message) (err error) {
 	}
 	defer resp.Body.Close()
 	var body []byte
-	resp.Body.Read(body)
+	_, err = resp.Body.Read(body)
+	if err != nil {
+		return err
+	}
 	if resp.StatusCode == http.StatusOK && err == nil {
 		return
 	}

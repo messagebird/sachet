@@ -29,7 +29,9 @@ func NewMailruIM(config Config) (*MailruIM, error) {
 func (mr *MailruIM) Send(message sachet.Message) error {
 	for _, ChatID := range message.To {
 		msg := mr.bot.NewTextMessage(ChatID, message.Text)
-		msg.Send()
+		if err := msg.Send(); err != nil {
+			// TODO: handle the error
+		}
 	}
 	return nil
 }

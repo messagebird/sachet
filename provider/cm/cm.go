@@ -87,7 +87,10 @@ func (c *CM) Send(message sachet.Message) error {
 	defer response.Body.Close()
 
 	var body []byte
-	response.Body.Read(body)
+	_, err = response.Body.Read(body)
+	if err != nil {
+		return err
+	}
 	if response.StatusCode == http.StatusOK && err == nil {
 		return nil
 	}
