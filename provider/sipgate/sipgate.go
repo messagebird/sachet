@@ -65,6 +65,7 @@ func (c *Sipgate) Send(message sachet.Message) error {
 		if err != nil {
 			return err
 		}
+		defer response.Body.Close()
 
 		if response.StatusCode != http.StatusNoContent {
 			return fmt.Errorf("Failed sending sms. statusCode: %d", response.StatusCode)

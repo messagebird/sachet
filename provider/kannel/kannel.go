@@ -60,6 +60,7 @@ func (c *Kannel) Send(message sachet.Message) error {
 		if err != nil {
 			return err
 		}
+		defer response.Body.Close()
 
 		if response.StatusCode >= http.StatusBadRequest {
 			return fmt.Errorf("Failed sending sms. statusCode: %d", response.StatusCode)

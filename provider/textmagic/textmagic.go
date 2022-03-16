@@ -15,6 +15,8 @@ type Config struct {
 	APIKey   string `yaml:"api_key"`
 }
 
+var _ (sachet.Provider) = (*TextMagic)(nil)
+
 type TextMagic struct {
 	client *textmagic.APIClient
 	auth   context.Context

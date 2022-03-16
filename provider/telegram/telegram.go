@@ -14,6 +14,8 @@ type Config struct {
 	DisableWebPagePreview bool   `yaml:"disable_web_page_preview"`
 }
 
+var _ (sachet.Provider) = (*Telegram)(nil)
+
 type Telegram struct {
 	bot    *tgbotapi.BotAPI
 	config *Config

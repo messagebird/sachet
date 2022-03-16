@@ -15,6 +15,8 @@ type Config struct {
 	Debug  bool   `yaml:"debug"`
 }
 
+var _ (sachet.Provider) = (*Sms77)(nil)
+
 // Sms77 contains the necessary values for the Sms77 provider.
 type Sms77 struct {
 	client *sms77api.Sms77API

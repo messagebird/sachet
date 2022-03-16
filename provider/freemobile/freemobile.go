@@ -64,6 +64,7 @@ func (c *FreeMobile) Send(message sachet.Message) error {
 	if err != nil {
 		return err
 	}
+	defer response.Body.Close()
 
 	if response.StatusCode == http.StatusOK && err == nil {
 		return nil

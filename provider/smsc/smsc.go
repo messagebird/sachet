@@ -16,6 +16,8 @@ type Config struct {
 
 const SmscRequestTimeout = time.Second * 60
 
+var _ (sachet.Provider) = (*Smsc)(nil)
+
 type Smsc struct {
 	Login    string
 	Password string

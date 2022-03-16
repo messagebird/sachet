@@ -19,6 +19,8 @@ type Config struct {
 	Apassword string `yaml:"password"`
 }
 
+var _ (sachet.Provider) = (*Turbosms)(nil)
+
 type Turbosms struct {
 	Login    string
 	Password string
@@ -99,6 +101,7 @@ func Request(c *http.Client, url string, payload []byte) ([]byte, error, int) {
 	if err != nil {
 		return nil, err, statuscode
 	}
+	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
