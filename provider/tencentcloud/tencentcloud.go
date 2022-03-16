@@ -56,7 +56,6 @@ func truncateString(str string, num int) string {
 }
 
 func (tencentcloud *TencentCloud) Send(message sachet.Message) error {
-	var err error = nil
 	switch message.Type {
 	case "", "text":
 		request := sms.NewSendSmsRequest()
@@ -75,8 +74,12 @@ func (tencentcloud *TencentCloud) Send(message sachet.Message) error {
 			fmt.Printf("An API error has returned: %s", err)
 			return err
 		}
-		b, _ := json.Marshal(response.Response)
+		b, err := json.Marshal(response.Response)
+		if err != nil {
+			return err
+		}
 		fmt.Printf("%s", b)
 	}
-	return err
+
+	return nil
 }
