@@ -5,11 +5,12 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"github.com/messagebird/sachet"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/messagebird/sachet"
 )
 
 type Config struct {
@@ -107,7 +108,7 @@ func (c *OTC) loginRequest() error {
 	tr := http.DefaultTransport.(*http.Transport)
 	tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: c.Insecure}
 
-	client := &http.Client{Timeout: time.Duration(10 * time.Second), Transport: tr}
+	client := &http.Client{Timeout: 10 * time.Second, Transport: tr}
 	resp, err := client.Do(req)
 	if err != nil {
 		return err
@@ -189,7 +190,7 @@ func (c *OTC) SendRequest(method, resource string, payload *smsRequest, attempts
 	tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: c.Insecure}
 
 	client := &http.Client{
-		Timeout:   time.Duration(10 * time.Second),
+		Timeout:   10 * time.Second,
 		Transport: tr,
 	}
 	resp, err := client.Do(req)
