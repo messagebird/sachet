@@ -33,8 +33,7 @@ func NewTextMagic(config Config) *TextMagic {
 	}
 }
 
-func (tm *TextMagic) Send(message sachet.Message) error {
-	var err error = nil
+func (tm *TextMagic) Send(message sachet.Message) (err error) {
 	switch message.Type {
 	case "", "text":
 		joinedTo := strings.Join(message.To[:], ",")

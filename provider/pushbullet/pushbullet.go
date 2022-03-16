@@ -72,7 +72,6 @@ func (c *Pushbullet) Send(message sachet.Message) error {
 		default:
 			return fmt.Errorf("unrecognised target type: %s", targetType)
 		}
-
 	}
 
 	return nil
