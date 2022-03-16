@@ -31,7 +31,7 @@ func NewKannel(config Config) *Kannel {
 }
 
 // Send send sms to n number of people using bulk sms api.
-func (c *Kannel) Send(message sachet.Message) (err error) {
+func (c *Kannel) Send(message sachet.Message) error {
 	for _, recipient := range message.To {
 		queryParams := url.Values{
 			"from": {message.From},
@@ -59,9 +59,10 @@ func (c *Kannel) Send(message sachet.Message) (err error) {
 			return err
 		}
 
-		if response.StatusCode >= 400 {
+		if response.StatusCode >= http.StatusBadRequest {
 			return fmt.Errorf("Failed sending sms. statusCode: %d", response.StatusCode)
 		}
 	}
-	return
+
+	return nil
 }

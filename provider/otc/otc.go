@@ -115,7 +115,7 @@ func (c *OTC) loginRequest() error {
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode >= 400 {
+	if resp.StatusCode >= http.StatusBadRequest {
 		return fmt.Errorf("OTC API request failed with HTTP status code %d", resp.StatusCode)
 	}
 
@@ -198,7 +198,7 @@ func (c *OTC) SendRequest(method, resource string, payload *smsRequest, attempts
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode == 401 {
+	if resp.StatusCode == http.StatusUnauthorized {
 		// Set empty token to force login.
 		c.Token = ""
 		if attempts--; attempts > 0 {
@@ -206,7 +206,7 @@ func (c *OTC) SendRequest(method, resource string, payload *smsRequest, attempts
 		} else {
 			return nil, err
 		}
-	} else if resp.StatusCode >= 400 {
+	} else if resp.StatusCode >= http.StatusBadRequest {
 		return nil, fmt.Errorf("OTC API request %s failed with HTTP status code %d", url, resp.StatusCode)
 	}
 
