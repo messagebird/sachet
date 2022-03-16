@@ -41,7 +41,7 @@ func (e *Esendex) Send(message sachet.Message) (err error) {
 		err = e.sendOne(message, phoneNumber)
 
 		if err != nil {
-			return fmt.Errorf("failed to make API call to Esendex: %s", err)
+			return fmt.Errorf("failed to make API call to Esendex: %w", err)
 		}
 	}
 

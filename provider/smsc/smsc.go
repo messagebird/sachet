@@ -30,7 +30,7 @@ func (c *Smsc) Send(message sachet.Message) (err error) {
 	for _, number := range message.To {
 		err = c.SendOne(message, number)
 		if err != nil {
-			return fmt.Errorf("Failed to make API call to smsc:%s", err)
+			return fmt.Errorf("Failed to make API call to smsc: %w", err)
 		}
 	}
 	return
