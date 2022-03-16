@@ -6,10 +6,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/messagebird/sachet"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/messagebird/sachet"
 )
 
 const (
@@ -81,7 +82,6 @@ func (e *Esendex) sendOne(message sachet.Message, phoneNumber string) (err error
 	}
 
 	data, err := json.Marshal(params)
-
 	if err != nil {
 		return err
 	}
@@ -98,7 +98,6 @@ func (e *Esendex) sendOne(message sachet.Message, phoneNumber string) (err error
 	request.SetBasicAuth(e.Config.User, e.Config.ApiToken)
 
 	response, err := e.httpClient.Do(request)
-
 	if err != nil {
 		return err
 	}

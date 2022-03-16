@@ -18,6 +18,7 @@ type Config struct {
 	Alogin    string `yaml:"login"`
 	Apassword string `yaml:"password"`
 }
+
 type Turbosms struct {
 	Login    string
 	Password string
@@ -89,7 +90,6 @@ func SoapDecode(data []byte, contents interface{}) error {
 }
 
 func Request(c *http.Client, url string, payload []byte) ([]byte, error, int) {
-
 	resp, err := c.Post(url, "text/xml", bytes.NewBuffer(payload))
 	statuscode := resp.StatusCode
 	if err != nil {
@@ -129,7 +129,6 @@ func (c *Turbosms) Send(message sachet.Message) (err error) {
 	replysms, err, statusreplysms := Request(clientConfig, urlSoap, datasms)
 	if err != nil {
 		return err
-
 	}
 	if statusreply == 200 && statusreplysms == 200 && err == nil {
 		return nil

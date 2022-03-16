@@ -167,7 +167,6 @@ func (c *OTC) loginRequest() error {
 func (c *OTC) SendRequest(method, resource string, payload *smsRequest, attempts int) (io.Reader, error) {
 	if len(c.token) == 0 {
 		err := c.loginRequest()
-
 		if err != nil {
 			return nil, err
 		}

@@ -1,9 +1,10 @@
 package telegram
 
 import (
-	"github.com/messagebird/sachet"
-	"gopkg.in/telegram-bot-api.v4"
 	"strconv"
+
+	"github.com/messagebird/sachet"
+	tgbotapi "gopkg.in/telegram-bot-api.v4"
 )
 
 type Config struct {

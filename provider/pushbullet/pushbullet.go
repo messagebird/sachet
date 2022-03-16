@@ -30,7 +30,6 @@ func NewPushbullet(config Config) *Pushbullet {
 
 // Send pushes a note to devices registered in configuration
 func (c *Pushbullet) Send(message sachet.Message) error {
-
 	for _, recipient := range message.To {
 
 		// create pushbullet client

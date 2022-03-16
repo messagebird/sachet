@@ -2,10 +2,11 @@ package sap
 
 import (
 	"fmt"
-	"github.com/messagebird/sachet"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/messagebird/sachet"
 )
 
 // Config is the configuration struct for Sap provider
@@ -33,7 +34,6 @@ func NewSap(config Config) *Sap {
 
 // Send sends SMS to user registered in configuration
 func (c *Sap) Send(message sachet.Message) error {
-
 	// No \n in Text tolerated
 	msg := strings.ReplaceAll(message.Text, "\n", " - ")
 	content := fmt.Sprintf("Version=2.0\nSubject=Alert\n[MSISDN]\nList=%s\n[MESSAGE]\nText=%s\n[SETUP]\nSplitText=yes\n[END]", strings.Join(message.To, ","), msg)

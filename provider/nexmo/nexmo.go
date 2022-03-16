@@ -2,7 +2,8 @@ package nexmo
 
 import (
 	"github.com/messagebird/sachet"
-	"gopkg.in/njern/gonexmo.v1"
+
+	nexmo "gopkg.in/njern/gonexmo.v1"
 )
 
 type Config struct {

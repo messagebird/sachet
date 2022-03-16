@@ -39,7 +39,7 @@ func (c *Exotel) Send(message sachet.Message) (err error) {
 
 	form := url.Values{"From": {message.From}, "Body": {message.Text}, "To": message.To}
 
-	//preparing the request
+	// preparing the request
 	request, err = http.NewRequest("POST", smsURL, strings.NewReader(form.Encode()))
 	if err != nil {
 		return
@@ -48,7 +48,8 @@ func (c *Exotel) Send(message sachet.Message) (err error) {
 	request.SetBasicAuth(c.AccountSid, c.Token)
 	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	request.Header.Set("User-Agent", "SachetV1.0")
-	//calling the endpoint
+
+	// calling the endpoint
 	httpClient := &http.Client{}
 	httpClient.Timeout = ExotelRequestTimeout
 

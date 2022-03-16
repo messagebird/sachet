@@ -37,7 +37,7 @@ func (c *MediaBurst) Send(message sachet.Message) (err error) {
 
 	form := url.Values{"Key": {c.APIKey}, "From": {message.From}, "Content": {message.Text}, "To": message.To}
 
-	//preparing the request
+	// preparing the request
 	request, err = http.NewRequest("GET", smsURL, strings.NewReader(form.Encode()))
 	if err != nil {
 		return
@@ -45,7 +45,7 @@ func (c *MediaBurst) Send(message sachet.Message) (err error) {
 
 	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	request.Header.Set("User-Agent", "SachetV1.0")
-	//calling the endpoint
+	// calling the endpoint
 	httpClient := &http.Client{}
 	httpClient.Timeout = MediaBurstRequestTimeout
 

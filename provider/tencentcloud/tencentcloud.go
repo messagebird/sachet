@@ -3,6 +3,7 @@ package tencentcloud
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/messagebird/sachet"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
@@ -40,7 +41,6 @@ func NewTencentCloud(config Config) (*TencentCloud, error) {
 		client: client,
 		config: &config,
 	}, nil
-
 }
 
 func truncateString(str string, num int) string {
@@ -78,5 +78,4 @@ func (tencentcloud *TencentCloud) Send(message sachet.Message) error {
 		fmt.Printf("%s", b)
 	}
 	return err
-
 }

@@ -2,10 +2,11 @@ package smsc
 
 import (
 	"fmt"
-	"github.com/messagebird/sachet"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/messagebird/sachet"
 )
 
 type Config struct {
