@@ -218,10 +218,9 @@ func (c *OTC) SendRequest(method, resource string, payload *smsRequest, attempts
 	return bytes.NewReader(body1), nil
 }
 
-//Send send sms to n number of people using bulk sms api
+// Send send sms to n number of people using bulk sms api.
 func (c *OTC) Send(message sachet.Message) (err error) {
 	for _, recipent := range message.To {
-
 		r1 := &smsRequest{
 			Endpoint: recipent,
 			Message:  message.Text,

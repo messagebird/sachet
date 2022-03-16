@@ -13,7 +13,7 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-// sachet section
+// sachet section.
 type Config struct {
 	Alogin    string `yaml:"login"`
 	Apassword string `yaml:"password"`
@@ -29,7 +29,7 @@ func NewTurbosms(config Config) *Turbosms {
 	return Turbosms
 }
 
-// http  url for  turbosms
+// http  url for  turbosms.
 var urlSoap string = "http://turbosms.in.ua/api/soap.html"
 
 type SoapBody struct {

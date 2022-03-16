@@ -11,20 +11,20 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-// Config is the configuration struct for AspSms provider
+// Config is the configuration struct for AspSms provider.
 type Config struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
 }
 
-// AspSms contains the necessary values for the AspSms provider
+// AspSms contains the necessary values for the AspSms provider.
 type AspSms struct {
 	Config
 
 	httpClient *http.Client
 }
 
-// NewAspSms creates and returns a new AspSms struct
+// NewAspSms creates and returns a new AspSms struct.
 func NewAspSms(config Config) *AspSms {
 	return &AspSms{
 		config,
@@ -42,7 +42,7 @@ type requestPayload struct {
 
 const apiUrl = "https://json.aspsms.com/SendSimpleTextSMS"
 
-// Send sends SMS to user registered in configuration
+// Send sends SMS to user registered in configuration.
 func (c *AspSms) Send(message sachet.Message) error {
 	params := requestPayload{
 		Username:    c.Username,

@@ -10,20 +10,20 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-// Config is the configuration struct for NowSms provider
+// Config is the configuration struct for NowSms provider.
 type Config struct {
 	User         string   `yaml:"username"`
 	Password     string   `yaml:"password"`
 	PhoneNumbers []string `yaml:"phone_numbers"`
 }
 
-// NowSms contains the necessary values for the NowSms provider
+// NowSms contains the necessary values for the NowSms provider.
 type NowSms struct {
 	Config
-	HTTPClient *http.Client // The HTTP client to send requests on
+	HTTPClient *http.Client // The HTTP client to send requests on.
 }
 
-// NewNowSms creates and returns a new NowSms struct
+// NewNowSms creates and returns a new NowSms struct.
 func NewNowSms(config Config) *NowSms {
 	return &NowSms{
 		config,
@@ -31,7 +31,7 @@ func NewNowSms(config Config) *NowSms {
 	}
 }
 
-// Send sends SMS to user registered in configuration
+// Send sends SMS to user registered in configuration.
 func (ns *NowSms) Send(message sachet.Message) error {
 	const nowSmsURL = "http://sms-gateway:8800/send"
 

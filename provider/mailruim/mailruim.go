@@ -2,6 +2,7 @@ package mailruim
 
 import (
 	botgolang "github.com/mail-ru-im/bot-golang"
+
 	"github.com/messagebird/sachet"
 )
 

@@ -11,18 +11,18 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-// Retrieving required data from 'ghasedak' sections of config.yaml
+// Retrieving required data from 'ghasedak' sections of config.yaml.
 type Config struct {
 	APIToken string `yaml:"api_token"`
 }
 
-// Creating the KaveNegar to contain provider data
+// Creating the KaveNegar to contain provider data.
 type Ghasedak struct {
 	Config
-	HTTPClient *http.Client // The HTTP client to send requests on
+	HTTPClient *http.Client // The HTTP client to send requests on.
 }
 
-// Ghasedak creates and returns a new Ghasedak struct
+// Ghasedak creates and returns a new Ghasedak struct.
 func NewGhasedak(config Config) *Ghasedak {
 	return &Ghasedak{
 		config,
@@ -30,7 +30,7 @@ func NewGhasedak(config Config) *Ghasedak {
 	}
 }
 
-// Building the API and call the Ghasedak endpoint to send SMS to the configured receptor from config.yaml
+// Building the API and call the Ghasedak endpoint to send SMS to the configured receptor from config.yaml.
 func (ns *Ghasedak) Send(message sachet.Message) error {
 	endpoint := "https://api.ghasedak.me/v2/sms/send/pair"
 	data := url.Values{}

@@ -5,10 +5,11 @@ import (
 	"log"
 	"os"
 
+	"github.com/messagebird/sachet"
+
 	messagebird "github.com/messagebird/go-rest-api"
 	sms "github.com/messagebird/go-rest-api/sms"
 	voicemessage "github.com/messagebird/go-rest-api/voicemessage"
-	"github.com/messagebird/sachet"
 )
 
 type Config struct {

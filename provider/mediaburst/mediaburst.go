@@ -10,26 +10,26 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-//Config configuration struct for mediaburst Client
+// Config configuration struct for mediaburst Client.
 type Config struct {
 	APIKey string `yaml:"api_key"`
 }
 
-//MediaBurstRequestTimeout  is the timeout for http request to mediaburst
+// MediaBurstRequestTimeout  is the timeout for http request to mediaburst.
 const MediaBurstRequestTimeout = time.Second * 20
 
-//MediaBurst is the exte MediaBurst
+// MediaBurst is the exte MediaBurst.
 type MediaBurst struct {
 	Config
 }
 
-//NewMediaBurst creates a new
+// NewMediaBurst creates a new.
 func NewMediaBurst(config Config) *MediaBurst {
 	MediaBurst := &MediaBurst{config}
 	return MediaBurst
 }
 
-//Send send sms to n number of people using bulk sms api
+// Send send sms to n number of people using bulk sms api.
 func (c *MediaBurst) Send(message sachet.Message) (err error) {
 	smsURL := "https://api.clockworksms.com/http/send.aspx"
 	var request *http.Request
@@ -37,7 +37,7 @@ func (c *MediaBurst) Send(message sachet.Message) (err error) {
 
 	form := url.Values{"Key": {c.APIKey}, "From": {message.From}, "Content": {message.Text}, "To": message.To}
 
-	// preparing the request
+	// preparing the request.
 	request, err = http.NewRequest("GET", smsURL, strings.NewReader(form.Encode()))
 	if err != nil {
 		return
@@ -45,7 +45,7 @@ func (c *MediaBurst) Send(message sachet.Message) (err error) {
 
 	request.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	request.Header.Set("User-Agent", "SachetV1.0")
-	// calling the endpoint
+	// calling the endpoint.
 	httpClient := &http.Client{}
 	httpClient.Timeout = MediaBurstRequestTimeout
 

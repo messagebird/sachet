@@ -10,19 +10,19 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-// Config is the configuration struct for CM provider
+// Config is the configuration struct for CM provider.
 type Config struct {
 	ProductToken string `yaml:"producttoken"`
 }
 
-// CM contains the necessary values for the CM provider
+// CM contains the necessary values for the CM provider.
 type CM struct {
 	Config
 }
 
 var cmHTTPClient = &http.Client{Timeout: time.Second * 20}
 
-// NewCM creates and returns a new CM struct
+// NewCM creates and returns a new CM struct.
 func NewCM(config Config) *CM {
 	return &CM{config}
 }
@@ -48,7 +48,7 @@ type CMPayload struct {
 	} `json:"messages"`
 }
 
-// Send sends SMS to n number of people using Bulk SMS API
+// Send sends SMS to n number of people using Bulk SMS API.
 func (c *CM) Send(message sachet.Message) error {
 	smsURL := "https://gw.cmtelecom.com/v1.0/message"
 

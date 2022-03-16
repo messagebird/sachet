@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/messagebird/sachet"
+
 	textmagic "github.com/textmagic/textmagic-rest-go-v2/v2"
 )
 

@@ -76,7 +76,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(*listenAddress, nil))
 }
 
-// receiverConfByReceiver loops the receiver conf list and returns the first instance with that name
+// receiverConfByReceiver loops the receiver conf list and returns the first instance with that name.
 func receiverConfByReceiver(name string) *ReceiverConf {
 	for i := range config.Receivers {
 		rc := &config.Receivers[i]
