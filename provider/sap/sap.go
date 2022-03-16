@@ -15,6 +15,8 @@ type Config struct {
 	AuthHash string `yaml:"auth_hash"`
 }
 
+var _ (sachet.Provider) = (*Sap)(nil)
+
 // Sap contains the necessary values for the Sap provider.
 type Sap struct {
 	Config

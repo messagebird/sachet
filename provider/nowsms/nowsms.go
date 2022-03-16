@@ -17,6 +17,8 @@ type Config struct {
 	PhoneNumbers []string `yaml:"phone_numbers"`
 }
 
+var _ (sachet.Provider) = (*NowSms)(nil)
+
 // NowSms contains the necessary values for the NowSms provider.
 type NowSms struct {
 	Config

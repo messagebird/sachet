@@ -11,6 +11,8 @@ type Config struct {
 	AuthToken  string `yaml:"auth_token"`
 }
 
+var _ (sachet.Provider) = (*Twilio)(nil)
+
 type Twilio struct {
 	client twiliogo.Client
 }

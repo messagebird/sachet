@@ -17,6 +17,8 @@ type Config struct {
 	URL      string `yaml:"url"`
 }
 
+var _ (sachet.Provider) = (*FreeMobile)(nil)
+
 // FreeMobile contains the necessary values for the FreeMobile provider.
 type FreeMobile struct {
 	Config

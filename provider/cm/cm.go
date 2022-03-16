@@ -15,6 +15,8 @@ type Config struct {
 	ProductToken string `yaml:"producttoken"`
 }
 
+var _ (sachet.Provider) = (*CM)(nil)
+
 // CM contains the necessary values for the CM provider.
 type CM struct {
 	Config

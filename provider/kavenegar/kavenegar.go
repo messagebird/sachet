@@ -16,6 +16,8 @@ type Config struct {
 	PhoneNumbers []string `yaml:"phone_numbers"`
 }
 
+var _ (sachet.Provider) = (*KaveNegar)(nil)
+
 // Creating the KaveNegar to contain provider data.
 type KaveNegar struct {
 	Config

@@ -11,6 +11,8 @@ type Config struct {
 	Url   string `yaml:"url"`
 }
 
+var _ (sachet.Provider) = (*MailruIM)(nil)
+
 type MailruIM struct {
 	bot *botgolang.Bot
 }

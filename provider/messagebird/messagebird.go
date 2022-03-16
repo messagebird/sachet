@@ -21,6 +21,8 @@ type Config struct {
 	Repeat    int    `yaml:"repeat"`
 }
 
+var _ (sachet.Provider) = (*MessageBird)(nil)
+
 type MessageBird struct {
 	client             *messagebird.Client
 	messageParams      sms.Params

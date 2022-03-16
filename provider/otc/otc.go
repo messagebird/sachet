@@ -203,9 +203,8 @@ func (c *OTC) SendRequest(method, resource string, payload *smsRequest, attempts
 		c.Token = ""
 		if attempts--; attempts > 0 {
 			return c.SendRequest(method, resource, payload, attempts)
-		} else {
-			return nil, err
 		}
+		return nil, err
 	} else if resp.StatusCode >= http.StatusBadRequest {
 		return nil, fmt.Errorf("OTC API request %s failed with HTTP status code %d", url, resp.StatusCode)
 	}

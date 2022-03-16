@@ -24,6 +24,8 @@ type Config struct {
 	AccountReference string `yaml:"account_reference"`
 }
 
+var _ (sachet.Provider) = (*Esendex)(nil)
+
 type Esendex struct {
 	Config
 	httpClient *http.Client

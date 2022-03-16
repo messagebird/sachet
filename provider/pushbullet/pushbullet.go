@@ -19,6 +19,8 @@ type Config struct {
 	AccessToken string `yaml:"access_token"`
 }
 
+var _ (sachet.Provider) = (*Pushbullet)(nil)
+
 // Pushbullet contains the necessary values for the Pushbullet provider.
 type Pushbullet struct {
 	Config

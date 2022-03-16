@@ -16,6 +16,8 @@ type Config struct {
 	APIToken string `yaml:"api_token"`
 }
 
+var _ (sachet.Provider) = (*Ghasedak)(nil)
+
 // Creating the KaveNegar to contain provider data.
 type Ghasedak struct {
 	Config

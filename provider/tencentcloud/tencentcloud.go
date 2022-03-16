@@ -24,12 +24,14 @@ type Config struct {
 	Truncate     bool   `yaml:"truncate"`
 }
 
+var _ (sachet.Provider) = (*TencentCloud)(nil)
+
 type TencentCloud struct {
 	client *sms.Client
 	config *Config
 }
 
-func NewTencentCloud(config Config) (*TencentCloud, error) {
+func NewTencentCloud(config Config) *TencentCloud {
 	credential := common.NewCredential(
 		config.SecretId,
 		config.SecretKey,
@@ -42,7 +44,7 @@ func NewTencentCloud(config Config) (*TencentCloud, error) {
 	return &TencentCloud{
 		client: client,
 		config: &config,
-	}, nil
+	}
 }
 
 func truncateString(str string, num int) string {

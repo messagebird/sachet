@@ -11,6 +11,8 @@ type Config struct {
 	APISecret string `yaml:"api_secret"`
 }
 
+var _ (sachet.Provider) = (*Nexmo)(nil)
+
 type Nexmo struct {
 	client *nexmo.Client
 }

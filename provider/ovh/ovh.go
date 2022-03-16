@@ -20,6 +20,8 @@ type Config struct {
 	Priority          string `yaml:"priority"`
 }
 
+var _ (sachet.Provider) = (*Ovh)(nil)
+
 type Ovh struct {
 	client *ovh.Client
 	config *Config

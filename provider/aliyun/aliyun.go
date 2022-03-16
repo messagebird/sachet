@@ -20,6 +20,8 @@ type Config struct {
 	TemplateParamKey string `yaml:"template_param_key"`
 }
 
+var _ (sachet.Provider) = (*Aliyun)(nil)
+
 type Aliyun struct {
 	client *dysmsapi.Client
 	config *Config

@@ -19,6 +19,8 @@ type Config struct {
 // KannelRequestTimeout  is the timeout for http request to Kannel.
 const KannelRequestTimeout = time.Second * 20
 
+var _ (sachet.Provider) = (*Kannel)(nil)
+
 // Kannel is the exte Kannel.
 type Kannel struct {
 	Config

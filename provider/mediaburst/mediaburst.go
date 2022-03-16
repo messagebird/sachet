@@ -18,6 +18,8 @@ type Config struct {
 // MediaBurstRequestTimeout  is the timeout for http request to mediaburst.
 const MediaBurstRequestTimeout = time.Second * 20
 
+var _ (sachet.Provider) = (*MediaBurst)(nil)
+
 // MediaBurst is the exte MediaBurst.
 type MediaBurst struct {
 	Config

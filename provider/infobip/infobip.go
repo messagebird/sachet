@@ -19,6 +19,8 @@ type Config struct {
 // InfobipRequestTimeout  is the timeout for http request to Infobip.
 const InfobipRequestTimeout = time.Second * 20
 
+var _ (sachet.Provider) = (*Infobip)(nil)
+
 // Infobip is the exte Infobip.
 type Infobip struct {
 	Config

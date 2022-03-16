@@ -19,6 +19,8 @@ type Config struct {
 // ExotelRequestTimeout  is the timeout for http request to exotel.
 const ExotelRequestTimeout = time.Second * 20
 
+var _ (sachet.Provider) = (*Exotel)(nil)
+
 // Exotel is the exte Exotel.
 type Exotel struct {
 	AccountSid string

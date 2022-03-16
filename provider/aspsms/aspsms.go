@@ -17,6 +17,8 @@ type Config struct {
 	Password string `yaml:"password"`
 }
 
+var _ (sachet.Provider) = (*AspSms)(nil)
+
 // AspSms contains the necessary values for the AspSms provider.
 type AspSms struct {
 	Config

@@ -20,6 +20,8 @@ type Config struct {
 	Password string `yaml:"password"`
 }
 
+var _ (sachet.Provider) = (*Sipgate)(nil)
+
 // Sipgate contains the necessary values for the Sipgate provider.
 type Sipgate struct {
 	Config

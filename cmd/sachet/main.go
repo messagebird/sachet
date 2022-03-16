@@ -133,7 +133,7 @@ func providerByName(name string) (sachet.Provider, error) {
 	case "ovh":
 		return ovh.NewOvh(config.Providers.OVH)
 	case "tencentcloud":
-		return tencentcloud.NewTencentCloud(config.Providers.TencentCloud)
+		return tencentcloud.NewTencentCloud(config.Providers.TencentCloud), nil
 	case "sap":
 		return sap.NewSap(config.Providers.Sap), nil
 	case "esendex":
