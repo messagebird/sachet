@@ -36,7 +36,8 @@ func NewSap(config Config) *Sap {
 func (c *Sap) Send(message sachet.Message) error {
 	// No \n in Text tolerated
 	msg := strings.ReplaceAll(message.Text, "\n", " - ")
-	content := fmt.Sprintf("Version=2.0\nSubject=Alert\n[MSISDN]\nList=%s\n[MESSAGE]\nText=%s\n[SETUP]\nSplitText=yes\n[END]", strings.Join(message.To, ","), msg)
+	content := fmt.Sprintf("Version=2.0\nSubject=Alert\n[MSISDN]\nList=%s\n[MESSAGE]\nText=%s\n[SETUP]\nSplitText=yes\n[END]",
+		strings.Join(message.To, ","), msg)
 
 	request, err := http.NewRequest("POST", c.URL, strings.NewReader(content))
 	if err != nil {

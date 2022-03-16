@@ -76,7 +76,11 @@ func SoapEncode(contents interface{}) ([]byte, error) {
 		return nil, err
 	}
 	data = append([]byte("\n"), data...)
-	env := SoapEnvelopeReqest{Id1: "http://schemas.xmlsoap.org/soap/envelope/", Id2: "http://turbosms.in.ua/api/Turbo", Body: SoapBody{Contents: data}}
+	env := SoapEnvelopeReqest{
+		Id1:  "http://schemas.xmlsoap.org/soap/envelope/",
+		Id2:  "http://turbosms.in.ua/api/Turbo",
+		Body: SoapBody{Contents: data},
+	}
 	return xml.MarshalIndent(&env, "", "  ")
 }
 

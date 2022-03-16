@@ -40,7 +40,8 @@ func (ns *KaveNegar) Send(message sachet.Message) error {
 	request.Header.Set("User-Agent", "Sachet")
 	params := request.URL.Query()
 	params.Add("receptor", strings.Join(message.To, ","))
-	// "params.Add("sender", message.From)" retrieves the sender number using "from" under receivers section, if you leave that empty, KaveNegar will use default sender SMS number to send the message
+	// "params.Add("sender", message.From)" retrieves the sender number using "from" under receivers section,
+	// if you leave that empty, KaveNegar will use default sender SMS number to send the message.
 	params.Add("sender", message.From)
 	params.Add("message", message.Text)
 	request.URL.RawQuery = params.Encode()

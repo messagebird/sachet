@@ -38,7 +38,8 @@ func (c *Smsc) Send(message sachet.Message) (err error) {
 
 func (c *Smsc) SendOne(message sachet.Message, PhoneNumber string) (err error) {
 	encoded_message := url.QueryEscape(message.Text)
-	smsURL := fmt.Sprintf("https://smsc.ru/sys/send.php?login=%s&psw=%s&phones=%s&sender=%s&fmt=0&mes=%s", c.Login, c.Password, PhoneNumber, message.From, encoded_message)
+	smsURL := fmt.Sprintf("https://smsc.ru/sys/send.php?login=%s&psw=%s&phones=%s&sender=%s&fmt=0&mes=%s",
+		c.Login, c.Password, PhoneNumber, message.From, encoded_message)
 	var request *http.Request
 	var resp *http.Response
 	request, err = http.NewRequest("GET", smsURL, nil)
