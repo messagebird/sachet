@@ -115,7 +115,7 @@ func (c *Turbosms) Send(message sachet.Message) (err error) {
 		Timeout: 15 * time.Second,
 		Jar:     cookieJar,
 	}
-	reply, err, statusreply := Request(clientConfig, urlSoap, []byte(data))
+	reply, err, statusreply := Request(clientConfig, urlSoap, data)
 	if err != nil {
 		return err
 	}
@@ -126,7 +126,7 @@ func (c *Turbosms) Send(message sachet.Message) (err error) {
 		return err
 	}
 	// Request
-	replysms, err, statusreplysms := Request(clientConfig, urlSoap, []byte(datasms))
+	replysms, err, statusreplysms := Request(clientConfig, urlSoap, datasms)
 	if err != nil {
 		return err
 
@@ -136,7 +136,7 @@ func (c *Turbosms) Send(message sachet.Message) (err error) {
 	}
 
 	var resp getAuthResponse
-	err = SoapDecode([]byte(reply), &resp)
+	err = SoapDecode(reply, &resp)
 	if err != nil {
 		return err
 	}
