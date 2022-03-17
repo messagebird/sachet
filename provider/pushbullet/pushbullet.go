@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/messagebird/sachet"
-
 	"github.com/xconstruct/go-pushbullet"
+
+	"github.com/messagebird/sachet"
 )
 
 const (

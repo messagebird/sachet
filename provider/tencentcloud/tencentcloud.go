@@ -5,12 +5,12 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/messagebird/sachet"
-
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	tcError "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 	sms "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms/v20190711"
+
+	"github.com/messagebird/sachet"
 )
 
 type Config struct {

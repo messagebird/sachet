@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/messagebird/sachet"
-
 	textmagic "github.com/textmagic/textmagic-rest-go-v2/v2"
+
+	"github.com/messagebird/sachet"
 )
 
 type Config struct {

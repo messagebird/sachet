@@ -60,7 +60,6 @@ linters:
   enable-all: true
   disable:
     # TODO: enable one by one
-    - gci
     - ireturn
     - forbidigo
     - containedctx

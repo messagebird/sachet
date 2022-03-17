@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/messagebird/sachet"
-
 	"github.com/sms77io/go-client/sms77api"
+
+	"github.com/messagebird/sachet"
 )
 
 // Config is the configuration struct for Sms77 provider.

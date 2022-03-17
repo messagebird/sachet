@@ -3,6 +3,9 @@ package main
 import (
 	"io/ioutil"
 
+	"github.com/prometheus/alertmanager/template"
+	"gopkg.in/yaml.v2"
+
 	"github.com/messagebird/sachet/provider/aliyun"
 	"github.com/messagebird/sachet/provider/aspsms"
 	"github.com/messagebird/sachet/provider/cm"
@@ -30,9 +33,6 @@ import (
 	"github.com/messagebird/sachet/provider/textmagic"
 	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
-
-	"github.com/prometheus/alertmanager/template"
-	"gopkg.in/yaml.v2"
 )
 
 type ReceiverConf struct {

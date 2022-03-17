@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
-	sachet "github.com/messagebird/sachet"
-
 	"github.com/aliyun/alibaba-cloud-sdk-go/services/dysmsapi"
+
+	"github.com/messagebird/sachet"
 )
 
 type Config struct {

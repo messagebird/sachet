@@ -3,9 +3,9 @@ package ovh
 import (
 	"fmt"
 
-	"github.com/messagebird/sachet"
-
 	"github.com/ovh/go-ovh/ovh"
+
+	"github.com/messagebird/sachet"
 )
 
 type Config struct {
