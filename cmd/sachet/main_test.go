@@ -22,5 +22,6 @@ func Test_errorHandler(t *testing.T) {
 }
 
 func Test_fail(t *testing.T) {
+	// TODO also try to fail lint?
 	assert.Equal(t, "marcel", "smart")
 }
