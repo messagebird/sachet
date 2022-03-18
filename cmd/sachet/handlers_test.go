@@ -30,7 +30,7 @@ func Test_newAlertText(t *testing.T) {
 			exp: " \n",
 		},
 		{
-			name: "alerts labels",
+			name: "alert labels",
 			data: template.Data{
 				Alerts: template.Alerts{
 					template.Alert{
@@ -42,7 +42,7 @@ func Test_newAlertText(t *testing.T) {
 					},
 				},
 			},
-			exp: " \nalertname= a\ninstance= a\nexported_instance= a",
+			exp: " \nalertname= a\nexported_instance= a\ninstance= a",
 		},
 		{
 			name: "common labels",

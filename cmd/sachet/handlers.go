@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"sort"
 	"strings"
 
 	"github.com/prometheus/alertmanager/template"
@@ -42,6 +43,7 @@ func newAlertText(data template.Data) string {
 		for k, v := range alert.Labels {
 			tuples = append(tuples, k+"= "+v)
 		}
+		sort.Strings(tuples)
 		return strings.ToUpper(data.Status) + " \n" + strings.Join(tuples, "\n")
 	}
 
