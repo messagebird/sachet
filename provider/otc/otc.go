@@ -5,11 +5,12 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"github.com/messagebird/sachet"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/messagebird/sachet"
 )
 
 type Config struct {
@@ -20,8 +21,8 @@ type Config struct {
 	Password         string `yaml:"password"`
 	ProjectID        string `yaml:"project_id"`
 	Insecure         bool   `yaml:"insecure"`
-	token            string
-	otcBaseURL       string
+	Token            string `yaml:"-"`
+	OtcBaseURL       string `yaml:"-"`
 }
 
 type smsRequest struct {
@@ -107,20 +108,20 @@ func (c *OTC) loginRequest() error {
 	tr := http.DefaultTransport.(*http.Transport)
 	tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: c.Insecure}
 
-	client := &http.Client{Timeout: time.Duration(10 * time.Second), Transport: tr}
+	client := &http.Client{Timeout: 10 * time.Second, Transport: tr}
 	resp, err := client.Do(req)
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode >= 400 {
+	if resp.StatusCode >= http.StatusBadRequest {
 		return fmt.Errorf("OTC API request failed with HTTP status code %d", resp.StatusCode)
 	}
 
-	c.token = resp.Header.Get("X-Subject-Token")
+	c.Token = resp.Header.Get("X-Subject-Token")
 
-	if c.token == "" {
+	if c.Token == "" {
 		return fmt.Errorf("unable to get auth token")
 	}
 
@@ -146,17 +147,17 @@ func (c *OTC) loginRequest() error {
 	for _, v := range endpointResp.Token.Catalog {
 		if v.Type == "smn" {
 			for _, endpoint := range v.Endpoints {
-				c.otcBaseURL = fmt.Sprintf("%s%s", endpoint.URL, c.ProjectID)
+				c.OtcBaseURL = fmt.Sprintf("%s%s", endpoint.URL, c.ProjectID)
 				continue
 			}
 		}
 
-		if c.otcBaseURL != "" {
+		if c.OtcBaseURL != "" {
 			continue
 		}
 	}
 
-	if c.otcBaseURL == "" {
+	if c.OtcBaseURL == "" {
 		return fmt.Errorf("unable to find snm endpoint")
 	}
 
@@ -164,15 +165,14 @@ func (c *OTC) loginRequest() error {
 }
 
 func (c *OTC) SendRequest(method, resource string, payload *smsRequest, attempts int) (io.Reader, error) {
-	if len(c.token) == 0 {
+	if len(c.Token) == 0 {
 		err := c.loginRequest()
-
 		if err != nil {
 			return nil, err
 		}
 	}
 
-	url := fmt.Sprintf("%s/%s", c.otcBaseURL, resource)
+	url := fmt.Sprintf("%s/%s", c.OtcBaseURL, resource)
 	body, err := json.Marshal(payload)
 	if err != nil {
 		return nil, err
@@ -183,13 +183,13 @@ func (c *OTC) SendRequest(method, resource string, payload *smsRequest, attempts
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-Auth-Token", c.token)
+	req.Header.Set("X-Auth-Token", c.Token)
 
 	tr := http.DefaultTransport.(*http.Transport)
 	tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: c.Insecure}
 
 	client := &http.Client{
-		Timeout:   time.Duration(10 * time.Second),
+		Timeout:   10 * time.Second,
 		Transport: tr,
 	}
 	resp, err := client.Do(req)
@@ -198,15 +198,14 @@ func (c *OTC) SendRequest(method, resource string, payload *smsRequest, attempts
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode == 401 {
-		// Set empty token to force login
-		c.token = ""
+	if resp.StatusCode == http.StatusUnauthorized {
+		// Set empty token to force login.
+		c.Token = ""
 		if attempts--; attempts > 0 {
 			return c.SendRequest(method, resource, payload, attempts)
-		} else {
-			return nil, err
 		}
-	} else if resp.StatusCode >= 400 {
+		return nil, err
+	} else if resp.StatusCode >= http.StatusBadRequest {
 		return nil, fmt.Errorf("OTC API request %s failed with HTTP status code %d", url, resp.StatusCode)
 	}
 
@@ -218,10 +217,9 @@ func (c *OTC) SendRequest(method, resource string, payload *smsRequest, attempts
 	return bytes.NewReader(body1), nil
 }
 
-//Send send sms to n number of people using bulk sms api
+// Send send sms to n number of people using bulk sms api.
 func (c *OTC) Send(message sachet.Message) (err error) {
 	for _, recipent := range message.To {
-
 		r1 := &smsRequest{
 			Endpoint: recipent,
 			Message:  message.Text,

@@ -2,6 +2,7 @@ package twilio
 
 import (
 	"github.com/carlosdp/twiliogo"
+
 	"github.com/messagebird/sachet"
 )
 
@@ -9,6 +10,8 @@ type Config struct {
 	AccountSID string `yaml:"account_sid"`
 	AuthToken  string `yaml:"auth_token"`
 }
+
+var _ (sachet.Provider) = (*Twilio)(nil)
 
 type Twilio struct {
 	client twiliogo.Client

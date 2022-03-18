@@ -1,9 +1,11 @@
 package telegram
 
 import (
-	"github.com/messagebird/sachet"
-	"gopkg.in/telegram-bot-api.v4"
 	"strconv"
+
+	tgbotapi "gopkg.in/telegram-bot-api.v4"
+
+	"github.com/messagebird/sachet"
 )
 
 type Config struct {
@@ -11,6 +13,8 @@ type Config struct {
 	ParseMode             string `yaml:"parse_mode"`
 	DisableWebPagePreview bool   `yaml:"disable_web_page_preview"`
 }
+
+var _ (sachet.Provider) = (*Telegram)(nil)
 
 type Telegram struct {
 	bot    *tgbotapi.BotAPI

@@ -8,16 +8,16 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 
-	"github.com/messagebird/sachet/provider/esendex"
-
-	"github.com/messagebird/sachet/provider/tencentcloud"
+	"github.com/heptiolabs/healthcheck"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/messagebird/sachet"
 	"github.com/messagebird/sachet/provider/aliyun"
 	"github.com/messagebird/sachet/provider/aspsms"
 	"github.com/messagebird/sachet/provider/cm"
+	"github.com/messagebird/sachet/provider/esendex"
 	"github.com/messagebird/sachet/provider/exotel"
 	"github.com/messagebird/sachet/provider/freemobile"
 	"github.com/messagebird/sachet/provider/ghasedak"
@@ -37,15 +37,10 @@ import (
 	"github.com/messagebird/sachet/provider/sms77"
 	"github.com/messagebird/sachet/provider/smsc"
 	"github.com/messagebird/sachet/provider/telegram"
+	"github.com/messagebird/sachet/provider/tencentcloud"
 	"github.com/messagebird/sachet/provider/textmagic"
 	"github.com/messagebird/sachet/provider/turbosms"
 	"github.com/messagebird/sachet/provider/twilio"
-
-	"github.com/prometheus/alertmanager/template"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-
-	"github.com/heptiolabs/healthcheck"
 )
 
 var (
@@ -61,92 +56,11 @@ func main() {
 		log.Fatalf("Error loading configuration: %s", err)
 	}
 
-	http.HandleFunc("/alert", func(w http.ResponseWriter, r *http.Request) {
-		defer r.Body.Close()
+	app := handlers{}
 
-		// https://godoc.org/github.com/prometheus/alertmanager/template#Data
-		data := template.Data{}
-		if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
-			errorHandler(w, http.StatusBadRequest, err, "?")
-			return
-		}
-
-		receiverConf := receiverConfByReceiver(data.Receiver)
-		if receiverConf == nil {
-			errorHandler(w, http.StatusBadRequest, fmt.Errorf("Receiver missing: %s", data.Receiver), "?")
-			return
-		}
-		provider, err := providerByName(receiverConf.Provider)
-		if err != nil {
-			errorHandler(w, http.StatusInternalServerError, err, receiverConf.Provider)
-			return
-		}
-
-		var text string
-		if receiverConf.Text != "" {
-			text, err = tmpl.ExecuteTextString(receiverConf.Text, data)
-			if err != nil {
-				errorHandler(w, http.StatusInternalServerError, err, receiverConf.Provider)
-				return
-			}
-		} else {
-			if len(data.Alerts) > 1 {
-				labelAlerts := map[string]template.Alerts{
-					"Firing":   data.Alerts.Firing(),
-					"Resolved": data.Alerts.Resolved(),
-				}
-				for label, alerts := range labelAlerts {
-					if len(alerts) > 0 {
-						text += label + ": \n"
-						for _, alert := range alerts {
-							text += alert.Labels["alertname"] + " @" + alert.Labels["instance"]
-							if len(alert.Labels["exported_instance"]) > 0 {
-								text += " (" + alert.Labels["exported_instance"] + ")"
-							}
-							text += "\n"
-						}
-					}
-				}
-			} else if len(data.Alerts) == 1 {
-				alert := data.Alerts[0]
-				tuples := []string{}
-				for k, v := range alert.Labels {
-					tuples = append(tuples, k+"= "+v)
-				}
-				text = strings.ToUpper(data.Status) + " \n" + strings.Join(tuples, "\n")
-			} else {
-				text = "Alert \n" + strings.Join(data.CommonLabels.Values(), " | ")
-			}
-		}
-
-		message := sachet.Message{
-			To:   receiverConf.To,
-			From: receiverConf.From,
-			Type: receiverConf.Type,
-			Text: text,
-		}
-
-		if err = provider.Send(message); err != nil {
-			errorHandler(w, http.StatusBadRequest, err, receiverConf.Provider)
-			return
-		}
-
-		requestTotal.WithLabelValues("200", receiverConf.Provider).Inc()
-	})
-
+	http.HandleFunc("/alert", app.Alert)
 	http.Handle("/metrics", promhttp.Handler())
-
-	http.HandleFunc("/-/reload", func(w http.ResponseWriter, r *http.Request) {
-		defer r.Body.Close()
-		if r.Method == "POST" {
-			log.Println("Loading configuration file", *configFile)
-			if err := LoadConfig(*configFile); err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-			}
-		} else {
-			http.Error(w, "Invalid request method.", http.StatusMethodNotAllowed)
-		}
-	})
+	http.HandleFunc("/-/reload", app.Reload)
 
 	hc := healthcheck.NewMetricsHandler(prometheus.DefaultRegisterer, "sachet")
 
@@ -162,7 +76,7 @@ func main() {
 	log.Fatal(http.ListenAndServe(*listenAddress, nil))
 }
 
-// receiverConfByReceiver loops the receiver conf list and returns the first instance with that name
+// receiverConfByReceiver loops the receiver conf list and returns the first instance with that name.
 func receiverConfByReceiver(name string) *ReceiverConf {
 	for i := range config.Receivers {
 		rc := &config.Receivers[i]
@@ -174,6 +88,7 @@ func receiverConfByReceiver(name string) *ReceiverConf {
 }
 
 func providerByName(name string) (sachet.Provider, error) {
+	// TODO: use map of providers instead
 	switch name {
 	case "messagebird":
 		return messagebird.NewMessageBird(config.Providers.MessageBird), nil
@@ -218,7 +133,7 @@ func providerByName(name string) (sachet.Provider, error) {
 	case "ovh":
 		return ovh.NewOvh(config.Providers.OVH)
 	case "tencentcloud":
-		return tencentcloud.NewTencentCloud(config.Providers.TencentCloud)
+		return tencentcloud.NewTencentCloud(config.Providers.TencentCloud), nil
 	case "sap":
 		return sap.NewSap(config.Providers.Sap), nil
 	case "esendex":
@@ -247,10 +162,15 @@ func errorHandler(w http.ResponseWriter, status int, err error, provider string)
 		err.Error(),
 	}
 	// respond json
-	bytes, _ := json.Marshal(data)
-	json := string(bytes[:])
-	fmt.Fprint(w, json)
+	body, err := json.Marshal(data)
+	if err != nil {
+		log.Fatalf("marshalling error: " + err.Error())
+	}
 
-	log.Println("Error: " + json)
+	if _, err := w.Write(body); err != nil {
+		log.Fatalf("marshalling error: " + err.Error())
+	}
+
+	log.Println("error: " + string(body))
 	requestTotal.WithLabelValues(strconv.FormatInt(int64(status), 10), provider).Inc()
 }

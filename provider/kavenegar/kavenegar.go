@@ -10,19 +10,21 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-// Retrieving required data from 'kavenegar' sections of config.yaml
+// Retrieving required data from 'kavenegar' sections of config.yaml.
 type Config struct {
 	APIToken     string   `yaml:"api_token"`
 	PhoneNumbers []string `yaml:"phone_numbers"`
 }
 
-// Creating the KaveNegar to contain provider data
+var _ (sachet.Provider) = (*KaveNegar)(nil)
+
+// Creating the KaveNegar to contain provider data.
 type KaveNegar struct {
 	Config
-	HTTPClient *http.Client // The HTTP client to send requests on
+	HTTPClient *http.Client // The HTTP client to send requests on.
 }
 
-// KaveNegar creates and returns a new KaveNegar struct
+// KaveNegar creates and returns a new KaveNegar struct.
 func NewKaveNegar(config Config) *KaveNegar {
 	return &KaveNegar{
 		config,
@@ -30,7 +32,7 @@ func NewKaveNegar(config Config) *KaveNegar {
 	}
 }
 
-// Building the API and call the KaveNegar endpoint to send SMS to the configured receptor from config.yaml
+// Building the API and call the KaveNegar endpoint to send SMS to the configured receptor from config.yaml.
 func (ns *KaveNegar) Send(message sachet.Message) error {
 	url := "https://api.kavenegar.com/v1/" + ns.APIToken + "/sms/send.json"
 	request, err := http.NewRequest("GET", url, nil)
@@ -40,7 +42,8 @@ func (ns *KaveNegar) Send(message sachet.Message) error {
 	request.Header.Set("User-Agent", "Sachet")
 	params := request.URL.Query()
 	params.Add("receptor", strings.Join(message.To, ","))
-	// "params.Add("sender", message.From)" retrieves the sender number using "from" under receivers section, if you leave that empty, KaveNegar will use default sender SMS number to send the message
+	// "params.Add("sender", message.From)" retrieves the sender number using "from" under receivers section,
+	// if you leave that empty, KaveNegar will use default sender SMS number to send the message.
 	params.Add("sender", message.From)
 	params.Add("message", message.Text)
 	request.URL.RawQuery = params.Encode()

@@ -9,31 +9,39 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-//Config configuration struct for Kannel Client
+// Config configuration struct for Kannel Client.
 type Config struct {
 	URL  string `yaml:"url"`
 	User string `yaml:"username"`
 	Pass string `yaml:"password"`
 }
 
-//KannelRequestTimeout  is the timeout for http request to Kannel
+// KannelRequestTimeout  is the timeout for http request to Kannel.
 const KannelRequestTimeout = time.Second * 20
 
-//Kannel is the exte Kannel
+var _ (sachet.Provider) = (*Kannel)(nil)
+
+// Kannel is the exte Kannel.
 type Kannel struct {
 	Config
 }
 
-//NewKannel creates a new
+// NewKannel creates a new.
 func NewKannel(config Config) *Kannel {
 	Kannel := &Kannel{config}
 	return Kannel
 }
 
-//Send send sms to n number of people using bulk sms api
-func (c *Kannel) Send(message sachet.Message) (err error) {
+// Send send sms to n number of people using bulk sms api.
+func (c *Kannel) Send(message sachet.Message) error {
 	for _, recipient := range message.To {
-		queryParams := url.Values{"from": {message.From}, "to": {recipient}, "text": {message.Text}, "user": {c.User}, "pass": {c.Pass}}
+		queryParams := url.Values{
+			"from": {message.From},
+			"to":   {recipient},
+			"text": {message.Text},
+			"user": {c.User},
+			"pass": {c.Pass},
+		}
 
 		request, err := http.NewRequest("GET", c.URL, nil)
 		if err != nil {
@@ -52,10 +60,12 @@ func (c *Kannel) Send(message sachet.Message) (err error) {
 		if err != nil {
 			return err
 		}
+		defer response.Body.Close()
 
-		if response.StatusCode >= 400 {
+		if response.StatusCode >= http.StatusBadRequest {
 			return fmt.Errorf("Failed sending sms. statusCode: %d", response.StatusCode)
 		}
 	}
-	return
+
+	return nil
 }

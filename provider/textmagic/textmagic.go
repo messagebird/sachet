@@ -5,14 +5,17 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/messagebird/sachet"
 	textmagic "github.com/textmagic/textmagic-rest-go-v2/v2"
+
+	"github.com/messagebird/sachet"
 )
 
 type Config struct {
 	Username string `yaml:"username"`
 	APIKey   string `yaml:"api_key"`
 }
+
+var _ (sachet.Provider) = (*TextMagic)(nil)
 
 type TextMagic struct {
 	client *textmagic.APIClient
@@ -33,11 +36,10 @@ func NewTextMagic(config Config) *TextMagic {
 	}
 }
 
-func (tm *TextMagic) Send(message sachet.Message) error {
-	var err error = nil
+func (tm *TextMagic) Send(message sachet.Message) (err error) {
 	switch message.Type {
 	case "", "text":
-		joinedTo := strings.Join(message.To[:], ",")
+		joinedTo := strings.Join(message.To, ",")
 		_, _, err = tm.client.TextMagicApi.SendMessage(tm.auth, textmagic.SendMessageInputObject{
 			Text:   message.Text,
 			Phones: joinedTo,

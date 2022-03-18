@@ -13,11 +13,14 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-// sachet section
+// sachet section.
 type Config struct {
 	Alogin    string `yaml:"login"`
 	Apassword string `yaml:"password"`
 }
+
+var _ (sachet.Provider) = (*Turbosms)(nil)
+
 type Turbosms struct {
 	Login    string
 	Password string
@@ -28,7 +31,7 @@ func NewTurbosms(config Config) *Turbosms {
 	return Turbosms
 }
 
-// http  url for  turbosms
+// http  url for  turbosms.
 var urlSoap string = "http://turbosms.in.ua/api/soap.html"
 
 type SoapBody struct {
@@ -75,7 +78,11 @@ func SoapEncode(contents interface{}) ([]byte, error) {
 		return nil, err
 	}
 	data = append([]byte("\n"), data...)
-	env := SoapEnvelopeReqest{Id1: "http://schemas.xmlsoap.org/soap/envelope/", Id2: "http://turbosms.in.ua/api/Turbo", Body: SoapBody{Contents: data}}
+	env := SoapEnvelopeReqest{
+		Id1:  "http://schemas.xmlsoap.org/soap/envelope/",
+		Id2:  "http://turbosms.in.ua/api/Turbo",
+		Body: SoapBody{Contents: data},
+	}
 	return xml.MarshalIndent(&env, "", "  ")
 }
 
@@ -89,12 +96,12 @@ func SoapDecode(data []byte, contents interface{}) error {
 }
 
 func Request(c *http.Client, url string, payload []byte) ([]byte, error, int) {
-
 	resp, err := c.Post(url, "text/xml", bytes.NewBuffer(payload))
 	statuscode := resp.StatusCode
 	if err != nil {
 		return nil, err, statuscode
 	}
+	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -115,7 +122,7 @@ func (c *Turbosms) Send(message sachet.Message) (err error) {
 		Timeout: 15 * time.Second,
 		Jar:     cookieJar,
 	}
-	reply, err, statusreply := Request(clientConfig, urlSoap, []byte(data))
+	reply, err, statusreply := Request(clientConfig, urlSoap, data)
 	if err != nil {
 		return err
 	}
@@ -126,17 +133,16 @@ func (c *Turbosms) Send(message sachet.Message) (err error) {
 		return err
 	}
 	// Request
-	replysms, err, statusreplysms := Request(clientConfig, urlSoap, []byte(datasms))
+	replysms, err, statusreplysms := Request(clientConfig, urlSoap, datasms)
 	if err != nil {
 		return err
-
 	}
 	if statusreply == 200 && statusreplysms == 200 && err == nil {
 		return nil
 	}
 
 	var resp getAuthResponse
-	err = SoapDecode([]byte(reply), &resp)
+	err = SoapDecode(reply, &resp)
 	if err != nil {
 		return err
 	}
