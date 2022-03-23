@@ -20,8 +20,3 @@ func Test_errorHandler(t *testing.T) {
 	errorHandler(w, http.StatusForbidden, err, "test")
 	assert.Equal(t, expect, w.Body.String())
 }
-
-func Test_fail(t *testing.T) {
-	// TODO also try to fail lint?
-	assert.Equal(t, "marcel", "smart")
-}
