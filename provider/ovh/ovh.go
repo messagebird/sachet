@@ -3,8 +3,9 @@ package ovh
 import (
 	"fmt"
 
-	"github.com/messagebird/sachet"
 	"github.com/ovh/go-ovh/ovh"
+
+	"github.com/messagebird/sachet"
 )
 
 type Config struct {
@@ -18,6 +19,8 @@ type Config struct {
 	NoStopClause      bool   `yaml:"no_stop_clause"`
 	Priority          string `yaml:"priority"`
 }
+
+var _ (sachet.Provider) = (*Ovh)(nil)
 
 type Ovh struct {
 	client *ovh.Client

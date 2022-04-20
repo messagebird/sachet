@@ -10,21 +10,23 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-// Config is the configuration struct for FreeMobile provider
+// Config is the configuration struct for FreeMobile provider.
 type Config struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
 	URL      string `yaml:"url"`
 }
 
-// FreeMobile contains the necessary values for the FreeMobile provider
+var _ (sachet.Provider) = (*FreeMobile)(nil)
+
+// FreeMobile contains the necessary values for the FreeMobile provider.
 type FreeMobile struct {
 	Config
 }
 
 var freemobileHTTPClient = &http.Client{Timeout: time.Second * 20}
 
-// NewFreeMobile creates and returns a new FreeMobile struct
+// NewFreeMobile creates and returns a new FreeMobile struct.
 func NewFreeMobile(config Config) *FreeMobile {
 	if config.URL == "" {
 		config.URL = "https://smsapi.free-mobile.fr/sendmsg"
@@ -38,7 +40,7 @@ type payload struct {
 	Message string `json:"msg"`
 }
 
-// Send sends SMS to user registered in configuration
+// Send sends SMS to user registered in configuration.
 func (c *FreeMobile) Send(message sachet.Message) error {
 	params := payload{
 		User:    c.Username,
@@ -62,6 +64,7 @@ func (c *FreeMobile) Send(message sachet.Message) error {
 	if err != nil {
 		return err
 	}
+	defer response.Body.Close()
 
 	if response.StatusCode == http.StatusOK && err == nil {
 		return nil

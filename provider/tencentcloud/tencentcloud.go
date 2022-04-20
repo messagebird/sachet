@@ -2,12 +2,15 @@ package tencentcloud
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
-	"github.com/messagebird/sachet"
+
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
-	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
+	tcError "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 	sms "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/sms/v20190711"
+
+	"github.com/messagebird/sachet"
 )
 
 type Config struct {
@@ -21,12 +24,14 @@ type Config struct {
 	Truncate     bool   `yaml:"truncate"`
 }
 
+var _ (sachet.Provider) = (*TencentCloud)(nil)
+
 type TencentCloud struct {
 	client *sms.Client
 	config *Config
 }
 
-func NewTencentCloud(config Config) (*TencentCloud, error) {
+func NewTencentCloud(config Config) *TencentCloud {
 	credential := common.NewCredential(
 		config.SecretId,
 		config.SecretKey,
@@ -39,8 +44,7 @@ func NewTencentCloud(config Config) (*TencentCloud, error) {
 	return &TencentCloud{
 		client: client,
 		config: &config,
-	}, nil
-
+	}
 }
 
 func truncateString(str string, num int) string {
@@ -55,7 +59,6 @@ func truncateString(str string, num int) string {
 }
 
 func (tencentcloud *TencentCloud) Send(message sachet.Message) error {
-	var err error = nil
 	switch message.Type {
 	case "", "text":
 		request := sms.NewSendSmsRequest()
@@ -70,13 +73,19 @@ func (tencentcloud *TencentCloud) Send(message sachet.Message) error {
 		request.TemplateID = common.StringPtr(tencentcloud.config.TemplateCode)
 		request.PhoneNumberSet = common.StringPtrs(message.To)
 		response, err := tencentcloud.client.SendSms(request)
-		if _, ok := err.(*errors.TencentCloudSDKError); ok {
+
+		var errTencentCloudSDKError *tcError.TencentCloudSDKError
+		if errors.As(err, &errTencentCloudSDKError) {
 			fmt.Printf("An API error has returned: %s", err)
 			return err
 		}
-		b, _ := json.Marshal(response.Response)
+
+		b, err := json.Marshal(response.Response)
+		if err != nil {
+			return err
+		}
 		fmt.Printf("%s", b)
 	}
-	return err
 
+	return nil
 }

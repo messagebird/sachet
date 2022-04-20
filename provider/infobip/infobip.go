@@ -10,16 +10,18 @@ import (
 	"github.com/messagebird/sachet"
 )
 
-//Config configuration struct for Infobip Client
+// Config configuration struct for Infobip Client.
 type Config struct {
 	Token  string `yaml:"token"`
 	Secret string `yaml:"secret"`
 }
 
-//InfobipRequestTimeout  is the timeout for http request to Infobip
+// InfobipRequestTimeout  is the timeout for http request to Infobip.
 const InfobipRequestTimeout = time.Second * 20
 
-//Infobip is the exte Infobip
+var _ (sachet.Provider) = (*Infobip)(nil)
+
+// Infobip is the exte Infobip.
 type Infobip struct {
 	Config
 }
@@ -38,16 +40,16 @@ type InfobipPayload struct {
 	Messages []InfobipMessage `json:"messages"`
 }
 
-//NewInfobip creates a new
+// NewInfobip creates a new.
 func NewInfobip(config Config) *Infobip {
 	Infobip := &Infobip{config}
 	return Infobip
 }
 
-//Send send sms to n number of people using bulk sms api
+// Send send sms to n number of people using bulk sms api.
 func (c *Infobip) Send(message sachet.Message) (err error) {
 	smsURL := "https://api.infobip.com/sms/2/text/advanced"
-	//smsURL = "http://requestb.in/pwf2ufpw"
+	// smsURL = "http://requestb.in/pwf2ufpw"
 	var request *http.Request
 	var resp *http.Response
 
@@ -70,7 +72,7 @@ func (c *Infobip) Send(message sachet.Message) (err error) {
 		return err
 	}
 
-	//preparing the request
+	// preparing the request.
 	request, err = http.NewRequest("POST", smsURL, bytes.NewBuffer(data))
 	if err != nil {
 		return
@@ -79,7 +81,7 @@ func (c *Infobip) Send(message sachet.Message) (err error) {
 	request.SetBasicAuth(c.Token, c.Secret)
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("User-Agent", "SachetV1.0")
-	//calling the endpoint
+	// calling the endpoint.
 	httpClient := &http.Client{}
 	httpClient.Timeout = InfobipRequestTimeout
 
@@ -89,7 +91,10 @@ func (c *Infobip) Send(message sachet.Message) (err error) {
 	}
 	defer resp.Body.Close()
 	var body []byte
-	resp.Body.Read(body)
+	_, err = resp.Body.Read(body)
+	if err != nil {
+		return
+	}
 	if resp.StatusCode == http.StatusOK && err == nil {
 		return
 	}

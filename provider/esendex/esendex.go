@@ -6,10 +6,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/messagebird/sachet"
 	"io/ioutil"
 	"net/http"
 	"time"
+
+	"github.com/messagebird/sachet"
 )
 
 const (
@@ -22,6 +23,8 @@ type Config struct {
 	ApiToken         string `yaml:"api_token"`
 	AccountReference string `yaml:"account_reference"`
 }
+
+var _ (sachet.Provider) = (*Esendex)(nil)
 
 type Esendex struct {
 	Config
@@ -40,7 +43,7 @@ func (e *Esendex) Send(message sachet.Message) (err error) {
 		err = e.sendOne(message, phoneNumber)
 
 		if err != nil {
-			return fmt.Errorf("failed to make API call to Esendex: %s", err)
+			return fmt.Errorf("failed to make API call to Esendex: %w", err)
 		}
 	}
 
@@ -81,7 +84,6 @@ func (e *Esendex) sendOne(message sachet.Message, phoneNumber string) (err error
 	}
 
 	data, err := json.Marshal(params)
-
 	if err != nil {
 		return err
 	}
@@ -98,7 +100,6 @@ func (e *Esendex) sendOne(message sachet.Message, phoneNumber string) (err error
 	request.SetBasicAuth(e.Config.User, e.Config.ApiToken)
 
 	response, err := e.httpClient.Do(request)
-
 	if err != nil {
 		return err
 	}

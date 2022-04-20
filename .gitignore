@@ -27,3 +27,4 @@ gin-bin
 bin
 config.yaml
 .idea
+.vscode

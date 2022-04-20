@@ -2,6 +2,7 @@ package mailruim
 
 import (
 	botgolang "github.com/mail-ru-im/bot-golang"
+
 	"github.com/messagebird/sachet"
 )
 
@@ -9,6 +10,8 @@ type Config struct {
 	Token string `yaml:"token"`
 	Url   string `yaml:"url"`
 }
+
+var _ (sachet.Provider) = (*MailruIM)(nil)
 
 type MailruIM struct {
 	bot *botgolang.Bot
@@ -28,7 +31,9 @@ func NewMailruIM(config Config) (*MailruIM, error) {
 func (mr *MailruIM) Send(message sachet.Message) error {
 	for _, ChatID := range message.To {
 		msg := mr.bot.NewTextMessage(ChatID, message.Text)
-		msg.Send()
+		if err := msg.Send(); err != nil {
+			// TODO: handle the error
+		}
 	}
 	return nil
 }

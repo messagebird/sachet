@@ -1,14 +1,17 @@
 package nexmo
 
 import (
+	nexmo "gopkg.in/njern/gonexmo.v1"
+
 	"github.com/messagebird/sachet"
-	"gopkg.in/njern/gonexmo.v1"
 )
 
 type Config struct {
 	APIKey    string `yaml:"api_key"`
 	APISecret string `yaml:"api_secret"`
 }
+
+var _ (sachet.Provider) = (*Nexmo)(nil)
 
 type Nexmo struct {
 	client *nexmo.Client

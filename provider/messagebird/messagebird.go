@@ -8,6 +8,7 @@ import (
 	messagebird "github.com/messagebird/go-rest-api"
 	sms "github.com/messagebird/go-rest-api/sms"
 	voicemessage "github.com/messagebird/go-rest-api/voicemessage"
+
 	"github.com/messagebird/sachet"
 )
 
@@ -19,6 +20,8 @@ type Config struct {
 	Voice     string `yaml:"voice"`
 	Repeat    int    `yaml:"repeat"`
 }
+
+var _ (sachet.Provider) = (*MessageBird)(nil)
 
 type MessageBird struct {
 	client             *messagebird.Client
@@ -44,8 +47,7 @@ func NewMessageBird(config Config) *MessageBird {
 	}
 }
 
-func (mb *MessageBird) Send(message sachet.Message) error {
-	var err error = nil
+func (mb *MessageBird) Send(message sachet.Message) (err error) {
 	switch message.Type {
 	case "", "text":
 		_, err = sms.Create(mb.client, message.From, message.To, message.Text, &mb.messageParams)

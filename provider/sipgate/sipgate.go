@@ -14,18 +14,20 @@ const sipgateURL = "https://api.sipgate.com/v2/sessions/sms"
 
 var sipgateHTTPClient = &http.Client{Timeout: time.Second * 20}
 
-// Config is the configuration struct for Sipgate provider
+// Config is the configuration struct for Sipgate provider.
 type Config struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
 }
 
-// Sipgate contains the necessary values for the Sipgate provider
+var _ (sachet.Provider) = (*Sipgate)(nil)
+
+// Sipgate contains the necessary values for the Sipgate provider.
 type Sipgate struct {
 	Config
 }
 
-// NewSipgate creates and returns a new Sipgate struct
+// NewSipgate creates and returns a new Sipgate struct.
 func NewSipgate(config Config) *Sipgate {
 	return &Sipgate{config}
 }
@@ -36,7 +38,7 @@ type payload struct {
 	Message   string `json:"message"`
 }
 
-// Send sends SMS to user registered in configuration
+// Send sends SMS to user registered in configuration.
 func (c *Sipgate) Send(message sachet.Message) error {
 	for _, recipient := range message.To {
 		params := payload{
@@ -63,6 +65,7 @@ func (c *Sipgate) Send(message sachet.Message) error {
 		if err != nil {
 			return err
 		}
+		defer response.Body.Close()
 
 		if response.StatusCode != http.StatusNoContent {
 			return fmt.Errorf("Failed sending sms. statusCode: %d", response.StatusCode)
