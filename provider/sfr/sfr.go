@@ -3,13 +3,14 @@ package sfr
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/messagebird/sachet"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/messagebird/sachet"
 )
 
-// Config is the configuration struct for Sfr provider
+// Config is the configuration struct for Sfr provider.
 type Config struct {
 	URL             string `yaml:"url"`
 	SPACEID         string `yaml:"space_id"`
@@ -42,13 +43,13 @@ type ResponseBody struct {
 	Response      int64  `json:response`
 }
 
-// Sap contains the necessary values for the Sfr provider
+// Sap contains the necessary values for the Sfr provider.
 type Sfr struct {
 	Config
 	HTTPClient *http.Client // The HTTP client to send requests on
 }
 
-// NewSfr creates and returns a new Sfr struct
+// NewSfr creates and returns a new Sfr struct.
 func NewSfr(config Config) *Sfr {
 	if config.URL == "" {
 		config.URL = "https://www.dmc.sfr-sh.fr/DmcWS/1.5.7/JsonService/MessagesUnitairesWS/addSingleCall"
@@ -59,10 +60,9 @@ func NewSfr(config Config) *Sfr {
 	}
 }
 
-// Send sends SMS to user registered in configuration
+// Send sends SMS to user registered in configuration.
 func (c *Sfr) Send(message sachet.Message) error {
-
-	// No \n in Text tolerated
+	// No \n in Text tolerated.
 	msg := strings.ReplaceAll(message.Text, "\n", " - ")
 
 	error := 0
@@ -81,7 +81,7 @@ func (c *Sfr) Send(message sachet.Message) error {
 			Lang:            c.LANG,
 		}
 
-		var params = request.URL.Query()
+		params := request.URL.Query()
 
 		messageUnitaire := &MessageUnitaire{
 			Media:   "SMSLong",
@@ -92,12 +92,12 @@ func (c *Sfr) Send(message sachet.Message) error {
 
 		a, err := json.Marshal(authenticate)
 		if err != nil {
-			return fmt.Errorf("error: %v", err)
+			return fmt.Errorf("error: %w", err)
 		}
 
 		mU, err := json.Marshal(messageUnitaire)
 		if err != nil {
-			return fmt.Errorf("error: %v", err)
+			return fmt.Errorf("error: %w", err)
 		}
 
 		params.Add("authenticate", string(a))
