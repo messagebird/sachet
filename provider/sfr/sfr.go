@@ -67,7 +67,6 @@ func (c *Sfr) Send(message sachet.Message) error {
 
 	errors := 0
 	for _, dest := range message.To {
-
 		request, err := http.NewRequest("GET", c.URL, nil)
 		if err != nil {
 			return err
