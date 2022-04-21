@@ -92,12 +92,12 @@ func (c *Sfr) Send(message sachet.Message) error {
 
 		a, err := json.Marshal(authenticate)
 		if err != nil {
-			return fmt.Errorf("error:", err)
+			return fmt.Errorf("error: %v", err)
 		}
 
 		mU, err := json.Marshal(messageUnitaire)
 		if err != nil {
-			return fmt.Errorf("error:", err)
+			return fmt.Errorf("error: %v", err)
 		}
 
 		params.Add("authenticate", string(a))
