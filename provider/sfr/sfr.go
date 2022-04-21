@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/messagebird/sachet"
-	"io/ioutil"
 	"net/http"
 	"strings"
 	"time"
@@ -90,8 +89,16 @@ func (c *Sfr) Send(message sachet.Message) error {
 			To:      dest,
 			From:    c.TPOA,
 		}
-		a, _ := json.Marshal(authenticate)
-		mU, _ := json.Marshal(messageUnitaire)
+
+		a, err := json.Marshal(authenticate)
+		if err != nil {
+			return fmt.Errorf("error:", err)
+		}
+
+		mU, err := json.Marshal(messageUnitaire)
+		if err != nil {
+			return fmt.Errorf("error:", err)
+		}
 
 		params.Add("authenticate", string(a))
 		params.Add("messageUnitaire", string(mU))
@@ -103,12 +110,15 @@ func (c *Sfr) Send(message sachet.Message) error {
 			fmt.Println(err)
 		}
 		defer response.Body.Close()
-		body, err := ioutil.ReadAll(response.Body)
+		dec := json.NewDecoder(response.Body)
 
 		var responseBody ResponseBody
-		if err := json.Unmarshal(body, &responseBody); err != nil { // Parse []byte to go struct pointer
-			fmt.Errorf("Can not unmarshal JSON")
-			error += 1
+		for dec.More() {
+			err := dec.Decode(&responseBody)
+			if err != nil {
+				fmt.Errorf("Can not decode JSON")
+				error += 1
+			}
 		}
 
 		if responseBody.Success != true {
