@@ -94,6 +94,13 @@ providers:
     debug: false
   ghasedak:
     api_token: 'GHASEDAK_API_KEY'
+  sfr:
+    url: "https://www.dmc.sfr-sh.fr/DmcWS/1.5.7/JsonService/MessagesUnitairesWS/addSingleCall"
+    service_id: ""
+    service_password: ""
+    space_id: ""
+    lang: "fr_FR"
+    tpoa: "TPOA"
   textmagic:
     username: 'username'
     api_key: 'TEXTMAGIC_API_KEY'
@@ -127,6 +134,13 @@ receivers:
     provider: "sap"
     to:
       - '+336xxxxxxxx'
+
+  - name: 'sfr'
+    provider: "sfr"
+    to:
+      - '+336xxxxxxxx'
+      - '+336xxxxxxxx'
+
   - name: 'kavenegar'
     provider: 'kavenegar'
     from: '10008663'
