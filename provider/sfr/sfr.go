@@ -40,7 +40,7 @@ type ResponseBody struct {
 	ErrorDetail   string `json:"errorDetail"`
 	Fatal         bool   `json:"fatal"`
 	InvalidParams bool   `json:"invalidParams"`
-	Response      int64  `json:response`
+	Response      int64  `json:"response"`
 }
 
 // Sap contains the necessary values for the Sfr provider.
@@ -65,8 +65,7 @@ func (c *Sfr) Send(message sachet.Message) error {
 	// No \n in Text tolerated.
 	msg := strings.ReplaceAll(message.Text, "\n", " - ")
 
-	error := 0
-
+	errors := 0
 	for _, dest := range message.To {
 
 		request, err := http.NewRequest("GET", c.URL, nil)
@@ -106,7 +105,7 @@ func (c *Sfr) Send(message sachet.Message) error {
 
 		response, err := c.HTTPClient.Do(request)
 		if err != nil {
-			error += 1
+			errors += 1
 			fmt.Println(err)
 		}
 		defer response.Body.Close()
@@ -116,20 +115,20 @@ func (c *Sfr) Send(message sachet.Message) error {
 		for dec.More() {
 			err := dec.Decode(&responseBody)
 			if err != nil {
-				fmt.Errorf("Can not decode JSON")
-				error += 1
+				fmt.Println("Can not decode JSON")
+				errors += 1
 			}
 		}
 
-		if responseBody.Success != true {
+		if !responseBody.Success {
 			fmt.Println("API error :", responseBody)
-			error += 1
+			errors += 1
 		} else {
 			fmt.Println("Successfully sent alert to ", dest)
 		}
 	}
-	if error > 0 {
-		return fmt.Errorf("Error with %d calls", error)
+	if errors > 0 {
+		return fmt.Errorf("Error with %d calls", errors)
 	}
 	return nil
 }
