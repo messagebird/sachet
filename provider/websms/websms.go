@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"net/http/httputil"
 	"time"
 
 	"github.com/messagebird/sachet"
@@ -34,9 +33,9 @@ func NewWebSms(config Config) *WebSms {
 }
 
 type TextSmsSendRequest struct {
-	SmsID			string `json:"clientMessageId"`
+	SmsID			string   `json:"clientMessageId"`
 	RecipientList	[]string `json:"recipientAddressList"`
-	Message  		string `json:"messageContent"`
+	Message  		string   `json:"messageContent"`
 }
 
 // Send sends SMS to user registered in configuration.
@@ -59,16 +58,9 @@ func (c *WebSms) Send(message sachet.Message) error {
 		return err
 	}
 
-	//request.SetBasicAuth(c.Username, c.Password)
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("User-Agent", "Sachet")
 	request.Header.Set("Authorization", "Bearer " + c.Token)
-
-	reqDump, err := httputil.DumpRequest(request, true)
-	if err != nil {
-		return err
-	}
-	log.Println(fmt.Sprintf("REQUEST: %q", reqDump))
 
 	// Send HTTP request
 	response, err := httpClient.Do(request)
@@ -81,5 +73,6 @@ func (c *WebSms) Send(message sachet.Message) error {
 		return fmt.Errorf("Failed to send sms. statusCode: %d", response.StatusCode)
 	}
 	
+	// Messages successfully sent
 	return nil
 }
