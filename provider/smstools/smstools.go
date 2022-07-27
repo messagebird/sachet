@@ -42,10 +42,10 @@ func (smst *SmsTools) createFile(recipient, message string) (*os.File, error) {
 	try := 0
 	for {
 		name := fmt.Sprintf("%s%d", prefix, hsum)
-		f, err := os.OpenFile(name, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0666)
+		f, err := os.OpenFile(name, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0o666)
 		if os.IsExist(err) {
 			if try++; try < 10000 {
-				hsum = hsum + 1
+				hsum++
 				continue
 			}
 			return nil, fmt.Errorf("unable to create conflict-free filename")
