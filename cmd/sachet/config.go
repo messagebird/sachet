@@ -18,6 +18,7 @@ import (
 	"github.com/messagebird/sachet/provider/kavenegar"
 	"github.com/messagebird/sachet/provider/mailruim"
 	"github.com/messagebird/sachet/provider/mediaburst"
+	"github.com/messagebird/sachet/provider/melipayamak"
 	"github.com/messagebird/sachet/provider/messagebird"
 	"github.com/messagebird/sachet/provider/nexmo"
 	"github.com/messagebird/sachet/provider/nowsms"
@@ -75,6 +76,7 @@ var config struct {
 		Ghasedak     ghasedak.Config
 		Sfr          sfr.Config
 		TextMagic    textmagic.Config
+		Melipayamak  melipayamak.Config
 	}
 
 	Receivers []ReceiverConf
