@@ -104,6 +104,10 @@ providers:
   textmagic:
     username: 'username'
     api_key: 'TEXTMAGIC_API_KEY'
+  melipayamak:
+    username: '###'
+    password: '###'
+    endpoint: 'https://rest.payamak-panel.com/api/SendSMS/SendSMS'
 
 templates:
   - telegram.tmpl
@@ -152,3 +156,8 @@ receivers:
     to:
       - '09012345679'
       - '09123456789'
+  - name: 'melipayamak'
+    provider: 'melipayamak'
+    to:
+      - '09123456789'
+    from: '50004000000000'
