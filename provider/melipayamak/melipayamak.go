@@ -54,9 +54,8 @@ func (mp *Melipayamak) Send(message sachet.Message) error {
 		return err
 	}
 	defer response.Body.Close()
-	body, _ := ioutil.ReadAll(response.Body)
 	if response.StatusCode != http.StatusOK {
-
+		body, _ := ioutil.ReadAll(response.Body)
 		return fmt.Errorf(
 			"SMS sending failed. HTTP status code: %d, Response body: %s",
 			response.StatusCode,
