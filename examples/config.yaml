@@ -108,6 +108,10 @@ providers:
     username: '###'
     password: '###'
     endpoint: 'https://rest.payamak-panel.com/api/SendSMS/SendSMS'
+  mattermost: # For more information: https://developers.mattermost.com/integrate/webhooks/incoming/
+    channel: 'alerts' # Put the name of the channel or if you want to send an alert as a direct message to a specific user you should use '@' like @tom
+    username: 'DoomBringer' # Defaults to the username set during webhook creation; if no username was set during creation, webhook is used.
+    icon_url: 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/198/freezing-face_1f976.png' 
 
 templates:
   - telegram.tmpl
@@ -161,3 +165,8 @@ receivers:
     to:
       - '09123456789'
     from: '50004000000000'
+  - name: 'mattermost'
+    provider: 'mattermost'
+    to: 
+      - 'https://your-mattermost-server.com/hooks/xxx-generatedkey-xxx' # Treat this endpoint as a secret. Anyone who has it will be able to post messages to your Mattermost instance.
+

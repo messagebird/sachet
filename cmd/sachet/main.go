@@ -25,6 +25,7 @@ import (
 	"github.com/messagebird/sachet/provider/kannel"
 	"github.com/messagebird/sachet/provider/kavenegar"
 	"github.com/messagebird/sachet/provider/mailruim"
+	"github.com/messagebird/sachet/provider/mattermost"
 	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/melipayamak"
 	"github.com/messagebird/sachet/provider/messagebird"
@@ -150,6 +151,8 @@ func providerByName(name string) (sachet.Provider, error) {
 		return textmagic.NewTextMagic(config.Providers.TextMagic), nil
 	case "melipayamak":
 		return melipayamak.NewMelipayamak(config.Providers.Melipayamak), nil
+	case "mattermost":
+		return mattermost.NewMattermost(config.Providers.Mattermost), nil
 	}
 
 	return nil, fmt.Errorf("%s: Unknown provider", name)
