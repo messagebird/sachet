@@ -17,6 +17,7 @@ import (
 	"github.com/messagebird/sachet/provider/kannel"
 	"github.com/messagebird/sachet/provider/kavenegar"
 	"github.com/messagebird/sachet/provider/mailruim"
+	"github.com/messagebird/sachet/provider/mattermost"
 	"github.com/messagebird/sachet/provider/mediaburst"
 	"github.com/messagebird/sachet/provider/melipayamak"
 	"github.com/messagebird/sachet/provider/messagebird"
@@ -77,6 +78,7 @@ var config struct {
 		Sfr          sfr.Config
 		TextMagic    textmagic.Config
 		Melipayamak  melipayamak.Config
+		Mattermost   mattermost.Config
 	}
 
 	Receivers []ReceiverConf
