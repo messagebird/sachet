@@ -4,7 +4,7 @@ WORKDIR /build
 
 COPY . .
 
-RUN GO111MODULE=on CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -mod vendor -o sachet github.com/messagebird/sachet/cmd/sachet
+RUN GO111MODULE=on CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -mod vendor -mod mod -o sachet github.com/messagebird/sachet/cmd/sachet
 
 FROM alpine:3.15
 
