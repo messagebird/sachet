@@ -16,14 +16,7 @@ type Config struct {
 	KVv2SecretPath         string
 }
 
-// Address: "http://vault.vault.svc.cluster.local:8200"
-// Role: "sachet"
-// PathToToken: "/var/run/secrets/kubernetes.io/serviceaccount/token"
-// KVv2MountPath: "cdm-kv"
-// KVv2SecretPath: "sachet"
-
 type KVv2SecretsProvider struct {
-	//client vaultApi.Client
 	Config Config
 }
 
