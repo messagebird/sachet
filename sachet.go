@@ -10,3 +10,7 @@ type Message struct {
 	Text string
 	Type string
 }
+
+type SecureSecretsProvider interface {
+	GetSecrets(secrets ...string) (map[string]string, error)
+}

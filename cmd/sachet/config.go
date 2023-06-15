@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/messagebird/sachet/vault"
 	"io/ioutil"
 
 	"github.com/prometheus/alertmanager/template"
@@ -81,6 +82,7 @@ var config struct {
 
 	Receivers []ReceiverConf
 	Templates []string
+	Vault     vault.Config
 }
 var tmpl *template.Template
 

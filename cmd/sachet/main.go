@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"github.com/messagebird/sachet/vault"
 	"log"
 	"net/http"
 	"os"
@@ -97,7 +98,7 @@ func providerByName(name string) (sachet.Provider, error) {
 	case "nexmo":
 		return nexmo.NewNexmo(config.Providers.Nexmo)
 	case "twilio":
-		return twilio.NewTwilio(config.Providers.Twilio), nil
+		return twilio.NewTwilio(config.Providers.Twilio, &vault.KVv2SecretsProvider{Config: config.Vault})
 	case "infobip":
 		return infobip.NewInfobip(config.Providers.Infobip), nil
 	case "kannel":
