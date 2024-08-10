@@ -74,8 +74,8 @@ providers:
     no_stop_clause: true # True if you don't need STOP clause at the end on the message
   tencentcloud:
     region_id: ap-shanghai
-    secret_id: AKIDWqaCa1aNL3V0MtSG7mCZPjvrgJhqdgeN
-    secret_key: d5JLBreHfnfJjHbffWCsSoF8wYs5pNgl
+    secret_id: ''
+    secret_key: ''
     app_id: 111233
     sign_name: sign_name
     template_code: 123233
@@ -108,6 +108,13 @@ providers:
     username: '###'
     password: '###'
     endpoint: 'https://rest.payamak-panel.com/api/SendSMS/SendSMS'
+  gnokii:
+    # DB schema is based on /usr/share/doc/gnokii-smsd-mysql/sms.tables.mysql.sql
+    db_username: 'user'
+    db_password: ''
+    db_host: 'localhost'
+    db_port: 3306
+    db_name: 'smsd'
 
 templates:
   - telegram.tmpl

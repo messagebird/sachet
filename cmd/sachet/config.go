@@ -13,6 +13,7 @@ import (
 	"github.com/messagebird/sachet/provider/exotel"
 	"github.com/messagebird/sachet/provider/freemobile"
 	"github.com/messagebird/sachet/provider/ghasedak"
+	"github.com/messagebird/sachet/provider/gnokii"
 	"github.com/messagebird/sachet/provider/infobip"
 	"github.com/messagebird/sachet/provider/kannel"
 	"github.com/messagebird/sachet/provider/kavenegar"
@@ -77,6 +78,7 @@ var config struct {
 		Sfr          sfr.Config
 		TextMagic    textmagic.Config
 		Melipayamak  melipayamak.Config
+		Gnokii       gnokii.Config
 	}
 
 	Receivers []ReceiverConf
